@@ -1,11 +1,21 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useMemo, useState } from 'react';
+import reactLogo from './assets/react.svg';
+import viteLogo from '/vite.svg';
+import './App.css';
+import { useData } from './useData';
 
 function App() {
   const [count, setCount] = useState(0)
-
+// useEffect(()=>{
+   
+//   const unsub=window.electron.subscribeStatistics((num)=>console.log(num));
+//   return unsub;
+// });
+const dataa=useData(10);
+const a=useMemo(
+  ()=>dataa.map((b)=>b.num),[dataa]
+);
+console.log(dataa);
   return (
     <>
       <div>
