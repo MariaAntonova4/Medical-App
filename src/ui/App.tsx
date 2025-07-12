@@ -8,7 +8,7 @@ function App() {
   const [count, setCount] = useState(0)
 // useEffect(()=>{
    
-//   const unsub=window.electron.subscribeStatistics((num)=>console.log(num));
+ //  const unsub=window.electron.subscribeStatistics((num)=>console.log(num));
 //   return unsub;
 // });
 const dataa=useData(10);

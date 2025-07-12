@@ -5,7 +5,8 @@ import { pollResources,getA } from './resourceManager.js';
 import { getAssetPath, getPreloadPath } from './pathResolver.js';
 import { createTray } from './tray.js';
 import { createMenu } from './menu.js';
-
+import { sqlite3 } from 'sqlite3';
+import { setSpec} from "../database/db.js";
 
 // type test = string;
 
@@ -22,16 +23,22 @@ app.on('ready',()=>{
     }
 
     pollResources(mainWindow);
-    ipcMainHandle('getA',()=>{
-        return getA();
-    });
+    // ipcMainHandle('getA',()=>{
+    //     return getA();
+    // });
     createTray(mainWindow);
     handleCloseEvents(mainWindow);
     createWindow(mainWindow);
+    ipcMain.handle('dbSpec',async(ev,argz)=>{
+        return await new Promise((res,rej)=>{
+            setSpec(argz,(data:any)=>{
+                res(data);
+            });
+        });
+    });
     })
 
     createMenu();
-    
 
     function createWindow(mainWindow:BrowserWindow) {
         let secondWindow=new BrowserWindow({

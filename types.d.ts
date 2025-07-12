@@ -19,3 +19,7 @@ type EventPayloadMapping = {
   changeView: View;
   sendFrameAction: FrameWindowAction;
 };
+export interface specialization{
+    id:number|null,
+    specName:string;
+}
