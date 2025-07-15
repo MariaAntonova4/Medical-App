@@ -1,16 +1,6 @@
 {
-  // "compilerOptions": {
-  //   "types": ["./types"]
-  // },
-  // "files": [],
-  // "exclude": ["src/electron"],
-  // "references": [
-  //   { "path": "./tsconfig.app.json" },
-  //   { "path": "./tsconfig.node.json" }
-  // ]
-  
 "compilerOptions": {
-    "types": ["./../types"],
+    "types": ["C:\\Users\\Asus\\Desktop\\Project Intern\\Medical-App\\types.d.ts"],
     "target": "ESNext",
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
@@ -27,7 +17,6 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src"],
-  "exclude": ["src/electron"],
-
+  "include": ["C:\\Users\\Asus\\Desktop\\Project Intern\\Medical-App\\src"],
+  "exclude": ["C:\\Users\\Asus\\Desktop\\Project Intern\\Medical-App\\src\\electron"],
 }

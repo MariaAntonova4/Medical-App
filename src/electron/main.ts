@@ -5,8 +5,9 @@ import { pollResources,getA } from './resourceManager.js';
 import { getAssetPath, getPreloadPath } from './pathResolver.js';
 import { createTray } from './tray.js';
 import { createMenu } from './menu.js';
-import { sqlite3 } from 'sqlite3';
-import { setSpec} from "../database/db.js";
+import  sqlite3  from 'sqlite3';
+import { getAllSpec, setSpec} from "../database/db.js";
+import { rejects } from 'assert';
 
 // type test = string;
 
@@ -23,35 +24,40 @@ app.on('ready',()=>{
     }
 
     pollResources(mainWindow);
-    // ipcMainHandle('getA',()=>{
-    //     return getA();
-    // });
+    ipcMainHandle('getA',()=>{
+        return getA();
+    });
     createTray(mainWindow);
     handleCloseEvents(mainWindow);
-    createWindow(mainWindow);
-    ipcMain.handle('dbSpec',async(ev,argz)=>{
-        return await new Promise((res,rej)=>{
-            setSpec(argz,(data:any)=>{
-                res(data);
-            });
-        });
-    });
-    })
+const db=new sqlite3.Database('medicApp.sql');
+
+//ipcMain.handle('insert-spec',(event,specName)=>setSpec(specName));
+ipcMain.handle('read-spec',async()=>{
+    const specs=await getAllSpec();
+    return specs;
+}
+    //     async()=>{
+//     return new Promise((resolve,reject)=>{
+        
+//         db.all('SELECT * FROM specialization',[],(err: any,rows: unknown)=>{
+//             if (err) {
+//                 reject(err);
+//             }else resolve(rows);
+//         })
+//     })
+// }
+)
+
+    // ipcMain.handle('dbSpec',async(ev,argz)=>{
+    //     return await new Promise((res,rej)=>{
+    //         setSpec(argz,(data:any)=>{
+    //             res(data);
+    //         });
+    //     });
+    // });
+    // })
 
     createMenu();
-
-    function createWindow(mainWindow:BrowserWindow) {
-        let secondWindow=new BrowserWindow({
-            parent:mainWindow,
-            webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
-      //enableRemoteModule: true,
-    },
-        });
-        secondWindow.loadFile('C:/Users/Asus/Desktop/Project Intern/index2.html');
-        //secondWindow.show();
-    }
 
     function handleCloseEvents(mainWindow:BrowserWindow){
         let willClose=false;
@@ -72,7 +78,7 @@ app.on('ready',()=>{
         willClose=false;
     });
     }
-    
-// });
+    });
+// }
 // function handleGetA(callback:()=>Atype){
-//             ipcMain.handle('getA',callback); }
+//             ipcMain.handle('getA',callback); 

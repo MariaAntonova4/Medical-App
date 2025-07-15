@@ -1,13 +1,19 @@
+import { ipcRenderer } from "electron/renderer";
+//import { EventPayloadMapping, SendInfo } from "../../types";
+
 const electron=require('electron');
 
 electron.contextBridge.exposeInMainWorld("electron",{
-    subscribeStatistics:(callback)=>{
+    subscribeStatistics:(callback: (arg0: SendInfo) => void)=>{
        return ipcOn("sendInfo",(num)=>{
         callback(num) 
        }) 
     },
-    getA:()=>ipcInvoke('getA'),
-}satisfies Window['electron']);
+    readSpec:()=>ipcRenderer.invoke('read-spec'),
+    //getSpec:(specName:string)=>ipcRenderer.invoke('insert-spec',specName),
+    // getA:()=>ipcInvoke('getA'),
+}//satisfies Window['electron']
+);
 
 function ipcInvoke<Key extends keyof EventPayloadMapping>(
     key:Key

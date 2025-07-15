@@ -7,7 +7,7 @@ export function pollResources(mainWindow:BrowserWindow){
         const num=7;
         ipcWebContentsSend('sendInfo',mainWindow.webContents,{
             num
-         }//.send("sendInfo",);
+         }
          );
         
     },POLLING_INTERVAL);

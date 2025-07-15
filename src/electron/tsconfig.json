@@ -3,9 +3,8 @@
         "strict": true,
         "target": "esnext",
         "module": "nodenext",
-        "outDir": "../../../dist-electron",
+        "outDir": "C:\\Users\\Asus\\Desktop\\Project Intern\\Medical-App\\dist-electron",
         "skipLibCheck": true,
-        "types": ["../../../types"],
-        "typeRoots": ["C:\\Users\\Asus\\Desktop\\Project Intern\\Medical-App\\node_modules\\@types", "C:\\Users\\Asus\\Desktop\\Project Intern\\Medical-App\\types.d.ts"]
+        "types": ["C:\\Users\\Asus\\Desktop\\Project Intern\\Medical-App\\types.d.ts"]
     },
 }
