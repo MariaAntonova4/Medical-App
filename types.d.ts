@@ -16,6 +16,7 @@ type UnsubscribeFunction=()=>void;
         getA:()=>Promise<Atype>;
         readSpec:()=>Promise<any>;
         getSpec:(specName)=>Promise<any>;
+        updateSpec:(idNum,specName)=>Promise<any>;
     }
 }  
 

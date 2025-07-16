@@ -10,7 +10,9 @@ export function setSpec(specName:string) {
     createSpecTable();
     db.run("INSERT OR REPLACE INTO specialization(specName) VALUES (?)",[specName]);
 }
-
+export function updateSpec(idSpec:number,specName:string) {
+    db.run("UPDATE specialization SET specName=(?) WHERE id=(?)",[specName],[idSpec]);
+}
 // export const setSpec=(data:Specialization,callback:Function)=>{
 //     db.serialize(()=>{
 //       createSpecTable();

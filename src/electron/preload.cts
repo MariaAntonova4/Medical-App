@@ -1,4 +1,5 @@
 import { ipcRenderer } from "electron/renderer";
+import { updateSpec } from "../database/db";
 //import { EventPayloadMapping, SendInfo } from "../../types";
 
 const electron=require('electron');
@@ -10,7 +11,8 @@ electron.contextBridge.exposeInMainWorld("electron",{
        }) 
     },
     readSpec:()=>ipcRenderer.invoke('read-spec'),
-    //getSpec:(specName:string)=>ipcRenderer.invoke('insert-spec',specName),
+    getSpec:(specName:string)=>ipcRenderer.invoke('insert-spec',specName),
+    updateSpec:(idNum:number,specName:string)=>ipcRenderer.invoke('update-spec',idNum,specName)
     // getA:()=>ipcInvoke('getA'),
 }//satisfies Window['electron']
 );

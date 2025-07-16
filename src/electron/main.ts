@@ -6,7 +6,7 @@ import { getAssetPath, getPreloadPath } from './pathResolver.js';
 import { createTray } from './tray.js';
 import { createMenu } from './menu.js';
 import  sqlite3  from 'sqlite3';
-import { getAllSpec, setSpec} from "../database/db.js";
+import { getAllSpec, setSpec, updateSpec} from "../database/db.js";
 import { rejects } from 'assert';
 
 // type test = string;
@@ -31,6 +31,7 @@ app.on('ready',()=>{
     handleCloseEvents(mainWindow);
 
 ipcMain.handle('insert-spec',(event,specName)=>setSpec(specName));
+ipcMain.handle('update-spec',(event,idNum,specName)=>updateSpec(idNum,specName));
 ipcMain.handle('read-spec',async()=>{
     const specs=await getAllSpec();
     return specs;

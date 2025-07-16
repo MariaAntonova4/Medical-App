@@ -23,19 +23,18 @@ function App() {
     //window.electron.getSpec('Anesthesiologist');
   },[]);
 const [ime,setIme]=useState("");
+const [idnum,setIdNum]=useState("");
+const [nameSpec,setNameSpec]=useState("");
 function search(formData: { get: (arg0: string) => any; }) {
     const namw = formData.get("namw");
     window.electron.getSpec(namw);
     //alert(`You searched for '${namw}'`);
   }
-  const handleSubmit=async(event:React.FormEvent)=>{
-    event.preventDefault();
-    
-    useEffect(()=>{
-    
-  },[]);
+  function update(formData: { get: (arg0: string) => any; }) {
+    const idnum=formData.get("idnum");
+    const specname=formData.get("specname");
+    window.electron.updateSpec(idnum,specname);
   }
-
   return (
     <>
     <div>
@@ -51,6 +50,11 @@ function search(formData: { get: (arg0: string) => any; }) {
     <div>
         <form action={search}>
       <input type="text"name="namw"value={ime}onChange={(e)=>setIme(e.target.value)} />
+      <input type="submit" />
+    </form>
+    <form action={update}>
+      <input type="number" name="idnum" onChange={(e)=>setIdNum(e.target.value)}/>
+      <input type="text"name="specname"onChange={(e)=>setNameSpec(e.target.value)} />
       <input type="submit" />
     </form>
     </div>
