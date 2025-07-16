@@ -29,13 +29,12 @@ app.on('ready',()=>{
     });
     createTray(mainWindow);
     handleCloseEvents(mainWindow);
-const db=new sqlite3.Database('medicApp.sql');
 
-//ipcMain.handle('insert-spec',(event,specName)=>setSpec(specName));
+ipcMain.handle('insert-spec',(event,specName)=>setSpec(specName));
 ipcMain.handle('read-spec',async()=>{
     const specs=await getAllSpec();
     return specs;
-}
+})
     //     async()=>{
 //     return new Promise((resolve,reject)=>{
         
@@ -45,8 +44,8 @@ ipcMain.handle('read-spec',async()=>{
 //             }else resolve(rows);
 //         })
 //     })
-// }
-)
+// })
+
 
     // ipcMain.handle('dbSpec',async(ev,argz)=>{
     //     return await new Promise((res,rej)=>{
@@ -55,7 +54,7 @@ ipcMain.handle('read-spec',async()=>{
     //         });
     //     });
     // });
-    // })
+    // }
 
     createMenu();
 
