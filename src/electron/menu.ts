@@ -5,9 +5,13 @@ export function createMenu(){
     Menu.setApplicationMenu(Menu.buildFromTemplate([{
         label:"App",
         type:"submenu",
-        submenu:[{
+        submenu:[
+            {
             label:"Quit",
             click:app.quit
+        },
+        {
+            label:"Admin"
         }]
     }]));
 }

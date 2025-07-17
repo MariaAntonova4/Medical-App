@@ -10,6 +10,7 @@ electron.contextBridge.exposeInMainWorld("electron",{
         callback(num) 
        }) 
     },
+    createChildWindow:()=>ipcRenderer.invoke('open-child-window'),
     readSpec:()=>ipcRenderer.invoke('read-spec'),
     getSpec:(specName:string)=>ipcRenderer.invoke('insert-spec',specName),
     updateSpec:(idNum:number,specName:string)=>ipcRenderer.invoke('update-spec',idNum,specName)

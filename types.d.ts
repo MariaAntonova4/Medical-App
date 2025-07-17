@@ -17,6 +17,7 @@ type UnsubscribeFunction=()=>void;
         readSpec:()=>Promise<any>;
         getSpec:(specName)=>Promise<any>;
         updateSpec:(idNum,specName)=>Promise<any>;
+        createChildWindow:()=>Promise<any>;
     }
 }  
 

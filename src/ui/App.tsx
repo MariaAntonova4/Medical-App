@@ -1,77 +1,43 @@
 import React, { useEffect, useMemo, useState,memo,useReducer } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
+import patientLogo from './../assets/patient.png';
+import doctorLogo from './../assets/doctor.png';
 import './App.css';
 import { useData } from './useData.js';
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-//import App2 from './App copy'
-
-// createRoot(document.getElementById('root')!).render(
-//   <StrictMode>
-//     <App2 />
-//   </StrictMode>,
-// )
-
-
+import Doctor from './Doctor'
+import Patient from './Patient';
 
 function App() {
-  const [specs,setSpecs]=useState<any[]>([]);
-  useEffect(()=>{
-    window.electron.readSpec().then(setSpecs);
-    //window.electron.getSpec('Anesthesiologist');
-  },[]);
-const [ime,setIme]=useState("");
-const [idnum,setIdNum]=useState("");
-const [nameSpec,setNameSpec]=useState("");
-function search(formData: { get: (arg0: string) => any; }) {
-    const namw = formData.get("namw");
-    window.electron.getSpec(namw);
-    //alert(`You searched for '${namw}'`);
+  function connectToDoctorWindow() {
+    //alert('hey');
+    //window.electron.createChildWindow();
+    createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <Doctor />
+  </StrictMode>,
+)
   }
-  function update(formData: { get: (arg0: string) => any; }) {
-    const idnum=formData.get("idnum");
-    const specname=formData.get("specname");
-    window.electron.updateSpec(idnum,specname);
+  function connectToPatientWindow() {
+    createRoot(document.getElementById('root')!).render(
+      <StrictMode>
+      <Patient/>
+      </StrictMode>
+    )
   }
   return (
     <>
-    <div>
-      <h1>
-        Specialization
-      </h1>
-      <ul>
-        {specs.map((spec,idx)=>(
-          <li key={idx}>{JSON.stringify(spec)}</li>
-        ))}
-      </ul>
-    </div>
-    <div>
-        <form action={search}>
-      <input type="text"name="namw"value={ime}onChange={(e)=>setIme(e.target.value)} />
-      <input type="submit" />
-    </form>
-    <form action={update}>
-      <input type="number" name="idnum" onChange={(e)=>setIdNum(e.target.value)}/>
-      <input type="text"name="specname"onChange={(e)=>setNameSpec(e.target.value)} />
-      <input type="submit" />
-    </form>
-    </div>
-      
-        
-       <div>
-      
-    </div>
-       {/* <div><button onClick={()=>{}}>See name</button>
+    {/* <div>
+      <button onClick={()=>{}}>See name</button>
         <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
+          
         </a>
         <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
+          
         </a>
-      </div>
-      <h1>Vite + React</h1>
+      </div> */}
+      {/* <h1>Vite + React</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
@@ -79,7 +45,22 @@ function search(formData: { get: (arg0: string) => any; }) {
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
-      </div> */}
+      </div>     */}
+       <div>
+        <h3>Connect to doctor window</h3>
+        <img src={doctorLogo} className="logo" alt="doctor logo" />
+        <form action={connectToDoctorWindow}>
+      <button>Doctor</button>
+      </form>
+
+        <h3>Connect to patient window</h3>
+        <img src={patientLogo} className="logo react" alt="patient logo" />
+        <form action={connectToPatientWindow}>
+          <button>
+            Patient
+          </button>
+        </form>
+       </div>
       <Func/>
     </>
   )

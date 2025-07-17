@@ -1,11 +1,12 @@
 import  sqlite3  from "sqlite3";
-//import { Specialization } from '../../types.js';
 const db = new sqlite3.Database('medicApp.sql');
 
 const createSpecTable=()=>{
     db.run("CREATE TABLE IF NOT EXISTS specialization (id INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT,specName TEXT)");
 }
-
+const createDocTable=()=>{
+    db.run("CREATE TABLE IF NOT EXISTS doctor (idDoc INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT)");
+}
 export function setSpec(specName:string) {
     createSpecTable();
     db.run("INSERT OR REPLACE INTO specialization(specName) VALUES (?)",[specName]);

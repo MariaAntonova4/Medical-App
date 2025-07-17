@@ -30,12 +30,15 @@ app.on('ready',()=>{
     createTray(mainWindow);
     handleCloseEvents(mainWindow);
 
-ipcMain.handle('insert-spec',(event,specName)=>setSpec(specName));
-ipcMain.handle('update-spec',(event,idNum,specName)=>updateSpec(idNum,specName));
-ipcMain.handle('read-spec',async()=>{
-    const specs=await getAllSpec();
-    return specs;
-})
+    ipcMain.handle('open-child-window',()=>createChildWindow());
+    ipcMain.handle('insert-spec',(event,specName)=>setSpec(specName));
+    ipcMain.handle('update-spec',(event,idNum,specName)=>updateSpec(idNum,specName));
+    ipcMain.handle('read-spec',async()=>{
+        const specs=await getAllSpec();
+        return specs;
+    })
+
+
     //     async()=>{
 //     return new Promise((resolve,reject)=>{
         
@@ -58,6 +61,25 @@ ipcMain.handle('read-spec',async()=>{
     // }
 
     createMenu();
+
+    function createChildWindow() {
+        const childWindow=new BrowserWindow({
+        parent:mainWindow,
+        modal:false,
+        webPreferences:{
+            preload:getPreloadPath()
+        }
+    });
+    if (isDev()) {
+        childWindow.loadURL('http://localhost:7842/child');
+    }else{
+        childWindow.loadFile(path.join(app.getAppPath(),'/dist-react/index.html'));
+    }
+    }
+    ipcMain.on('',()=>{
+        createChildWindow();
+    });
+
 
     function handleCloseEvents(mainWindow:BrowserWindow){
         let willClose=false;
