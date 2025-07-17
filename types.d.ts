@@ -15,7 +15,10 @@ type UnsubscribeFunction=()=>void;
         subscribeStatistics:(callback:(sendInfo:SendInfo)=>void)=>UnsubscribeFunction;
         getA:()=>Promise<Atype>;
         readSpec:()=>Promise<any>;
+        readClinic:()=>Promise<any>;
         getSpec:(specName)=>Promise<any>;
+        insertClinic:(clinicName,clinicAddress)=>Promise<any>;
+        updateClinic:(idClinic,updateClinicName,updateClinicAddress)=>Promise<any>;
         updateSpec:(idNum,specName)=>Promise<any>;
         createChildWindow:()=>Promise<any>;
     }

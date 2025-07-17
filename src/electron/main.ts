@@ -6,10 +6,8 @@ import { getAssetPath, getPreloadPath } from './pathResolver.js';
 import { createTray } from './tray.js';
 import { createMenu } from './menu.js';
 import  sqlite3  from 'sqlite3';
-import { getAllSpec, setSpec, updateSpec} from "../database/db.js";
-import { rejects } from 'assert';
+import { getAllSpec, setSpec, updateSpec,insertClinic,getAllClinics,updateClinic} from "../database/db.js";
 
-// type test = string;
 
 app.on('ready',()=>{
     const mainWindow=new BrowserWindow({
@@ -32,12 +30,17 @@ app.on('ready',()=>{
 
     ipcMain.handle('open-child-window',()=>createChildWindow());
     ipcMain.handle('insert-spec',(event,specName)=>setSpec(specName));
+    ipcMain.handle('insert-clinic',(event,clinicName, clinicAddress)=>insertClinic(clinicName,clinicAddress));
     ipcMain.handle('update-spec',(event,idNum,specName)=>updateSpec(idNum,specName));
+    ipcMain.handle('update-clinic',(event,idClinic,updateClinicName,updateClinicAddress)=>updateClinic(idClinic,updateClinicName,updateClinicAddress));
     ipcMain.handle('read-spec',async()=>{
         const specs=await getAllSpec();
         return specs;
-    })
-
+    });
+    ipcMain.handle('read-clinic',async()=>{
+            const clinics=await getAllClinics();
+            return clinics;
+        });
 
     //     async()=>{
 //     return new Promise((resolve,reject)=>{

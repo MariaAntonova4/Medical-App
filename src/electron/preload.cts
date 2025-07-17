@@ -1,6 +1,4 @@
 import { ipcRenderer } from "electron/renderer";
-import { updateSpec } from "../database/db";
-//import { EventPayloadMapping, SendInfo } from "../../types";
 
 const electron=require('electron');
 
@@ -12,8 +10,11 @@ electron.contextBridge.exposeInMainWorld("electron",{
     },
     createChildWindow:()=>ipcRenderer.invoke('open-child-window'),
     readSpec:()=>ipcRenderer.invoke('read-spec'),
+    readClinic:()=>ipcRenderer.invoke('read-clinic'),
     getSpec:(specName:string)=>ipcRenderer.invoke('insert-spec',specName),
-    updateSpec:(idNum:number,specName:string)=>ipcRenderer.invoke('update-spec',idNum,specName)
+    insertClinic:(clinicName:string,clinicAddress:string)=>ipcRenderer.invoke('insert-clinic',clinicName,clinicAddress),
+    updateSpec:(idNum:number,specName:string)=>ipcRenderer.invoke('update-spec',idNum,specName),
+    updateClinic:(idClinic:number,updateClinicName:string,updateClinicAddress:string)=>ipcRenderer.invoke('update-clinic',idClinic,updateClinicName,updateClinicAddress),
     // getA:()=>ipcInvoke('getA'),
 }//satisfies Window['electron']
 );

@@ -8,7 +8,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import Doctor from './Doctor'
 import Patient from './Patient';
-
+import Admin from './Admin';
 function App() {
   function connectToDoctorWindow() {
     //alert('hey');
@@ -26,6 +26,13 @@ function App() {
       </StrictMode>
     )
   }
+  function connectToAdminWindow() {
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <Admin/>
+    </StrictMode>
+  )
+}
   return (
     <>
     {/* <div>
@@ -47,6 +54,7 @@ function App() {
         </p>
       </div>     */}
        <div>
+        
         <h3>Connect to doctor window</h3>
         <img src={doctorLogo} className="logo" alt="doctor logo" />
         <form action={connectToDoctorWindow}>
@@ -60,17 +68,20 @@ function App() {
             Patient
           </button>
         </form>
+
+        <h3>Connect to admin window</h3>
+        <form action={connectToAdminWindow}>
+          <button>
+            Admin
+          </button>
+        </form>
+
        </div>
       <Func/>
     </>
   )
 }
-function name() {
-  // React.memo(props:any)=>{
-  //   const active_spec=useMainStore(state=>state.active_spec);
 
-  // }
-}
 function Func() {
   const [ime,setIme]=useState("");
   const handleSubmit=(event: { preventDefault: () => void; })=>{

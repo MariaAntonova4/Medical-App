@@ -3,7 +3,8 @@ import { useEffect,StrictMode, useState} from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import './App.css';
-import App from './App'
+import App from './App';
+
 function App2(){
   const [aSpecName,setASpecName]=useState("");
 const [idSpec,setIdSpec]=useState("");
