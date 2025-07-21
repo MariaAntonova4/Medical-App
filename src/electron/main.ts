@@ -6,7 +6,7 @@ import { getAssetPath, getPreloadPath } from './pathResolver.js';
 import { createTray } from './tray.js';
 import { createMenu } from './menu.js';
 import  sqlite3  from 'sqlite3';
-import { getAllSpec, setSpec, updateSpec,insertClinic,getAllClinics,updateClinic} from "../database/db.js";
+import { getAllSpec, setSpec, updateSpec,insertClinic,getAllClinics,updateClinic, insertTypeOfUser, getAllTypesOfUsers, insert_User} from "../database/db.js";
 
 
 app.on('ready',()=>{
@@ -31,6 +31,8 @@ app.on('ready',()=>{
     ipcMain.handle('open-child-window',()=>createChildWindow());
     ipcMain.handle('insert-spec',(event,specName)=>setSpec(specName));
     ipcMain.handle('insert-clinic',(event,clinicName, clinicAddress)=>insertClinic(clinicName,clinicAddress));
+    ipcMain.handle('insert-type-user',(event,userTypeName)=>insertTypeOfUser(userTypeName));
+    ipcMain.handle('insert-user',(event,userName,pass,userType)=>insert_User(userName,pass,userType));
     ipcMain.handle('update-spec',(event,idNum,specName)=>updateSpec(idNum,specName));
     ipcMain.handle('update-clinic',(event,idClinic,updateClinicName,updateClinicAddress)=>updateClinic(idClinic,updateClinicName,updateClinicAddress));
     ipcMain.handle('read-spec',async()=>{
@@ -41,7 +43,14 @@ app.on('ready',()=>{
             const clinics=await getAllClinics();
             return clinics;
         });
-
+    ipcMain.handle('read-type-user',async()=>{
+        const typesOfUsers=await getAllTypesOfUsers();
+        return typesOfUsers;
+    });
+        ipcMain.handle('read-user',async()=>{
+        // const users=await getUsers();
+        // return users;
+    });
     //     async()=>{
 //     return new Promise((resolve,reject)=>{
         

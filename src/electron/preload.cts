@@ -1,4 +1,5 @@
 import { ipcRenderer } from "electron/renderer";
+import { insertTypeOfUser } from "../database/db";
 
 const electron=require('electron');
 
@@ -11,8 +12,12 @@ electron.contextBridge.exposeInMainWorld("electron",{
     createChildWindow:()=>ipcRenderer.invoke('open-child-window'),
     readSpec:()=>ipcRenderer.invoke('read-spec'),
     readClinic:()=>ipcRenderer.invoke('read-clinic'),
+    readTypeOfUser:()=>ipcRenderer.invoke('read-type-user'),
+    readUser:()=>ipcRenderer.invoke('read-user'),
     getSpec:(specName:string)=>ipcRenderer.invoke('insert-spec',specName),
     insertClinic:(clinicName:string,clinicAddress:string)=>ipcRenderer.invoke('insert-clinic',clinicName,clinicAddress),
+    insertTypeOfUser:(userTypeName:string)=>ipcRenderer.invoke('insert-type-user',userTypeName),
+    insert_User:(username:string,password:string,typeOfUser:number)=>ipcRenderer.invoke('insert-user'),
     updateSpec:(idNum:number,specName:string)=>ipcRenderer.invoke('update-spec',idNum,specName),
     updateClinic:(idClinic:number,updateClinicName:string,updateClinicAddress:string)=>ipcRenderer.invoke('update-clinic',idClinic,updateClinicName,updateClinicAddress),
     // getA:()=>ipcInvoke('getA'),

@@ -19,6 +19,26 @@ function Admin(){
   const[updateClinicAddress,updateClinicAddressF]=useState("");
   const[clinics,allClinics]=useState<any[]>([]);
 
+  const[inTypeUser,insertTypeUser]=useState("");
+  const[allTypesOfUsers,typesOfUsers]=useState<any[]>([]);
+
+  const[inUsername,insertUsername]=useState("");
+  const[inPass,insertPass]=useState("");
+  const[inTypeOfUser,insertTypeU]=useState("");
+  const[users,allUsers]=useState<any[]>([]);
+
+  const[inFirstPName,insertFirstPName]=useState("");
+  const[inMiddlePName,insertMiddlePName]=useState("");
+  const[inLastPName,insertLastPName]=useState("");
+
+  useEffect(()=>{
+    window.electron.readUser().then(allUsers);
+  },[]);
+
+  useEffect(()=>{
+    window.electron.readTypeOfUser().then(typesOfUsers);
+  },[]);
+
   useEffect(()=>{
     window.electron.readClinic().then(allClinics);
   },[]);
@@ -27,6 +47,18 @@ function Admin(){
     window.electron.readSpec().then(setSpecs);
   },[]);
 
+  function insert_User(formData: { get: (arg0: string) => any; }) {
+    const addUsername=formData.get("inUsername");
+    const addPass=formData.get("inPass");
+    const addTypeU=formData.get("inTypeOfUser");
+    alert(addTypeU);
+  }
+
+  function insertTypeOfUser(formData: { get: (arg0: string) => any; }) {
+    const addTypeUser=formData.get("inTypeUser");
+
+    window.electron.insertTypeOfUser(addTypeUser);
+  }
     function insertClinic(formData: { get: (arg0: string) => any; }) {
         const addClinicName=formData.get("insertClinicName");
         const addClinicAddress=formData.get("insertClinicAddress");
@@ -62,6 +94,19 @@ function Admin(){
 
   return(
     <>
+    <div>
+      <h1>Users</h1>
+      <ul>{users.map((user,idx)=>(
+        <li key={idx}>{JSON.stringify(user)}</li>
+      ))}</ul>
+    </div>
+
+    <div>
+      <h1>Types Of Users</h1>
+      <ul>{allTypesOfUsers.map((typeOfUser,idx)=>(
+        <li key={idx}>{JSON.stringify(typeOfUser)}</li>
+      ))}</ul>
+    </div>
 
     <div>
         <h1>Clinics</h1>
@@ -84,11 +129,44 @@ function Admin(){
     </div>
 
     <div>
+      <form action={insert_User}>
+        <input type="email" name="inUsername" onChange={(e)=>insertUsername(e.target.value)}/>
+        <input type="password" name="inPass" onChange={(e)=>insertPass(e.target.value)} />
+        <select>
+          {allTypesOfUsers.map((tyUser)=>(
+            <option key={tyUser.idTypeUser} value={tyUser.idTypeUser}>
+              {tyUser.typeUserName}
+            </option>
+          ))}
+        </select>
+        {/* <script>
+    var text = JSON.stringify({allTypesOfUsers}, function (key, value) {
+      if (value) {
+        {<option value={value}></option>}
+      }
+        
+    });</script> */}
+        {/* <select name="" id="">{allTypesOfUsers.map((typeOfUser,idx)=>(
+          <option value={typeOfUser}key={idx}>{JSON.stringify(typeOfUser)}</option>))}
+        </select> */}
+        <input type="submit" value="Insert User" />
+      </form>
+    </div>
+
+    <div>
+      <form action={insertTypeOfUser}>
+        <input type="text" name="inTypeUser" onChange={(e)=>insertTypeUser(e.target.value)} />
+        <input type="submit" value="Insert Type Of User" />
+      </form>
+    </div>
+
+    <div>
         <form action={insertClinic}>
             <input type="text" name="insertClinicName" onChange={(e)=>setAClinicName(e.target.value)} />
             <input type="text" name="insertClinicAddress" onChange={(e)=>setAClinicAddress(e.target.value)} />
             <input type="submit" value="Insert Clinic" />
         </form>
+
         <form action={updateClinic}>
             <input type="number" name="idClinic" onChange={(e)=>setIdClinic(e.target.value)}/>
             <input type="text" name="updateClinicName" onChange={(e)=>updateClinicNameF(e.target.value)} />

@@ -18,7 +18,27 @@ export function setSpec(specName:string) {
 
 export function insertClinic(clinicName:string,clinicAddress:string){
     createClinicTable();
-    db.run("INSERT OR REPLACE INTO clinic (nameOfClinic, addressOfClinic)VALUES(?,?)",[clinicName],[clinicAddress]);
+    const inClinic=db.prepare("INSERT OR REPLACE INTO clinic (nameOfClinic, addressOfClinic)VALUES(?,?)");
+    const result=inClinic.run(clinicName,clinicAddress);
+    console.log("Clinic added");
+}
+
+
+function createTypeOfUser(){
+    db.run("CREATE TABLE IF NOT EXISTS typeOfUser(idTypeUser INTEGER INIQUE PRIMARY KEY AUTOINCREMENT, typeUserName TEXT )");
+}
+export function insertTypeOfUser(typeUserName:string){
+    createTypeOfUser()
+    db.run("INSERT OR REPLACE INTO typeOfUser(typeUserName)VALUES(?)",[typeUserName]);
+}
+function createUser(){
+    db.run("CREATE TABLE IF NOT EXISTS user(idUser INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT, username TEXT,pass Text,userType INTEGER, CONSTRAINT FK_TypeUser FOREIGN KEY (userType) REFERENCES typeOfUser(idTypeUser))");
+}
+export function insert_User(userName:string,password:string,userType:number){
+    db.run("CREATE TABLE IF NOT EXISTS user(idUser INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT, username TEXT,pass Text,userType INTEGER, CONSTRAINT FK_TypeUser FOREIGN KEY (userType) REFERENCES typeOfUser(idTypeUser))");
+    const inUser=db.prepare("INSERT OR REPLACE INTO user (username,pass,userType)VALUES(?,?,?)");
+    const result=inUser.run(userName,password,userType);
+    console.log("Clinic added");
 }
 
 export function updateSpec(idSpec:number,specName:string) {
@@ -56,6 +76,30 @@ export function getAllClinics():Promise<any[]>{
                 reject(err);              
             } else {
                 resolve(data);
+            }
+        })
+    });
+}
+
+export function getAllTypesOfUsers():Promise<any[]>{
+    return new Promise((resolve,reject)=>{
+        db.all("SELECT * FROM typeOfUser",[],(err,data)=>{
+            if (err) {
+                reject(err);
+            } else {
+              resolve(data);  
+            }
+        })
+    });
+}
+
+export function getAllUsers():Promise<any[]>{
+    return new Promise((resolve,reject)=>{
+        db.all("SELECT * FROM user",[],(err,data)=>{
+            if (err) {
+                reject(err);
+            } else {
+              resolve(data);  
             }
         })
     });
