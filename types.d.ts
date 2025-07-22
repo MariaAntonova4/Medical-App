@@ -24,6 +24,7 @@ type UnsubscribeFunction=()=>void;
         insert_User:(username,password,typeOfUser)=>Promise<any>;
         updateClinic:(idClinic,updateClinicName,updateClinicAddress)=>Promise<any>;
         updateSpec:(idNum,specName)=>Promise<any>;
+        update_User:(upIdUser,upUsername,upPass,upTypeU)=>Promise<any>;
         createChildWindow:()=>Promise<any>;
     }
 }  

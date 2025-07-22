@@ -6,7 +6,7 @@ import { getAssetPath, getPreloadPath } from './pathResolver.js';
 import { createTray } from './tray.js';
 import { createMenu } from './menu.js';
 import  sqlite3  from 'sqlite3';
-import { getAllSpec, setSpec, updateSpec,insertClinic,getAllClinics,updateClinic, insertTypeOfUser, getAllTypesOfUsers, insert_User} from "../database/db.js";
+import { getAllSpec, setSpec, updateSpec,insertClinic,getAllClinics,updateClinic, insertTypeOfUser, getAllTypesOfUsers, insert_User, update_User} from "../database/db.js";
 
 
 app.on('ready',()=>{
@@ -35,6 +35,7 @@ app.on('ready',()=>{
     ipcMain.handle('insert-user',(event,userName,pass,userType)=>insert_User(userName,pass,userType));
     ipcMain.handle('update-spec',(event,idNum,specName)=>updateSpec(idNum,specName));
     ipcMain.handle('update-clinic',(event,idClinic,updateClinicName,updateClinicAddress)=>updateClinic(idClinic,updateClinicName,updateClinicAddress));
+    ipcMain.handle('update-user',(event,upIdUser,upUsername,upPass,upTypeOfUser)=>update_User(upIdUser,upUsername,upPass,upTypeOfUser));
     ipcMain.handle('read-spec',async()=>{
         const specs=await getAllSpec();
         return specs;

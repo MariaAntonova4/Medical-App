@@ -50,15 +50,13 @@ export function updateClinic(idClinic:number,updateClinicName:string,updateClini
     const result=up.run(updateClinicName,updateClinicAddress,idClinic);
     console.log(`Updated clinic`);
 }
-// export const setSpec=(data:Specialization,callback:Function)=>{
-//     db.serialize(()=>{
-//       createSpecTable();
-//     const stmt = db.prepare("INSERT OR REPLACE INTO specialization(specName) VALUES (?)");
-//     stmt.run(data.id,data.specName);
-//     stmt.finalize();  
-//     });
-    
-// }
+
+export function update_User(upIdUser:number,upUsername:string,upPass:string,upTypeOfUser:number) {
+    const up=db.prepare("UPDATE user SET username=?, pass=?, userType=? WHERE idUser=?");
+    const result=up.run(upUsername,upPass,upTypeOfUser,upIdUser);
+    console.log(`Updated user`);
+}
+
 export function getAllSpec():Promise<any[]>{
     return new Promise((resolve,reject)=>{
       db.all("SELECT * FROM specialization ",[],(err,data)=>{

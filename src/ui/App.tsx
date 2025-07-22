@@ -8,7 +8,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import Doctor from './Doctor'
 import Patient from './Patient';
-import Admin from './Admin';
+import Admin from './UnlockAdmin';
 function App() {
   function connectToDoctorWindow() {
     //alert('hey');

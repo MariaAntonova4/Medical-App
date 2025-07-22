@@ -20,6 +20,7 @@ electron.contextBridge.exposeInMainWorld("electron",{
     insert_User:(username:string,password:string,typeOfUser:number)=>ipcRenderer.invoke('insert-user'),
     updateSpec:(idNum:number,specName:string)=>ipcRenderer.invoke('update-spec',idNum,specName),
     updateClinic:(idClinic:number,updateClinicName:string,updateClinicAddress:string)=>ipcRenderer.invoke('update-clinic',idClinic,updateClinicName,updateClinicAddress),
+    update_User:(upIdUser:number,upUsername:string,upPass:string,upTypeOfUser:number)=>ipcRenderer.invoke('update-user',upIdUser,upUsername,upPass,upTypeOfUser),
     // getA:()=>ipcInvoke('getA'),
 }//satisfies Window['electron']
 );

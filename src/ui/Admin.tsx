@@ -51,7 +51,15 @@ function Admin(){
     const addUsername=formData.get("inUsername");
     const addPass=formData.get("inPass");
     const addTypeU=formData.get("inTypeOfUser");
-    alert(addTypeU);
+    window.electron.insert_User(addUsername,addPass,addTypeU);
+  }
+
+function update_User(formData: { get: (arg0: string) => any; }) {
+    const upIdUser=formData.get("upIdUser");
+    const upUsername=formData.get("upUsername");
+    const upPass=formData.get("upPass");
+    const upTypeU=formData.get("upTypeOfUser");
+    window.electron.update_User(upIdUser,upUsername,upPass,upTypeU);
   }
 
   function insertTypeOfUser(formData: { get: (arg0: string) => any; }) {
@@ -130,9 +138,9 @@ function Admin(){
 
     <div>
       <form action={insert_User}>
-        <input type="email" name="inUsername" onChange={(e)=>insertUsername(e.target.value)}/>
+        <input type="text" name="inUsername" onChange={(e)=>insertUsername(e.target.value)}/>
         <input type="password" name="inPass" onChange={(e)=>insertPass(e.target.value)} />
-        <select>
+        <select name="inTypeOfUser">
           {allTypesOfUsers.map((tyUser)=>(
             <option key={tyUser.idTypeUser} value={tyUser.idTypeUser}>
               {tyUser.typeUserName}
@@ -150,6 +158,22 @@ function Admin(){
           <option value={typeOfUser}key={idx}>{JSON.stringify(typeOfUser)}</option>))}
         </select> */}
         <input type="submit" value="Insert User" />
+      </form>
+    </div>
+
+<div>
+      <form action={update_User}>
+        <input type="number" name="upIdUser"/>
+        <input type="text" name="upUsername" onChange={(e)=>insertUsername(e.target.value)}/>
+        <input type="password" name="upPass" onChange={(e)=>insertPass(e.target.value)} />
+        <select name="upTypeOfUser">
+          {allTypesOfUsers.map((tyUser)=>(
+            <option key={tyUser.idTypeUser} value={tyUser.idTypeUser}>
+              {tyUser.typeUserName}
+            </option>
+          ))}
+        </select>
+        <input type="submit" value="Update User" />
       </form>
     </div>
 
