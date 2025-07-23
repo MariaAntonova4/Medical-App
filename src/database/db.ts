@@ -31,6 +31,21 @@ export function insertTypeOfUser(typeUserName:string){
     createTypeOfUser()
     db.run("INSERT OR REPLACE INTO typeOfUser(typeUserName)VALUES(?)",[typeUserName]);
 }
+
+export function insertDoc_Spec(idDoc_Spec:number,idDoc_D_S:number,idSpec_D_S:number) {
+    db.run("CREATE TABLE IF NOT EXISTS Doc_Spec(idDoc_Spec INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT,idDoc_D_S INTEGER,idSpec_D_S INTEGER,CONSTRAINT FK_Doc_Spec FOREIGN KEY (idDoc_D_S) REFERENCES doctor(idDoc),CONSTRAINT FK_Spec_Doc FOREIGN KEY (idSpec_D_S) REFERENCES specialization(id))");
+    const inDoc_Spec=db.prepare("INSERT OR REPLACE INTO Doc_Spec(idDoc_D_S,idSpec_D_S) VALUES(?,?)");
+    const result=inDoc_Spec.run(idDoc_Spec,idDoc_D_S,idSpec_D_S);
+    console.log("Inserted Doctor's Specialization");
+}
+
+export function insertDoc_Clinic(idDoc_Clinic:number,idDoc_D_C:number,idClinic_D_C:number,cabinet:number) {
+    db.run("CREATE TABLE IF NOT EXISTS Doc_Clinic(idDoc_Clinic INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT,idDoc_D_C INTEGER,idClinic_D_C INTEGER,cabinet INTEGER,CONSTRAINT FK_Doc_Clinic FOREIGN KEY (idDoc_D_C) REFERENCES doctor(idDoc),CONSTRAINT FK_Clinic_Doc FOREIGN KEY (idClinic_D_C) REFERENCES clinic(idClinic))");
+    const inDoc_Clinic=db.prepare("INSERT OR REPLACE INTO Doc_Clinic(idDoc_D_C, idClinic_D_C, cabinet) VALUES(?,?,?)");
+    const result=inDoc_Clinic.run(idDoc_Clinic,idDoc_D_C,idClinic_D_C,cabinet);
+    console.log("Inserted the Clinic in which is the Doctor");
+}
+
 function createUser(){
     db.run("CREATE TABLE IF NOT EXISTS user(idUser INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT, username TEXT,pass Text,userType INTEGER, CONSTRAINT FK_TypeUser FOREIGN KEY (userType) REFERENCES typeOfUser(idTypeUser))");
 }

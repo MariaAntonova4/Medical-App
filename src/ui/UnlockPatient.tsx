@@ -15,20 +15,18 @@ function App() {
     window.electron.readUser().then(allUsers);
   },[]);
 
-  function connectToAdminWindow(formData: { get: (arg0: string) => any; }) {
+  function connectToPatientWindow(formData: { get: (arg0: string) => any; }) {
     const getUsername=formData.get("inUsername");
     const getPass=formData.get("inPass");
-    //добави проверка дали въведените данни съвпадат с 
-    //базата данни за потребител и ако съвпада да се насочи към админ страницата===""
-    
-    if (users.find((user)=>user.username===getUsername&&user.pass===getPass&&user.userType===1)) {
+   
+    if (users.find((user)=>user.username===getUsername&&user.pass===getPass&&user.userType===3)) {
     createRoot(document.getElementById('root')!).render(
     <StrictMode>
       <Admin/>
     </StrictMode>
     )  
-    }else if(users.find((user)=>user.username===getUsername&&user.pass===getPass&&user.userType!==1)){
-      alert("You don't have permission for Admin account");
+    }else if(users.find((user)=>user.username===getUsername&&user.pass===getPass&&user.userType!==3)){
+      alert("You don't have permission for Patient account");
       createRoot(document.getElementById('root')!).render(
     <StrictMode>
       <Unlock/>
@@ -38,20 +36,20 @@ function App() {
     else{
       alert("Wrong data");
     //   createRoot(document.getElementById('root')!).render(
-    // // <StrictMode>
-    // //   </>
-    // // </StrictMode>
+    // <StrictMode>
+    //   <Unlock/>
+    // </StrictMode>
     // ) 
     }
 }
   return (
     <>
     <div>
-      <h3>Connect to Admin window</h3>
-      <form action={connectToAdminWindow}>
+      <h3>Connect to Patient window</h3>
+      <form action={connectToPatientWindow}>
         <input type="text" name="inUsername" onChange={(e)=>insertUsername(e.target.value)}/>
         <input type="password" name="inPass" onChange={(e)=>insertPass(e.target.value)} />
-        <input type="submit" value="Unlock Admin" />
+        <input type="submit" value="Unlock Patient" />
       </form>
     </div>
       
