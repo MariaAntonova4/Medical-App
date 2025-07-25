@@ -6,7 +6,7 @@ import { getAssetPath, getPreloadPath } from './pathResolver.js';
 import { createTray } from './tray.js';
 import { createMenu } from './menu.js';
 import  sqlite3  from 'sqlite3';
-import { getAllSpec, setSpec, updateSpec,insertClinic,getAllClinics,updateClinic, insertTypeOfUser, getAllTypesOfUsers, insert_User, update_User} from "../database/db.js";
+import { getAllSpec, setSpec, updateSpec,insertClinic,getAllClinics,updateClinic, insertTypeOfUser, getAllTypesOfUsers, insert_User, update_User, insertDoctor, insertDoc_Clinic, insertDoc_Spec, getAllUsers, getAllDoctors, getAllDoc_Clinic, getAllDoc_Spec, updateDoc_Spec, updateDoc_Clinic, updateDoctor} from "../database/db.js";
 
 
 app.on('ready',()=>{
@@ -31,10 +31,16 @@ app.on('ready',()=>{
     ipcMain.handle('open-child-window',()=>createChildWindow());
     ipcMain.handle('insert-spec',(event,specName)=>setSpec(specName));
     ipcMain.handle('insert-clinic',(event,clinicName, clinicAddress)=>insertClinic(clinicName,clinicAddress));
+    ipcMain.handle('insert-doctor',(event,firstName,middleName,lastName,docSpecialization,docTelephone,docUser)=>insertDoctor(firstName,middleName,lastName,docSpecialization,docTelephone,docUser));
+    ipcMain.handle('insert-doc-clinic',(event,idDoc_D_C,idClinic_D_C,cabinet)=>insertDoc_Clinic(idDoc_D_C,idClinic_D_C,cabinet));
+    ipcMain.handle('insert-doc-spec',(event,idDoc_D_S,idSpec_D_S)=>insertDoc_Spec(idDoc_D_S,idSpec_D_S));
     ipcMain.handle('insert-type-user',(event,userTypeName)=>insertTypeOfUser(userTypeName));
     ipcMain.handle('insert-user',(event,userName,pass,userType)=>insert_User(userName,pass,userType));
     ipcMain.handle('update-spec',(event,idNum,specName)=>updateSpec(idNum,specName));
     ipcMain.handle('update-clinic',(event,idClinic,updateClinicName,updateClinicAddress)=>updateClinic(idClinic,updateClinicName,updateClinicAddress));
+    ipcMain.handle('update-doctor',(event,idDoc,firstName,middleName,lastName,docSpecialization,docTelephone,docUser)=>updateDoctor(idDoc,firstName,middleName,lastName,docSpecialization,docTelephone,docUser));
+    ipcMain.handle('update-doctor-clinic',(event,idD_C,idDoc_D_C,idClinic_D_C,cabinet)=>updateDoc_Clinic(idD_C,idDoc_D_C,idClinic_D_C,cabinet));
+    ipcMain.handle('update-doctor-spec',(event,idD_S,idDoc_D_S,idSpec_D_S)=>updateDoc_Spec(idD_S,idDoc_D_S,idSpec_D_S));
     ipcMain.handle('update-user',(event,upIdUser,upUsername,upPass,upTypeOfUser)=>update_User(upIdUser,upUsername,upPass,upTypeOfUser));
     ipcMain.handle('read-spec',async()=>{
         const specs=await getAllSpec();
@@ -49,29 +55,22 @@ app.on('ready',()=>{
         return typesOfUsers;
     });
         ipcMain.handle('read-user',async()=>{
-        // const users=await getUsers();
-        // return users;
+        const users=await getAllUsers();
+        return users;
     });
-    //     async()=>{
-//     return new Promise((resolve,reject)=>{
-        
-//         db.all('SELECT * FROM specialization',[],(err: any,rows: unknown)=>{
-//             if (err) {
-//                 reject(err);
-//             }else resolve(rows);
-//         })
-//     })
-// })
 
-
-    // ipcMain.handle('dbSpec',async(ev,argz)=>{
-    //     return await new Promise((res,rej)=>{
-    //         setSpec(argz,(data:any)=>{
-    //             res(data);
-    //         });
-    //     });
-    // });
-    // }
+ ipcMain.handle('read-doctor',async()=>{
+            const doctor=await getAllDoctors();
+            return doctor;
+        });
+    ipcMain.handle('read-doctor-clinic',async()=>{
+        const doc_Clinics=await getAllDoc_Clinic();
+        return doc_Clinics;
+    });
+        ipcMain.handle('read-doctor-spec',async()=>{
+        const doc_Spec=await getAllDoc_Spec();
+        return doc_Spec;
+    });
 
     createMenu();
 
