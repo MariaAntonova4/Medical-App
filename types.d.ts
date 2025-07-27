@@ -1,4 +1,4 @@
-import { insertDoc_Clinic, insertDoc_Spec, insertDoctor } from "./src/database/db";
+import { insertDoc_Clinic, insertDoc_Spec, insertDoctor, insertSchedule } from "./src/database/db";
 
  export{}
 declare global{
@@ -21,15 +21,21 @@ type UnsubscribeFunction=()=>void;
         readDoctor:()=>Promise<any>;
         readDoc_Clinic:()=>Promise<any>;
         readDoc_Spec:()=>Promise<any>;
+        readPurpose:()=>Promise<any>;
+        readSchedule:()=>Promise<any>;
+        readStage:()=>Promise<any>;
+        readType:()=>Promise<any>;
         readTypeOfUser:()=>Promise<any>;
+        readType_Purpose:()=>Promise<any>;
         readUser:()=>Promise<any>;
         getSpec:(specName)=>Promise<any>;
         insertClinic:(clinicName,clinicAddress)=>Promise<any>;
         insertDoctor:(firstName,middleName,lastName,docSpecialization,docTelephone,docUser)=>Promise<any>;
         insertDoc_Clinic:(idDoc_D_C,idClinic_D_C,cabinet)=>Promise<any>;
         insertDoc_Spec:(idDoc_D_S,idSpec_D_S)=>Promise<any>;
-        insertPurpose:()=>Promise<any>;
-        insertStage:()=>Promise<any>;
+        insertPurpose:(purposeName,duration)=>Promise<any>;
+        insertSchedule:(doctor_clinic,beginningTime,finishTime,data,idType)=>Promise<any>;
+        insertStage:(stageName)=>Promise<any>;
         insertType:(typeName)=>Promise<any>;
         insertTypeOfUser:(userTypeName)=>Promise<any>;
         insertType_Purpose:(idType,idPurpose,idStage)=>Promise<any>;

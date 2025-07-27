@@ -51,6 +51,33 @@ function Admin(){
   const[inDoc_Speci,insertDoc_Speci]=useState("");   const[upDoc_Speci,updateDoc_Speci]=useState("");
   const[doc_specs,allDoc_Specs]=useState<any[]>([]);
   
+//const[upIdDoc,updateIdDoc]=useState("");
+const[inTypeName,insertTypeName]=useState("");  // const[upFirstName,updateFirstName]=useState("");
+const[types,allTypes]=useState<any[]>([]);
+
+const[inPurposeName,insertPurposeName]=useState(""); //const[upMiddleName,updateMiddleName]=useState("");
+const[inDuration,insertDuration]=useState("");     //const[upLastName,updateLastName]=useState("");
+const[purposes,allPurposes]=useState<any[]>([]);
+
+const[inDoctor_Clinic,insertDoctor_Clinic]=useState("");
+const[inBeginningTime,insertBeginningTime]=useState("");
+const[inFinishTime,insertFinishTime]=useState("");
+const[inData,insertData]=useState("");
+const[inIdTy,insertIdTy]=useState("");
+const[schedules,allSchedules]=useState<any[]>([]);
+
+//const[upIdDoc,updateIdDoc]=useState("");
+const[inStageName,insertStageName]=useState("");   //const[upFirstName,updateFirstName]=useState("");
+
+const[stages,allStages]=useState<any[]>([]);
+
+const[inIdType,insertIdType]=useState(""); //const[upMiddleName,updateMiddleName]=useState("");
+const[inIdPurpose,insertidPurpose]=useState("");    // const[upLastName,updateLastName]=useState("");
+const[inIdStage,insertIdStage]=useState("");
+const[type_purposes,allType_Purpose]=useState<any[]>([]);
+
+//const[]=useState<any[]>([]);
+
   useEffect(()=>{
     window.electron.readDoctor().then(allDoctors);
   },[]);
@@ -79,6 +106,63 @@ function Admin(){
   useEffect(()=>{
     window.electron.readSpec().then(setSpecs);
   },[]);
+
+  useEffect(()=>{
+    window.electron.readType().then(allTypes);
+  },[]);
+
+  useEffect(()=>{
+    window.electron.readType_Purpose().then(allType_Purpose);
+  },[]);
+
+  useEffect(()=>{
+    window.electron.readPurpose().then(allPurposes);
+  },[]);
+
+  useEffect(()=>{
+    window.electron.readSchedule().then(allSchedules);
+  },[]);
+
+  useEffect(()=>{
+    window.electron.readStage().then(allStages);
+  },[]);
+
+    function insertPurpose(formData: { get: (arg0: string) => any; }) {
+    const addPurposeName=formData.get("inPurposeName");
+    const addDuration=formData.get("inDuration");
+
+    window.electron.insertPurpose(addPurposeName,addDuration);
+  }
+
+  function insertSchedule(formData: { get: (arg0: string) => any; }){
+    const addDoctor_Clinic=formData.get("inDoctor_Clinic");
+    const addBeginningTime=formData.get("inBeginningTime");
+    const addFinishTime=formData.get("inFinishTime");
+    const addData=formData.get("inData");
+    const addIdTy=formData.get("inIdTy");
+
+    window.electron.insertSchedule(addDoctor_Clinic,addBeginningTime,addFinishTime,addData,addIdTy);
+  }
+
+    function insertStage(formData: { get: (arg0: string) => any; }) {
+    const addStageName=formData.get("inStageName");
+
+    window.electron.insertStage(addStageName);
+  }
+
+    function insertType(formData: { get: (arg0: string) => any; }) {
+    const addTypeName=formData.get("inTypeName");
+
+    window.electron.insertType(addTypeName);
+  }
+
+    function insertType_Purpose(formData: { get: (arg0: string) => any; }) {
+    const addIdType=formData.get("inIdType");
+    const addIdPurpose=formData.get("inIdPurpose");
+    const addIdStage=formData.get("inIdStage");
+
+    window.electron.insertType_Purpose(addIdType,addIdPurpose,addIdStage);
+  }
 
   function insert_User(formData: { get: (arg0: string) => any; }) {
     const addUsername=formData.get("inUsername");
@@ -200,6 +284,49 @@ function update_User(formData: { get: (arg0: string) => any; }) {
   return(
     <>
     
+<div>
+      <h1>Schedules</h1>
+      <ul>{schedules.map((schedule,idx)=>(
+        <li key={idx}>{JSON.stringify(schedule)}</li>
+      ))}</ul>
+    </div>
+
+<div>
+      <h1>Types</h1>
+      <ul>{types.map((type,idx)=>(
+        <li key={idx}>{JSON.stringify(type)}</li>
+      ))}</ul>
+    </div>
+    
+    <div>
+      <h1>Purpose</h1>
+      <ul>{purposes.map((purpose,idx)=>(
+        <li key={idx}>{JSON.stringify(purpose)}</li>
+      ))}</ul>
+    </div>
+
+    <div>
+      <h1>Stage</h1>
+      <ul>{stages.map((stage,idx)=>(
+        <li key={idx}>{JSON.stringify(stage)}</li>
+      ))}</ul>
+    </div>
+    
+    {/* <div>
+      <h1>Users</h1>
+      <ul>{users.map((user,idx)=>(
+        <li key={idx}>{JSON.stringify(user)}</li>
+      ))}</ul>
+    </div> */}
+
+    <div>
+      <h1>Type_Purpose</h1>
+      <ul>{type_purposes.map((type_purpose,idx)=>(
+        <li key={idx}>{JSON.stringify(type_purpose)}</li>
+      ))}</ul>
+    </div>
+
+
     <div>
       <h1>Doctors</h1>
       <ul>{doctors.map((doctor,idx)=>(
@@ -254,6 +381,136 @@ function update_User(formData: { get: (arg0: string) => any; }) {
         ))}
       </ul>
     </div>
+
+<div>
+        <form action={insertType}>
+            <input type="text" name="inTypeName" onChange={(e)=>insertTypeName(e.target.value)} />
+            <input type="submit" value="Insert Type" />
+        </form>
+
+        {/* <form action={updateDoctor}>
+            <input type="number" name="upIdDoc" onChange={(e)=>updateIdDoc(e.target.value)}/>
+            <input type="text" name="upFirstName" onChange={(e)=>updateFirstName(e.target.value)} />
+            <input type="text" name="upMiddleName" onChange={(e)=>updateMiddleName(e.target.value)} />
+            <input type="text" name="upLastName" onChange={(e)=>updateLastName(e.target.value)} />
+            <input type="text" name='upDoc_User' onChange={(e)=>updateDoc_User(e.target.value)}/>
+            <select name="upDoctor_Spec">
+          {specs.map((specialization)=>(
+            <option key={specialization.id} value={specialization.id}>
+              {specialization.specName}
+            </option>
+          ))}
+        </select>
+            <input type="tel" name="upDoc_Tel" onChange={(e)=>updateDoc_Tel(e.target.value)} />
+            <input type="submit" value="Update Doctor" />
+        </form> */}
+    </div>
+
+    <div>
+        <form action={insertPurpose}>
+        <input type="text" name='inPurposeName' onChange={(e)=>insertPurposeName(e.target.value)}/>
+        <input type="number" name="inDuration" onChange={(e)=>insertDuration(e.target.value)} />
+            <input type="submit" value="Insert Purpose" />
+        </form>
+
+        {/* <form action={updateDoc_Clinic}>
+            <input type="number" name="upIdD_C" onChange={(e)=>updateIdD_C(e.target.value)}/>
+        <input type="text" name='upCabinet' onChange={(e)=>updateCabinet(e.target.value)}/>
+            <input type="submit" value="Update Doctor's clinic" />
+        </form> */}
+    </div>
+
+ <div>
+        <form action={insertType_Purpose}>
+          <select name="inIdType">
+          {types.map((type)=>(
+            <option key={type.idType} value={type.idType}>
+              {type.typeName}
+            </option>
+          ))}
+        </select>  
+            <select name="inIdPurpose">
+          {purposes.map((purpose)=>(
+            <option key={purpose.idPurpose} value={purpose.idPurpose}>
+              {purpose.purposeName}
+            </option>
+          ))}
+        </select> 
+            <select name="inIdStage">
+          {stages.map((stage)=>(
+            <option key={stage.idStage} value={stage.idStage}>
+              {stage.stageName}
+            </option>
+          ))}
+        </select>
+            <input type="submit" value="Insert Type_Purpose" />
+        </form>
+
+        {/* <form action={updateDoc_Spec}>
+            <input type="number" name="idClinic" onChange={(e)=>setIdClinic(e.target.value)}/>
+            <select name="upDoc_Speci">
+          {doctors.map((doctor)=>(
+            <option key={doctor.idDoc} value={doctor.idDoc}>
+              {doctor.firstName} {doctor.middleName} {doctor.lastName}
+            </option>
+          ))}
+        </select>  
+            <select name="upSpec_Doc">
+          {specs.map((specialization)=>(
+            <option key={specialization.id} value={specialization.id}>
+              {specialization.specName}
+            </option>
+          ))}
+        </select>
+            <input type="submit" value="Update Doctor's specialization" />
+        </form> */}
+    </div>
+
+  <div>
+    <form action={insertSchedule}>
+      <select name="inDoctor_Clinic">
+          {doc_clinics.map((doc_clinic)=>(
+            <option key={doc_clinic.idDoc_Clinic} value={doc_clinic.idDoc_Clinic}>
+              {doc_clinic.idDoc_Clinic}
+            </option>
+          ))}
+        </select>  
+      <input type="time" name="inBeginningTime" onChange={(e)=>insertBeginningTime(e.target.value)}/>
+      <input type="time" name="inFinishTime" onChange={(e)=>insertFinishTime(e.target.value)}/>
+      <input type="date" name="inData" onChange={(e)=>insertData(e.target.value)}/>
+      <select name="inIdTy">
+          {types.map((type)=>(
+            <option key={type.idType} value={type.idType}>
+              {type.typeName}
+            </option>
+          ))}
+        </select> 
+      <input type="submit" value="Insert Schedule" />
+    </form>
+  </div>
+
+    <div>
+      <form action={insertStage}>
+        <input type="text" name="inStageName" onChange={(e)=>insertStageName(e.target.value)}/>
+        <input type="submit" value="Insert Stage" />
+      </form>
+    </div>
+
+<div>
+      {/* <form action={update_User}>
+        <input type="number" name="upIdUser"/>
+        <input type="text" name="upUsername" onChange={(e)=>insertUsername(e.target.value)}/>
+        <input type="submit" value="Update User" />
+      </form> */}
+    </div>
+{/* 
+    <div>
+      <form action={insertType_Purpose}>
+        <input type="text" name="inTypeUser" onChange={(e)=>insertTypeUser(e.target.value)} />
+        
+        <input type="submit" value="Insert Type Of User" />
+      </form>
+    </div> */}
 
 
     <div>

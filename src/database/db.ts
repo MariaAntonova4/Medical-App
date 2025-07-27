@@ -36,17 +36,51 @@ export function insertType(typeName:string) {
     console.log("Type added");  
 }
 
-export function insertPurpose(firstName:string,duration:string) {
-    db.run("CREATE TABLE IF NOT EXISTS purpose(idPurpose INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT,firstName TEXT, middleName TEXT, lastName TEXT, doctorSpecialization INTEGER, docTelephone TEXT, docUser INTEGER, CONSTRAINT FK_SpecializationDoctor FOREIGN KEY (doctorSpecialization) REFERENCES specialization(id),CONSTRAINT FK_UserDoctor FOREIGN KEY (docUser) REFERENCES user(idUser))");
-    const inDoctor=db.prepare("INSERT OR REPLACE INTO doctor(firstName,middleName,lastName,doctorSpecialization, docTelephone, docUser)VALUES(?,?,?,?,?,?)") ;
-    const result=inDoctor.run(firstName,middleName,lastName,docSpecialization,docTelephone,docUser);
-    console.log("Doctor added");  
+export function insertPurpose(purposeName:string,duration:number) {
+    db.run("CREATE TABLE IF NOT EXISTS purpose(idPurpose INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT,purposeName TEXT, duration INTEGER)");
+    const inDoctor=db.prepare("INSERT OR REPLACE INTO purpose(purposeName,duration)VALUES(?,?)") ;
+    const result=inDoctor.run(purposeName,duration);
+    console.log("Purpose added");  
 }
 
 export function insertStage(stageName:string) {
     db.run("CREATE TABLE IF NOT EXISTS stage(idStage INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT,stageName TEXT)");
     db.run("INSERT OR REPLACE INTO stage(stageName)VALUES(?)",[stageName]) ;
     console.log("Stage added");  
+}
+
+export function insertSchedule(doctor_clinic:number,beginningTime:Date,finishTime:Date,date:Date,idType:number) {
+    db.run("CREATE TABLE IF NOT EXISTS schedule(idStage INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT, doctor_clinic INTEGER, beginningTime TIME, finishTime TIME, date DATE, idType INTEGER, CONSTRAINT FK_Type_Schedule FOREIGN KEY (idType) REFERENCES type(idType),CONSTRAINT FK_Purpose_T_P FOREIGN KEY (doctor_clinic) REFERENCES Doc_Clinic(idDoc_Clinic))");
+    const inSchedule=db.prepare("INSERT OR REPLACE INTO schedule(doctor_clinic,beginningTime,finishTime,date,idType)VALUES(?,?,?,?,?)") ;
+    const result=inSchedule.run(doctor_clinic,beginningTime.getTime(),finishTime.getTime(),date.getDate(),idType);
+    console.log("Schedule added");  
+}
+
+// export function insertMainDoctor() {
+//     db.run("CREATE TABLE IF NOT EXISTS mainDoctor(idMainDoctor INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT,idPatient)");
+//     const inMainDoctor=db.prepare("INSERT OR REPLACE INTO mainDoctor(idType,idPurpose,idStage)VALUES(?,?,?)");
+//     const result=inMainDoctor.run();
+//     console.log('Main Doctor added');
+// }
+
+export function insertPatient(firstName:string,middleName:string,lastName:string,age:number, EGN:string,gender:string, address:string,telephone:string,idUser:number){
+    db.run("CREATE TABLE IF NOT EXISTS patient(idPatient INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT,firstName TEXT,middleName TEXT,lastName TEXT, age INTEGER, EGN TEXT, gender TEXT, address TEXT, telephone TEXT, idUser Integer)");
+    const inPatient=db.prepare("INSERT OR REPLACE INTO patient(firstName,middleName,lastName,age,EGN,gender,address,telephone,idUser)VALUES(?,?,?,?,?,?,?,?,?)");
+    const result=inPatient.run(firstName,middleName,lastName,age,EGN,gender,address,telephone,idUser);
+    console.log('Patient added');
+}
+
+export function insertStatus(statusName:string){
+    db.run("CREATE TABLE IF NOT EXISTS status(idStatus INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT,statusName TEXT)");
+    db.run("INSERT OR REPLACE INTO status(statusName)VALUES(?)",[statusName]) ;
+    console.log("Status added");  
+}
+
+export function insertAppointment(doc_cli:number, status:number,time:Date,date:Date,ty_pur:number,idPatient:number) {
+    db.run("CREATE TABLE IF NOT EXISTS appointment(idAppointment INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT,doc_cli INTEGER, status INTEGER, time TIME, date DATE,ty_pur INTEGER,idPatient INTEGER)");
+    const inAppointment=db.prepare("INSERT OR REPLACE INTO appointment(doc_cli,status,time,date,ty_pur,idPatient)VALUES(?,?,?,?,?,?)");
+    const result=inAppointment.run();
+    console.log('Appointment added');
 }
 
 export function insertType_Purpose(idType:number,idPurpose:number,idStage:number) {
@@ -195,6 +229,66 @@ export function getAllDoc_Clinic():Promise<any[]>{
 export function getAllDoc_Spec():Promise<any[]>{
     return new Promise((resolve,reject)=>{
         db.all("SELECT * FROM Doc_Spec",[],(err,data)=>{
+            if (err) {
+                reject(err);
+            } else {
+              resolve(data);  
+            }
+        })
+    });
+}
+
+export function getAllType_Purpose():Promise<any[]>{
+    return new Promise((resolve,reject)=>{
+        db.all("SELECT * FROM type_purpose",[],(err,data)=>{
+            if (err) {
+                reject(err);
+            } else {
+              resolve(data);  
+            }
+        })
+    });
+}
+
+export function getAllTypes():Promise<any[]>{
+    return new Promise((resolve,reject)=>{
+        db.all("SELECT * FROM type",[],(err,data)=>{
+            if (err) {
+                reject(err);
+            } else {
+              resolve(data);  
+            }
+        })
+    });
+}
+
+export function getAllPurpose():Promise<any[]>{
+    return new Promise((resolve,reject)=>{
+        db.all("SELECT * FROM purpose",[],(err,data)=>{
+            if (err) {
+                reject(err);              
+            } else {
+                resolve(data);
+            }
+        })
+    });
+}
+
+export function getAllStage():Promise<any[]>{
+    return new Promise((resolve,reject)=>{
+        db.all("SELECT * FROM stage",[],(err,data)=>{
+            if (err) {
+                reject(err);
+            } else {
+              resolve(data);  
+            }
+        })
+    });
+}
+
+export function getAllSchedule():Promise<any[]>{
+    return new Promise((resolve,reject)=>{
+        db.all("SELECT * FROM schedule",[],(err,data)=>{
             if (err) {
                 reject(err);
             } else {
