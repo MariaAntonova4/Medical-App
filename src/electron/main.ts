@@ -6,7 +6,8 @@ import { getAssetPath, getPreloadPath } from './pathResolver.js';
 import { createTray } from './tray.js';
 import { createMenu } from './menu.js';
 import  sqlite3  from 'sqlite3';
-import { getAllSpec, setSpec, updateSpec,insertClinic,getAllClinics,updateClinic, insertTypeOfUser, getAllTypesOfUsers, insert_User, update_User, insertDoctor, insertDoc_Clinic, insertDoc_Spec, getAllUsers, getAllDoctors, getAllDoc_Clinic, getAllDoc_Spec, updateDoc_Spec, updateDoc_Clinic, updateDoctor, insertPurpose, insertStage, insertType, insertType_Purpose, getAllTypes, getAllStage, getAllPurpose, getAllType_Purpose, insertSchedule, getAllSchedule} from "../database/db.js";
+import { getAllSpec, setSpec, updateSpec,insertClinic,getAllClinics,updateClinic, insertTypeOfUser, getAllTypesOfUsers, insert_User, update_User, insertDoctor, insertDoc_Clinic, insertDoc_Spec, getAllUsers, getAllDoctors, getAllDoc_Clinic, getAllDoc_Spec, updateDoc_Spec, updateDoc_Clinic, updateDoctor, insertPurpose, insertStage, insertType, insertType_Purpose, getAllTypes, getAllStage, getAllPurpose, getAllType_Purpose, insertSchedule, getAllSchedule, insertAppointment, insertPatient, insertStatus, getAllAppointments, getAllPatinets, getAllStatus} from "../database/db.js";
+//import { monitorEventLoopDelay } from 'perf_hooks';
 
 
 app.on('ready',()=>{
@@ -30,13 +31,16 @@ app.on('ready',()=>{
 
     ipcMain.handle('open-child-window',()=>createChildWindow());
     ipcMain.handle('insert-spec',(event,specName)=>setSpec(specName));
+    ipcMain.handle('insert-appointment',(event,doc_cli,status,time,date,ty_pur,idPatient)=>insertAppointment(doc_cli,status,time,date,ty_pur,idPatient));
     ipcMain.handle('insert-clinic',(event,clinicName, clinicAddress)=>insertClinic(clinicName,clinicAddress));
     ipcMain.handle('insert-doctor',(event,firstName,middleName,lastName,docSpecialization,docTelephone,docUser)=>insertDoctor(firstName,middleName,lastName,docSpecialization,docTelephone,docUser));
     ipcMain.handle('insert-doc-clinic',(event,idDoc_D_C,idClinic_D_C,cabinet)=>insertDoc_Clinic(idDoc_D_C,idClinic_D_C,cabinet));
     ipcMain.handle('insert-doc-spec',(event,idDoc_D_S,idSpec_D_S)=>insertDoc_Spec(idDoc_D_S,idSpec_D_S));
+    ipcMain.handle('insert-patient',(event,firstName,middleName,lastName,age,EGN,gender,address,telephone,idUser)=>insertPatient(firstName,middleName,lastName,age,EGN,gender,address,telephone,idUser));
     ipcMain.handle('insert-purpose',(event,purposeName,duration)=>insertPurpose(purposeName,duration));
     ipcMain.handle('insert-schedule',(event,doctor_clinic,beginningTime,finishTime,data,idType)=>insertSchedule(doctor_clinic,beginningTime,finishTime,data,idType));
     ipcMain.handle('insert-stage',(event,stageName)=>insertStage(stageName));
+    ipcMain.handle('insert-status',(event,statusName)=>insertStatus(statusName));
     ipcMain.handle('insert-type',(event,typeName)=>insertType(typeName));
     ipcMain.handle('insert-type-user',(event,userTypeName)=>insertTypeOfUser(userTypeName));
     ipcMain.handle('insert-type-purpose',(event,idType,idPurpose,idStage)=>insertType_Purpose(idType,idPurpose,idStage));
@@ -95,6 +99,19 @@ app.on('ready',()=>{
         });
     ipcMain.handle('read-doctor-spec',async()=>{
             const doc_Spec=await getAllDoc_Spec();
+            return doc_Spec;
+        });
+
+    ipcMain.handle('read-appointment',async()=>{
+        const doctor=await getAllAppointments();
+        return doctor;
+    });
+    ipcMain.handle('read-patient',async()=>{
+            const doc_Clinics=await getAllPatinets();
+            return doc_Clinics;
+        });
+    ipcMain.handle('read-status',async()=>{
+            const doc_Spec=await getAllStatus();
             return doc_Spec;
         });
 

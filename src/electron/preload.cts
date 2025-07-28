@@ -1,5 +1,6 @@
 import { ipcRenderer } from "electron/renderer";
 import { insertDoc_Clinic, insertDoc_Spec, insertDoctor, insertPurpose, insertStage, insertType, insertTypeOfUser, updateDoc_Clinic, updateDoc_Spec, updateDoctor } from "../database/db";
+//import { stat } from "fs";
 
 const electron=require('electron');
 
@@ -11,25 +12,31 @@ electron.contextBridge.exposeInMainWorld("electron",{
     },
     createChildWindow:()=>ipcRenderer.invoke('open-child-window'),
     readSpec:()=>ipcRenderer.invoke('read-spec'),
+    readAppointment:()=>ipcRenderer.invoke('read-appointment'),
     readClinic:()=>ipcRenderer.invoke('read-clinic'),
     readDoctor:()=>ipcRenderer.invoke('read-doctor'),
     readDoc_Clinic:()=>ipcRenderer.invoke('read-doctor-clinic'),
     readDoc_Spec:()=>ipcRenderer.invoke('read-doctor-spec'),
+    readPatinet:()=>ipcRenderer.invoke('read-patinet'),
     readPurpose:()=>ipcRenderer.invoke('read-purpose'),
     readSchedule:()=>ipcRenderer.invoke('read-schedule'),
     readStage:()=>ipcRenderer.invoke('read-stage'),
+    readStatus:()=>ipcRenderer.invoke('read-status'),
     readType:()=>ipcRenderer.invoke('read-type'),
     readTypeOfUser:()=>ipcRenderer.invoke('read-type-user'),
     readType_Purpose:()=>ipcRenderer.invoke('read-type-purpose'),
     readUser:()=>ipcRenderer.invoke('read-user'),
     getSpec:(specName:string)=>ipcRenderer.invoke('insert-spec',specName),
     insertClinic:(clinicName:string,clinicAddress:string)=>ipcRenderer.invoke('insert-clinic',clinicName,clinicAddress),
+    insertAppointment:(doc_cli:number, status:number,time:Date,date:Date,ty_pur:number,idPatient:number)=>ipcRenderer.invoke('insert-appointment',doc_cli,status,time,date,ty_pur,idPatient),
     insertDoctor:(firstName:string,middleName:string,lastName:string,docSpecialization:number,docTelephone:string,docUser:number)=>ipcRenderer.invoke('insert-doctor',firstName,middleName,lastName,docSpecialization,docTelephone,docUser),
     insertDoc_Clinic:(idDoc_D_C:number,idClinic_D_C:number,cabinet:string)=>ipcRenderer.invoke('insert-doc-clinic',idDoc_D_C,idClinic_D_C,cabinet),
     insertDoc_Spec:(idDoc_D_S:number,idSpec_D_S:number)=>ipcRenderer.invoke('insert-doc-spec',idDoc_D_S,idSpec_D_S),
+    insertPatient:(firstName:string,middleName:string,lastName:string,age:number,EGN:string,gender:string,address:string,telephone:string,idUser:number)=>ipcRenderer.invoke('insert-patient',firstName,middleName,lastName,age,EGN,gender,address,telephone,idUser),
     insertPurpose:(purposeName:string,duration:number)=>ipcRenderer.invoke('insert-purpose',purposeName,duration),
     insertSchedule:(doctor_clinic:number,beginningTime:Date,finishTime:Date,data:Date,idType:number)=>ipcRenderer.invoke('insert-schedule',doctor_clinic,beginningTime,finishTime,data,idType),
     insertStage:(stageName:string)=>ipcRenderer.invoke('insert-stage',stageName),
+    insertStatus:(statusName:string)=>ipcRenderer.invoke('insert-status',statusName),
     insertType:(typeName:string)=>ipcRenderer.invoke('insert-type',typeName),
     insertTypeOfUser:(userTypeName:string)=>ipcRenderer.invoke('insert-type-user',userTypeName),
     insertType_Purpose:(idType:number,idPurpose:number,idStage:number)=>ipcRenderer.invoke('insert-type-purpose',idType,idPurpose,idStage),

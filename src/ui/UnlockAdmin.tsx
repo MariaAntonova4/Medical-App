@@ -18,9 +18,7 @@ function App() {
   function connectToAdminWindow(formData: { get: (arg0: string) => any; }) {
     const getUsername=formData.get("inUsername");
     const getPass=formData.get("inPass");
-    //добави проверка дали въведените данни съвпадат с 
-    //базата данни за потребител и ако съвпада да се насочи към админ страницата===""
-    
+
     if (users.find((user)=>user.username===getUsername&&user.pass===getPass&&user.userType===1)) {
     createRoot(document.getElementById('root')!).render(
     <StrictMode>

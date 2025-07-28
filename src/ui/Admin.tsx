@@ -27,10 +27,6 @@ function Admin(){
   const[inTypeOfUser,insertTypeU]=useState("");
   const[users,allUsers]=useState<any[]>([]);
 
-  const[inFirstPName,insertFirstPName]=useState("");
-  const[inMiddlePName,insertMiddlePName]=useState("");
-  const[inLastPName,insertLastPName]=useState("");
-
   const[upIdDoc,updateIdDoc]=useState("");
   const[inFirstName,insertFirstName]=useState("");   const[upFirstName,updateFirstName]=useState("");
   const[inMiddleName,insertMiddleName]=useState(""); const[upMiddleName,updateMiddleName]=useState("");
@@ -76,7 +72,41 @@ const[inIdPurpose,insertidPurpose]=useState("");    // const[upLastName,updateLa
 const[inIdStage,insertIdStage]=useState("");
 const[type_purposes,allType_Purpose]=useState<any[]>([]);
 
+// const[inDoc_Cli,insertDoc_cli]=useState("");
+// const[inStat,insertStat]=useState(""); 
+// const[inTime,insertTime]=useState("");
+// const[inDate,insertDate]=useState("");
+// const[inTy_Pur,insertTy_Pur]=useState("");
+// const[inIdPatient,insertIdPatient]=useState("");
+// const[appointments,allAppointments]=useState<any[]>([]);
+
+// const[inFirstPName,insertFirstPName]=useState("");
+// const[inMiddlePName,insertMiddlePName]=useState("");
+// const[inLastPName,insertLastPName]=useState("");
+// const[inAge,insertAge]=useState("");
+// const[inEGN,insertEGN]=useState("");
+// const[inGender,insertGender]=useState("");
+// const[inAddress,insertAddress]=useState("");
+// const[inTelephone,insertTelephone]=useState("");
+// const[inIdUser,insertIdUser]=useState("");
+// const[patients,allPatients]=useState<any[]>([]);
+
+// const[inStatusName,insertStatusName]=useState("");
+// const[statuses,allStatus]=useState<any[]>([]);
+
 //const[]=useState<any[]>([]);
+
+  // useEffect(()=>{
+  //   window.electron.readAppointment().then(allAppointments);
+  // },[]);
+
+  // useEffect(()=>{
+  //   window.electron.readPatient().then(allPatients);
+  // },[]);
+
+  // useEffect(()=>{
+  //   window.electron.readStatus().then(allStatus);
+  // },[]);
 
   useEffect(()=>{
     window.electron.readDoctor().then(allDoctors);
@@ -90,7 +120,7 @@ const[type_purposes,allType_Purpose]=useState<any[]>([]);
     window.electron.readDoc_Spec().then(allDoc_Specs);
   },[]);
   
-  
+
   useEffect(()=>{
     window.electron.readUser().then(allUsers);
   },[]);
@@ -126,6 +156,37 @@ const[type_purposes,allType_Purpose]=useState<any[]>([]);
   useEffect(()=>{
     window.electron.readStage().then(allStages);
   },[]);
+
+  // function insertAppointment(formData: { get: (arg0: string) => any; }){
+  //   const addDoc_cli=formData.get("inDoc_Cli");
+  //   const addStatus=formData.get("inStat");
+  //   const addTime=formData.get("inTime");
+  //   const addDate=formData.get("inDate");
+  //   const addTy_pur=formData.get("inTy_Pur");
+  //   const addIdPatient=formData.get("inIdPatient");
+
+  //   window.electron.insertAppointment(addDoc_cli,addStatus,addTime,addDate,addTy_pur,addIdPatient);
+  // }
+
+  // function insertPatient(formData: { get: (arg0: string) => any; }) {
+  //   const addFirstName=formData.get("inFirstPName");
+  //   const addMiddleName=formData.get("inMiddlePName");
+  //   const addLastName=formData.get("inLastPName");
+  //   const addAge=formData.get("inAge");
+  //   const addEGN=formData.get("inEGN");
+  //   const addGender=formData.get("inGender");
+  //   const addAddress=formData.get("inAddress");
+  //   const addTelephone=formData.get("inTelephone");
+  //   const addIdUser=formData.get("inIdUser");
+
+  //   window.electron.insertPatient(addFirstName,addMiddleName,addLastName,addAge,addEGN,addGender,addAddress,addTelephone,addIdUser);
+  // }
+
+  // function insertStatus(formData: { get: (arg0: string) => any; }) {
+  //   const addStatusName=formData.get("inStatusName");
+
+  //   window.electron.insertStatus(addStatusName);
+  // }
 
     function insertPurpose(formData: { get: (arg0: string) => any; }) {
     const addPurposeName=formData.get("inPurposeName");
@@ -190,7 +251,6 @@ function update_User(formData: { get: (arg0: string) => any; }) {
 
         window.electron.insertClinic(addClinicName,addClinicAddress);
     }
-
 
   function updateDoctor(formData: { get: (arg0: string) => any; }) {
     const upIdDoc=formData.get("upIdDoc");
@@ -283,7 +343,27 @@ function update_User(formData: { get: (arg0: string) => any; }) {
 
   return(
     <>
-    
+     {/* <div>
+      <h1>Appointments</h1>
+      <ul>{appointments.map((appointment,idx)=>(
+        <li key={idx}>{JSON.stringify(appointment)}</li>
+      ))}</ul>
+    </div>     
+
+     <div>
+      <h1>Patients</h1>
+      <ul>{patients.map((patient,idx)=>(
+        <li key={idx}>{JSON.stringify(patient)}</li>
+      ))}</ul>
+    </div>   
+
+      <div>
+      <h1>Status</h1>
+      <ul>{statuses.map((status,idx)=>(
+        <li key={idx}>{JSON.stringify(status)}</li>
+      ))}</ul>
+    </div>    */}
+
 <div>
       <h1>Schedules</h1>
       <ul>{schedules.map((schedule,idx)=>(
@@ -311,13 +391,6 @@ function update_User(formData: { get: (arg0: string) => any; }) {
         <li key={idx}>{JSON.stringify(stage)}</li>
       ))}</ul>
     </div>
-    
-    {/* <div>
-      <h1>Users</h1>
-      <ul>{users.map((user,idx)=>(
-        <li key={idx}>{JSON.stringify(user)}</li>
-      ))}</ul>
-    </div> */}
 
     <div>
       <h1>Type_Purpose</h1>
@@ -325,7 +398,6 @@ function update_User(formData: { get: (arg0: string) => any; }) {
         <li key={idx}>{JSON.stringify(type_purpose)}</li>
       ))}</ul>
     </div>
-
 
     <div>
       <h1>Doctors</h1>
@@ -382,6 +454,41 @@ function update_User(formData: { get: (arg0: string) => any; }) {
       </ul>
     </div>
 
+{/* const[inDoc_Cli,insertDoc_cli]=useState("");
+const[inStat,insertStat]=useState(""); 
+const[inTy_Pur,insertTy_Pur]=useState("");
+*/}
+
+    {/* <div>
+      <form action={insertAppointment}>
+        <input type="time" name="inTime" onChange={(e)=>insertTime(e.target.value)}/>
+        <input type="date" name="inDate" onChange={(e)=>insertDate(e.target.value)}/>
+        <input type="text" name="inIdPatient"onChange={(e)=>insertIdPatient(e.target.value)}/>
+        <input type="submit" value="InsertAppointment" />
+      </form>
+    </div>
+  
+  <div>
+    <form action={insertPatient}>
+      <input type="text" name="inFirstPName" onChange={(e)=>insertFirstPName(e.target.value)}/>
+      <input type="text" name="inMiddlePName" onChange={(e)=>insertMiddlePName(e.target.value)}/>
+      <input type="text" name="inLastPName" onChange={(e)=>insertLastPName(e.target.value)}/>
+      <input type="number" name="inAge" onChange={(e)=>insertAge(e.target.value)}/>
+      <input type="text" name="inEGN" onChange={(e)=>insertEGN(e.target.value)}/>
+      <input type="text" name="inGender" onChange={(e)=>insertGender(e.target.value)}/>
+      <input type="text" name="inAddress" onChange={(e)=>insertAddress(e.target.value)}/>
+      <input type="tel" name="inTelephone" onChange={(e)=>insertTelephone(e.target.value)}/>
+      <input type="text" name="inIdUser" onChange={(e)=>insertIdUser(e.target.value)}/>
+      <input type="submit" value="Insert Patient" />
+    </form>
+  </div>
+
+  <div>
+    <form action={insertStatus}>
+      <input type="text" name="inStatusName" onChange={(e)=>insertStatusName(e.target.value)}/>
+      <input type="submit" value="Insert Status" />
+    </form>
+  </div> */}
 <div>
         <form action={insertType}>
             <input type="text" name="inTypeName" onChange={(e)=>insertTypeName(e.target.value)} />
