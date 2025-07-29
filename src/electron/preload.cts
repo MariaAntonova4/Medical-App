@@ -1,6 +1,5 @@
 import { ipcRenderer } from "electron/renderer";
 import { insertDoc_Clinic, insertDoc_Spec, insertDoctor, insertPurpose, insertStage, insertType, insertTypeOfUser, updateDoc_Clinic, updateDoc_Spec, updateDoctor } from "../database/db";
-//import { stat } from "fs";
 
 const electron=require('electron');
 
@@ -46,6 +45,7 @@ electron.contextBridge.exposeInMainWorld("electron",{
     updateDoctor:(idDoc:number,firstName:string,middleName:string,lastName:string,docSpecialization:number,docTelephone:string,docUser:number)=>ipcRenderer.invoke('update-doctor',idDoc,firstName,middleName,lastName,docSpecialization,docTelephone,docUser),
     updateDoc_Clinic:(idD_C:number,idDoc_D_C:number,idClinic_D_C:number,cabinet:string)=>ipcRenderer.invoke('update-doctor-clinic',idD_C,idDoc_D_C,idClinic_D_C,cabinet),
     updateDoc_Spec:(idD_S:number,idDoc_D_S:number,idSpec_D_S:number)=>ipcRenderer.invoke('update-doctor-spec',idD_S,idDoc_D_S,idSpec_D_S),
+    updatePurpose:(idPurpose:number,purposeName:string,duration:Date)=>ipcRenderer.invoke('update-purpose',idPurpose,purposeName,duration),
     update_User:(upIdUser:number,upUsername:string,upPass:string,upTypeOfUser:number)=>ipcRenderer.invoke('update-user',upIdUser,upUsername,upPass,upTypeOfUser),
     // getA:()=>ipcInvoke('getA'),
 }//satisfies Window['electron']

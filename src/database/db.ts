@@ -79,7 +79,7 @@ export function insertStatus(statusName:string){
 export function insertAppointment(doc_cli:number, status:number,time:Date,date:Date,ty_pur:number,idPatient:number) {
     db.run("CREATE TABLE IF NOT EXISTS appointment(idAppointment INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT,doc_cli INTEGER, status INTEGER, time TIME, date DATE,ty_pur INTEGER,idPatient INTEGER)");
     const inAppointment=db.prepare("INSERT OR REPLACE INTO appointment(doc_cli,status,time,date,ty_pur,idPatient)VALUES(?,?,?,?,?,?)");
-    const result=inAppointment.run();
+    const result=inAppointment.run(doc_cli,status,time,date,ty_pur,idPatient);
     console.log('Appointment added');
 }
 
@@ -150,6 +150,12 @@ export function updateDoc_Clinic(idD_C:number,idDoc_D_C:number,idClinic_D_C:numb
     console.log("Updated the Clinic in which is the Doctor");
 }
 
+export function updatePurpose(idPurpose:number,purposeName:string,duration:Date){
+    const upPurpose=db.prepare("UPDATE purpose SET purposeName=?, duration=? WHERE idPurpose=?") ;
+    const result=upPurpose.run(purposeName,duration,idPurpose);
+    console.log("Purpose updated");
+}
+
 export function update_User(upIdUser:number,upUsername:string,upPass:string,upTypeOfUser:number) {
     const up=db.prepare("UPDATE user SET username=?, pass=?, userType=? WHERE idUser=?");
     const result=up.run(upUsername,upPass,upTypeOfUser,upIdUser);
@@ -216,7 +222,7 @@ export function getAllDoctors():Promise<any[]>{
 
 export function getAllDoc_Clinic():Promise<any[]>{
     return new Promise((resolve,reject)=>{
-        db.all("SELECT * FROM Doc_Clinic",[],(err,data)=>{
+        db.all("SELECT Doc_Clinic.idDoc_Clinic,Doc_Clinic.idDoc_D_C,doctor.firstName, doctor.middleName,doctor.lastName,Doc_Clinic.idClinic_D_C,clinic.nameOfClinic,Doc_Clinic.cabinet FROM Doc_Clinic INNER JOIN doctor ON Doc_Clinic.idDoc_D_C=doctor.idDoc INNER JOIN clinic ON Doc_Clinic.idClinic_D_C=clinic.idClinic",[],(err,data)=>{
             if (err) {
                 reject(err);
             } else {
@@ -240,7 +246,7 @@ export function getAllDoc_Spec():Promise<any[]>{
 
 export function getAllType_Purpose():Promise<any[]>{
     return new Promise((resolve,reject)=>{
-        db.all("SELECT * FROM type_purpose",[],(err,data)=>{
+        db.all("SELECT type_purpose.idType_Purpose,type_purpose.idType,type.typeName,type_purpose.idPurpose,purpose.purposeName,type_purpose.idStage, stage.stageName FROM type_purpose INNER JOIN type ON type_purpose.idType=type.idType INNER JOIN purpose ON type_purpose.idPurpose=purpose.idPurpose INNER JOIN stage ON type_purpose.idStage=stage.idStage",[],(err,data)=>{
             if (err) {
                 reject(err);
             } else {
