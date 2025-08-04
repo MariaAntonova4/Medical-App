@@ -9,6 +9,7 @@ import './index.css'
 import Doctor from './Doctor'
 import Patient from './Patient';
 import Admin from './UnlockAdmin';
+import Dev from './Admin';
 function App() {
   function connectToDoctorWindow() {
     //alert('hey');
@@ -29,7 +30,8 @@ function App() {
   function connectToAdminWindow() {
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
-      <Admin/>
+      {/* <Admin/> */}
+      <Dev/>
     </StrictMode>
   )
 }

@@ -72,12 +72,6 @@ const[inIdPurpose,insertidPurpose]=useState("");
 const[inIdStage,insertIdStage]=useState("");
 const[type_purposes,allType_Purpose]=useState<any[]>([]);
 
-const[inDoc_Cli,insertDoc_cli]=useState("");
-const[inStat,insertStat]=useState(""); 
-const[inTime,insertTime]=useState("");
-const[inDate,insertDate]=useState("");
-const[inTy_Pur,insertTy_Pur]=useState("");
-const[inIdPatient,insertIdPatient]=useState("");
 const[appointments,allAppointments]=useState<any[]>([]);
 
 const[inFirstPName,insertFirstPName]=useState("");
@@ -157,16 +151,6 @@ const[]=useState<any[]>([]);
     window.electron.readStage().then(allStages);
   },[]);
 
-  function insertAppointment(formData: { get: (arg0: string) => any; }){
-    const addDoc_cli=formData.get("inDoc_Cli");
-    const addStatus=formData.get("inStat");
-    const addTime=formData.get("inTime");
-    const addDate=formData.get("inDate");
-    const addTy_pur=formData.get("inTy_Pur");
-    const addIdPatient=formData.get("inIdPatient");
-    //addStatus  addIdPatient
-    window.electron.insertAppointment(addDoc_cli,1,addTime,addDate,addTy_pur,1);
-  }
 
   function insertPatient(formData: { get: (arg0: string) => any; }) {
     const addFirstName=formData.get("inFirstPName");
@@ -470,29 +454,6 @@ function update_User(formData: { get: (arg0: string) => any; }) {
 const[inStat,insertStat]=useState(""); 
 const[inTy_Pur,insertTy_Pur]=useState("");
 */}
-
-
-    <div>
-      <form action={insertAppointment}>
-         <select name="inDoc_Cli">
-          {doc_clinics.map((doc_clinic)=>(
-            <option key={doc_clinic.idDoc_Clinic} value={doc_clinic.idDoc_Clinic}>
-              {doc_clinic.firstName} {doc_clinic.lastName} - {doc_clinic.nameOfClinic} ({doc_clinic.cabinet})
-            </option>
-          ))}
-        </select>
-        <input type="time" name="inTime" onChange={(e)=>insertTime(e.target.value)}/>
-        <input type="date" name="inDate" onChange={(e)=>insertDate(e.target.value)}/>
-        <select name="inTy_Pur">
-          {type_purposes.map((ty_pur)=>(
-            <option key={ty_pur.idType_Purpose} value={ty_pur.idType_Purpose}>
-              {ty_pur.typeName} - {ty_pur.purposeName}
-            </option>
-          ))}
-        </select>
-        <input type="submit" value="InsertAppointment" />
-      </form>
-    </div>
   
   <div>
     <form action={insertPatient}>

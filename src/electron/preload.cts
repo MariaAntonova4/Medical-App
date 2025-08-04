@@ -19,6 +19,8 @@ electron.contextBridge.exposeInMainWorld("electron",{
     readPatinet:()=>ipcRenderer.invoke('read-patinet'),
     readPurpose:()=>ipcRenderer.invoke('read-purpose'),
     readSchedule:()=>ipcRenderer.invoke('read-schedule'),
+    readTy_PurSchedule:()=>ipcRenderer.invoke('read-ty-pur-schedule'),
+    readDoctorSchedule:()=>ipcRenderer.invoke('read-doc-schedule'),
     readStage:()=>ipcRenderer.invoke('read-stage'),
     readStatus:()=>ipcRenderer.invoke('read-status'),
     readType:()=>ipcRenderer.invoke('read-type'),

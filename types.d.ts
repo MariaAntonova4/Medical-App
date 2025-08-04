@@ -25,6 +25,8 @@ type UnsubscribeFunction=()=>void;
         readPatient:()=>Promise<any>;
         readPurpose:()=>Promise<any>;
         readSchedule:()=>Promise<any>;
+        readTy_PurSchedule:()=>Promise<any>;
+        readDoctorSchedule:()=>Promise<any>;
         readStage:()=>Promise<any>;
         readStatus:()=>Promise<any>;
         readType:()=>Promise<any>;

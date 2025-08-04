@@ -246,7 +246,7 @@ export function getAllDoc_Spec():Promise<any[]>{
 
 export function getAllType_Purpose():Promise<any[]>{
     return new Promise((resolve,reject)=>{
-        db.all("SELECT type_purpose.idType_Purpose,type_purpose.idType,type.typeName,type_purpose.idPurpose,purpose.purposeName,type_purpose.idStage, stage.stageName FROM type_purpose INNER JOIN type ON type_purpose.idType=type.idType INNER JOIN purpose ON type_purpose.idPurpose=purpose.idPurpose INNER JOIN stage ON type_purpose.idStage=stage.idStage",[],(err,data)=>{
+        db.all("SELECT type_purpose.idType_Purpose,type_purpose.idType,type.typeName,type_purpose.idPurpose,purpose.duration,purpose.purposeName,type_purpose.idStage, stage.stageName FROM type_purpose INNER JOIN type ON type_purpose.idType=type.idType INNER JOIN purpose ON type_purpose.idPurpose=purpose.idPurpose INNER JOIN stage ON type_purpose.idStage=stage.idStage",[],(err,data)=>{
             if (err) {
                 reject(err);
             } else {
@@ -294,7 +294,31 @@ export function getAllStage():Promise<any[]>{
 
 export function getAllSchedule():Promise<any[]>{
     return new Promise((resolve,reject)=>{
-        db.all("SELECT * FROM schedule",[],(err,data)=>{
+        db.all("SELECT schedule.idStage, schedule.doctor_clinic, schedule.beginningTime, schedule.finishTime, schedule.date, schedule.idType,type_purpose.idPurpose FROM schedule INNER JOIN type_purpose ON schedule.idType=type_purpose.idType",[],(err,data)=>{
+            if (err) {
+                reject(err);
+            } else {
+              resolve(data);  
+            }
+        })
+    });
+}
+
+export function getAllTy_PurSchedule(){
+    return new Promise((resolve,reject)=>{
+        db.all("SELECT schedule.idType, type_purpose.idPurpose,type.typeName,purpose.purposeName FROM schedule INNER JOIN type_purpose ON schedule.idType=type_purpose.idType INNER JOIN type ON type_purpose.idType=type.idType INNER JOIN purpose ON type_purpose.idPurpose=purpose.idPurpose INNER JOIN stage ON type_purpose.idStage=stage.idStage",[],(err,data)=>{
+            if (err) {
+                reject(err);
+            } else {
+              resolve(data);  
+            }
+        })
+    });
+}
+
+export function getAllDoctorSchedule(){
+    return new Promise((resolve,reject)=>{
+        db.all("SELECT doctor.firstName, doctor.middleName, doctor.lastName, schedule.doctor_clinic, schedule.beginningTime, schedule.finishTime, schedule.date FROM schedule INNER JOIN Doc_Clinic ON schedule.doctor_clinic=Doc_Clinic.idDoc_Clinic INNER JOIN clinic ON Doc_Clinic.idClinic_D_C=clinic.idClinic INNER JOIN doctor ON Doc_Clinic.idDoc_D_C=doctor.idDoc",[],(err,data)=>{
             if (err) {
                 reject(err);
             } else {

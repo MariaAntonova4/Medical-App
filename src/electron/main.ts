@@ -11,7 +11,9 @@ import { getAllSpec, setSpec, updateSpec,insertClinic,getAllClinics,updateClinic
 getAllDoc_Spec, updateDoc_Spec, updateDoc_Clinic, updateDoctor, insertPurpose, insertStage, insertType, insertType_Purpose
 , getAllTypes, getAllStage, getAllPurpose, getAllType_Purpose, insertSchedule, getAllSchedule, insertAppointment, 
 insertPatient, insertStatus, getAllAppointments, getAllPatinets, getAllStatus,
-updatePurpose} from "../database/db.js";
+updatePurpose,
+getAllTy_PurSchedule,
+getAllDoctorSchedule} from "../database/db.js";
 
 
 app.on('ready',()=>{
@@ -92,6 +94,14 @@ app.on('ready',()=>{
     });
         ipcMain.handle('read-schedule',async()=>{
         const users=await getAllSchedule();
+        return users;
+    });
+        ipcMain.handle('read-ty-pur-schedule',async()=>{
+        const users=await getAllTy_PurSchedule();
+        return users;
+    });
+    ipcMain.handle('read-doc-schedule',async()=>{
+        const users=await getAllDoctorSchedule();
         return users;
     });
      ipcMain.handle('read-doctor',async()=>{
