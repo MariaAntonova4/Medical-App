@@ -25,6 +25,10 @@ const[inIdPatient,insertIdPatient]=useState("");
 const[appointments,allAppointments]=useState<any[]>([]);
 
 useEffect(()=>{
+    window.electron.readAppointment().then(allAppointments);
+  },[]);
+
+useEffect(()=>{
     window.electron.readDoc_Clinic().then(allDoc_Clinics);
   },[]);
 
@@ -61,19 +65,34 @@ useEffect(()=>{
       const sch=schedules.find((schedule)=>schedule.doctor_clinic==addDoc_cli);
       alert(sch.finishTime);
       alert(addTime);
-      var numberTime=parseFloat(addTime);
-      var minutes=new Date(numberTime);
-      alert(minutes.getTime());
+      //var numberTime=parseFloat(addTime);
+      //var minutes=new Date(numberTime);
+      //alert(minutes.getTime());
       if (addTime>sch.beginningTime&&addTime<sch.finishTime) {
-        while (durationChecker<ty_purNumber.duration) {
-          
-          if (schedules.find((schedule)=>schedule.beginningTime==addTime+durationChecker||schedule.finishTime==addTime+durationChecker)) {
+        while (durationChecker<=ty_purNumber.duration) {
+        var [hours, minutes] = addTime.split(':').map(Number);
+          var date = new Date();
+          date.setHours(hours);
+          date.setMinutes(minutes + durationChecker); // Add 5 minutes
+
+          // Format back to HH:mm
+          var newHours = String(date.getHours()).padStart(2, '0');
+          var newMinutes = String(date.getMinutes()).padStart(2, '0');
+          const addNewTime=newHours+":"+newMinutes;
+//
+           if (appointments.find((appointment)=>appointment.time<addNewTime&&appointment.date==addDate&&appointment.doc_cli==addDoc_cli)) {
+              alert("There alredy is an appointment!");
+              return;
+              }
+
+          if (sch.beginningTime>=addNewTime||sch.finishTime<=addNewTime) {
+            alert("The dates !!!");
             return;
           }
-
-          // durationChecker=durationChecker+5;
-          minutes.setHours(9,5);
-          alert(minutes.getTime());
+          alert(addNewTime);
+          durationChecker=durationChecker+5;
+          //minutes.setHours(9,5);
+          //alert({newHours,newMinutes});
         }
         alert("Adding in database");
         //window.electron.insertAppointment(addDoc_cli,1,addTime,addDate,addTy_pur,1);
@@ -101,7 +120,7 @@ useEffect(()=>{
             </option>
           ))}
         </select>
-        <input type="time" value={time} name="inTime" onChange={(e)=>insertTime(e.target.value)}/>
+        <input type="time" name="inTime" onChange={(e)=>insertTime(e.target.value)}/>
         <input type="date" name="inDate" onChange={(e)=>insertDate(e.target.value)}/>
         <select name="inTy_Pur">
           {ty_purSchedules.map((schedule)=>(

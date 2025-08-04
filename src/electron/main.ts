@@ -13,7 +13,8 @@ getAllDoc_Spec, updateDoc_Spec, updateDoc_Clinic, updateDoctor, insertPurpose, i
 insertPatient, insertStatus, getAllAppointments, getAllPatinets, getAllStatus,
 updatePurpose,
 getAllTy_PurSchedule,
-getAllDoctorSchedule} from "../database/db.js";
+getAllDoctorSchedule,
+updateSchedule} from "../database/db.js";
 
 
 app.on('ready',()=>{
@@ -57,6 +58,7 @@ app.on('ready',()=>{
     ipcMain.handle('update-doctor-clinic',(event,idD_C,idDoc_D_C,idClinic_D_C,cabinet)=>updateDoc_Clinic(idD_C,idDoc_D_C,idClinic_D_C,cabinet));
     ipcMain.handle('update-doctor-spec',(event,idD_S,idDoc_D_S,idSpec_D_S)=>updateDoc_Spec(idD_S,idDoc_D_S,idSpec_D_S));
     ipcMain.handle('update-purpose',(event,idPurpose,purposeName,duration)=>updatePurpose(idPurpose,purposeName,duration));
+    ipcMain.handle('update-schedule',(event,upIdSchedule,upDoc_Cli,upBeginningTime,upFinishTime, upDate, upType)=>updateSchedule(upIdSchedule,upDoc_Cli,upBeginningTime,upFinishTime, upDate, upType));
     ipcMain.handle('update-user',(event,upIdUser,upUsername,upPass,upTypeOfUser)=>update_User(upIdUser,upUsername,upPass,upTypeOfUser));
     ipcMain.handle('read-spec',async()=>{
         const specs=await getAllSpec();

@@ -150,10 +150,16 @@ export function updateDoc_Clinic(idD_C:number,idDoc_D_C:number,idClinic_D_C:numb
     console.log("Updated the Clinic in which is the Doctor");
 }
 
-export function updatePurpose(idPurpose:number,purposeName:string,duration:Date){
+export function updatePurpose(idPurpose:number,purposeName:string,duration:number){
     const upPurpose=db.prepare("UPDATE purpose SET purposeName=?, duration=? WHERE idPurpose=?") ;
     const result=upPurpose.run(purposeName,duration,idPurpose);
     console.log("Purpose updated");
+}
+
+export function updateSchedule(upIdSchedule:number,upDoc_Cli:number,upBeginningTime:Date,upFinishTime:Date, upDate:Date, upType:number) {
+    const upSchedule=db.prepare("UPDATE schedule SET doctor_clinic=?, beginningTime=?, finishTime=?, date=?, idType=? WHERE idStage=?");
+    const result=upSchedule.run(upDoc_Cli,upBeginningTime,upFinishTime, upDate, upType,upIdSchedule);
+    console.log(`Updated schedule`);
 }
 
 export function update_User(upIdUser:number,upUsername:string,upPass:string,upTypeOfUser:number) {

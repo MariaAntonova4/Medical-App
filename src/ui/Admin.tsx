@@ -62,7 +62,13 @@ const[inData,insertData]=useState("");
 const[inIdTy,insertIdTy]=useState("");
 const[schedules,allSchedules]=useState<any[]>([]);
 
-//const[upIdDoc,updateIdDoc]=useState("");
+const[upIdSchedule,updateIdSchedule]=useState("");
+const[upDoctor_Clinic,updateDoctor_Clinic]=useState("");
+const[upBeginningTime,updateBeginningTime]=useState("");
+const[upFinishTime,updateFinishTime]=useState("");
+const[upData,updateData]=useState("");
+const[upIdTy,updateIdTy]=useState("");
+
 const[inStageName,insertStageName]=useState("");   //const[upFirstName,updateFirstName]=useState("");
 
 const[stages,allStages]=useState<any[]>([]);
@@ -187,7 +193,7 @@ const[]=useState<any[]>([]);
     const updaPurposeName=formData.get("upPurposeName");
     const updaDuration=formData.get("upDuration");
 
-    window.electron.updatePurpose(updaPurposeName,updaDuration,updaIdPurpose);
+    window.electron.updatePurpose(updaIdPurpose,updaPurposeName,updaDuration);
   }
 
   function insertSchedule(formData: { get: (arg0: string) => any; }){
@@ -198,6 +204,17 @@ const[]=useState<any[]>([]);
     const addIdTy=formData.get("inIdTy");
 
     window.electron.insertSchedule(addDoctor_Clinic,addBeginningTime,addFinishTime,addData,addIdTy);
+  }
+
+    function updateSchedule(formData: { get: (arg0: string) => any; }){
+    const updaIdSchedule=formData.get("upIdSchedule");
+    const updaDoctor_Clinic=formData.get("upDoctor_Clinic");
+    const updaBeginningTime=formData.get("upBeginningTime");
+    const updaFinishTime=formData.get("upFinishTime");
+    const updaData=formData.get("upData");
+    const updaIdTy=formData.get("upIdTy");
+
+    window.electron.updateSchedule(updaIdSchedule,updaDoctor_Clinic,updaBeginningTime,updaFinishTime,updaData,updaIdTy);
   }
 
     function insertStage(formData: { get: (arg0: string) => any; }) {
@@ -483,7 +500,7 @@ const[inTy_Pur,insertTy_Pur]=useState("");
         </form>
 
         {/* <form action={updateDoctor}>
-            <input type="number" name="upIdDoc" onChange={(e)=>updateIdDoc(e.target.value)}/>
+            
             <input type="text" name="upFirstName" onChange={(e)=>updateFirstName(e.target.value)} />
             <input type="text" name="upMiddleName" onChange={(e)=>updateMiddleName(e.target.value)} />
             <input type="text" name="upLastName" onChange={(e)=>updateLastName(e.target.value)} />
@@ -506,10 +523,11 @@ const[inTy_Pur,insertTy_Pur]=useState("");
         <input type="number" name="inDuration" onChange={(e)=>insertDuration(e.target.value)} />
             <input type="submit" value="Insert Purpose" />
         </form>
-
+        </div>
+        <div>
         <form action={updatePurpose}>
             <input type="number" name="upIdPurpose" onChange={(e)=>updateIdPurpose(e.target.value)}/>
-            <input type="text" name='upCabinet' onChange={(e)=>updatePurposeName(e.target.value)}/>
+            <input type="text" name='upPurposeName' onChange={(e)=>updatePurposeName(e.target.value)}/>
             <input type="number" name="upDuration" onChange={(e)=>updateDuration(e.target.value)} />
             <input type="submit" value="Update Purpose" />
         </form>
@@ -583,6 +601,31 @@ const[inTy_Pur,insertTy_Pur]=useState("");
       <input type="submit" value="Insert Schedule" />
     </form>
   </div>
+
+ <div>
+    <form action={updateSchedule}>
+      <input type="number" name="upIdSchedule" onChange={(e)=>updateIdSchedule(e.target.value)}/>
+      <select name="upDoctor_Clinic">
+          {doc_clinics.map((doc_clinic)=>(
+            <option key={doc_clinic.idDoc_Clinic} value={doc_clinic.idDoc_Clinic}>
+              {doc_clinic.idDoc_Clinic}
+            </option>
+          ))}
+        </select>  
+      <input type="time" name="upBeginningTime" onChange={(e)=>insertBeginningTime(e.target.value)}/>
+      <input type="time" name="upFinishTime" onChange={(e)=>insertFinishTime(e.target.value)}/>
+      <input type="date" name="upData" onChange={(e)=>insertData(e.target.value)}/>
+      <select name="upIdTy">
+          {types.map((type)=>(
+            <option key={type.idType} value={type.idType}>
+              {type.typeName}
+            </option>
+          ))}
+        </select> 
+      <input type="submit" value="Update Schedule" />
+    </form>
+  </div>
+
 
     <div>
       <form action={insertStage}>

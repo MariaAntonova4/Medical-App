@@ -53,6 +53,7 @@ type UnsubscribeFunction=()=>void;
         updateDoc_Spec:(idD_S,idDoc_D_S,idSpec_D_S)=>Promise<any>;
         updateDoctor:(idDoc,firstName,middleName,lastName,docSpecialization,docTelephone,docUser)=>Promise<any>;
         updatePurpose:(idPurpose,purposeName,duration)=>Promise<any>;
+        updateSchedule:(upIdSchedule,upDoc_Cli,upBeginningTime,upFinishTime, upDate, upType)=>Promise<any>;
         updateSpec:(idNum,specName)=>Promise<any>;
         update_User:(upIdUser,upUsername,upPass,upTypeU)=>Promise<any>;
         createChildWindow:()=>Promise<any>;
