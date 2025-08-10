@@ -4,7 +4,8 @@ import viteLogo from '/vite.svg';
 import './App.css';
 import { createRoot } from 'react-dom/client';
 import Home from './App';
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Child from './Child.js'
 function App() {
   const[doc_clinics,allDoc_Clinics]=useState<any[]>([]);
 
@@ -99,7 +100,9 @@ useEffect(()=>{
       }
     }} 
   }
-
+const openChildWindow = () => {
+  window.electron.createChildWindow();
+};
   function connectToHome() {
     createRoot(document.getElementById('root')!).render(
       <StrictMode>
@@ -110,6 +113,17 @@ useEffect(()=>{
   return (
     <>
     {/*doctor., doctor.middleName, doctor.lastName, schedule.idStage, schedule.doctor_clinic,schedule.idType, type_purpose.idPurpose,type.typeName,purpose.purposeName FROM schedule INNER JOIN type_purpose ON schedule.idType=type_purpose.idType INNER JOIN Doc_Clinic ON schedule.doctor_clinic=Doc_Clinic.idDoc_Clinic INNER JOIN clinic ON Doc_Clinic.idClinic_D_C=clinic.idClinic INNER JOIN doctor ON Doc_Clinic.idDoc_D_C=doctor.idDoc INNER JOIN type ON type_purpose.idType=type.idType INNER JOIN purpose ON type_purpose.idPurpose=purpose.idPurpose INNER JOIN stage ON type_purpose.idStage=stage.idStage",[],(err,data)=>{ */}
+
+
+<div><button onClick={openChildWindow}>Open Child Window</button></div>
+  
+    <BrowserRouter>
+      <Routes>
+
+        <Route path="/child" element={<Child />} />
+      </Routes>
+    </BrowserRouter>
+
 
         <div>
       <form action={insertAppointment}>

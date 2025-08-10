@@ -43,6 +43,7 @@ electron.contextBridge.exposeInMainWorld("electron",{
     insertType_Purpose:(idType:number,idPurpose:number,idStage:number)=>ipcRenderer.invoke('insert-type-purpose',idType,idPurpose,idStage),
     insert_User:(username:string,password:string,typeOfUser:number)=>ipcRenderer.invoke('insert-user'),
     updateSpec:(idNum:number,specName:string)=>ipcRenderer.invoke('update-spec',idNum,specName),
+    updateAppointment:(idAppointment:number,doc_cli:number, status:number,time:Date,date:Date,ty_pur:number,idPatient:number)=>ipcRenderer.invoke('update-appointment',idAppointment,doc_cli, status,time,date,ty_pur,idPatient),
     updateClinic:(idClinic:number,updateClinicName:string,updateClinicAddress:string)=>ipcRenderer.invoke('update-clinic',idClinic,updateClinicName,updateClinicAddress),
     updateDoctor:(idDoc:number,firstName:string,middleName:string,lastName:string,docSpecialization:number,docTelephone:string,docUser:number)=>ipcRenderer.invoke('update-doctor',idDoc,firstName,middleName,lastName,docSpecialization,docTelephone,docUser),
     updateDoc_Clinic:(idD_C:number,idDoc_D_C:number,idClinic_D_C:number,cabinet:string)=>ipcRenderer.invoke('update-doctor-clinic',idD_C,idDoc_D_C,idClinic_D_C,cabinet),

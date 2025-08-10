@@ -126,6 +126,12 @@ export function updateSpec(idSpec:number,specName:string) {
     db.run("UPDATE specialization SET specName=(?) WHERE id=(?)",[specName],[idSpec]);
 }
 
+export function updateAppointment(idAppointment:number,doc_cli:number, status:number,time:Date,date:Date,ty_pur:number,idPatient:number) {
+    const up=db.prepare("UPDATE appointment SET doc_cli=?,status=?,time=?, date=?,ty_pur=?,idPatient=? WHERE idAppointment=?");
+    const result=up.run(doc_cli, status,time,date,ty_pur,idPatient,idAppointment);
+    console.log(`Updated appointment`);
+}
+
 export function updateClinic(idClinic:number,updateClinicName:string,updateClinicAddress:string) {
     const up=db.prepare("UPDATE clinic SET nameOfClinic=?,addressOfClinic=? WHERE idClinic=?");
     const result=up.run(updateClinicName,updateClinicAddress,idClinic);

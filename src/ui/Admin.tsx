@@ -6,6 +6,13 @@ import './App.css';
 import App from './App';
 
 function Admin(){
+  const[upIdAppointment,updateIdAppointment]=useState("");
+  const[upDoc_Cl,updateDoc_Cl]=useState("");
+  const[upTime,updateTime]=useState("");
+  const[upDate,updateDate]=useState("");
+  const[upTy_Pur,updateTy_Pur]=useState("");
+  const[ty_purSchedules,allTy_PurSchedules]=useState<any[]>([]);
+  const[doctorsSchedules,allDoctorSchedules]=useState<any[]>([]);
 
   const [aSpecName,setASpecName]=useState("");
   const [idSpec,setIdSpec]=useState("");
@@ -47,12 +54,12 @@ function Admin(){
   const[inDoc_Speci,insertDoc_Speci]=useState("");   const[upDoc_Speci,updateDoc_Speci]=useState("");
   const[doc_specs,allDoc_Specs]=useState<any[]>([]);
   
-const[inTypeName,insertTypeName]=useState("");  // const[upFirstName,updateFirstName]=useState("");
+const[inTypeName,insertTypeName]=useState("");  
 const[types,allTypes]=useState<any[]>([]);
 
 const[upIdPurpose,updateIdPurpose]=useState("");
-const[inPurposeName,insertPurposeName]=useState(""); const[upPurposeName,updatePurposeName]=useState("");//const[upMiddleName,updateMiddleName]=useState("");
-const[inDuration,insertDuration]=useState("");  const[upDuration,updateDuration]=useState("");   //const[upLastName,updateLastName]=useState("");
+const[inPurposeName,insertPurposeName]=useState(""); const[upPurposeName,updatePurposeName]=useState("");
+const[inDuration,insertDuration]=useState("");  const[upDuration,updateDuration]=useState("");   
 const[purposes,allPurposes]=useState<any[]>([]);
 
 const[inDoctor_Clinic,insertDoctor_Clinic]=useState("");
@@ -69,7 +76,7 @@ const[upFinishTime,updateFinishTime]=useState("");
 const[upData,updateData]=useState("");
 const[upIdTy,updateIdTy]=useState("");
 
-const[inStageName,insertStageName]=useState("");   //const[upFirstName,updateFirstName]=useState("");
+const[inStageName,insertStageName]=useState("");   
 
 const[stages,allStages]=useState<any[]>([]);
 
@@ -96,6 +103,14 @@ const[statuses,allStatus]=useState<any[]>([]);
 
 const[]=useState<any[]>([]);
 
+ useEffect(()=>{
+    window.electron.readTy_PurSchedule().then(allTy_PurSchedules);
+  },[]);
+
+     useEffect(()=>{
+    window.electron.readDoctorSchedule().then(allDoctorSchedules);
+  },[]);
+  
   useEffect(()=>{
     window.electron.readAppointment().then(allAppointments);
   },[]);
@@ -157,6 +172,15 @@ const[]=useState<any[]>([]);
     window.electron.readStage().then(allStages);
   },[]);
 
+  function updateAppointment(formData: { get: (arg0: string) => any; }) {
+    const updaIdAppointment=formData.get("upIdAppointment");
+    const updaDoc_Cl=formData.get("upDoc_Cl");
+    const updaTime=formData.get("upTime");
+    const updaDate=formData.get("upDate");
+    const updaTy_Pur=formData.get("upTy_Pur");
+    
+    window.electron.updateAppointment(updaIdAppointment,updaDoc_Cl,1,updaTime,updaDate,updaTy_Pur,1);
+  }
 
   function insertPatient(formData: { get: (arg0: string) => any; }) {
     const addFirstName=formData.get("inFirstPName");
@@ -293,7 +317,7 @@ function update_User(formData: { get: (arg0: string) => any; }) {
       const idD_S=formData.get("upIdD_S");
         const updateDoctor=formData.get("upDoc_Speci");
         const updateSpec=formData.get("upSpec_Doc");
-
+        alert(idD_S,updateDoctor,updateSpec);
         window.electron.updateDoc_Spec(idD_S,updateDoctor,updateSpec);
     }
 
@@ -558,26 +582,28 @@ const[inTy_Pur,insertTy_Pur]=useState("");
         </select>
             <input type="submit" value="Insert Type_Purpose" />
         </form>
-
-        {/* <form action={updateDoc_Spec}>
-            <input type="number" name="idClinic" onChange={(e)=>setIdClinic(e.target.value)}/>
-            <select name="upDoc_Speci">
-          {doctors.map((doctor)=>(
-            <option key={doctor.idDoc} value={doctor.idDoc}>
-              {doctor.firstName} {doctor.middleName} {doctor.lastName}
+      </div>
+        <form action={updateAppointment}>
+            <input type="number" name="upIdAppointment" onChange={(e)=>updateIdAppointment(e.target.value)}/>
+            <select name="upDoc_Cl">
+          {doctorsSchedules.map((schedule)=>(
+            <option key={schedule.doctor_clinic} value={schedule.doctor_clinic}>
+              {schedule.firstName} {schedule.middleName} {schedule.lastName}
             </option>
           ))}
         </select>  
-            <select name="upSpec_Doc">
-          {specs.map((specialization)=>(
-            <option key={specialization.id} value={specialization.id}>
-              {specialization.specName}
+        <input type="time" name="upTime" onChange={(e)=>updateTime(e.target.value)} />
+        <input type="date" name="upDate" onChange={(e)=>updateDate(e.target.value)} />
+            <select name="upTy_Pur">
+          {ty_purSchedules.map((schedule)=>(
+            <option key={schedule.idType_Purpose} value={schedule.idType_Purpose}>
+              {schedule.typeName} - {schedule.purposeName}
             </option>
           ))}
         </select>
-            <input type="submit" value="Update Doctor's specialization" />
-        </form> */}
-    </div>
+            <input type="submit" value="Update Appointment" />
+        </form>
+    
 
   <div>
     <form action={insertSchedule}>
@@ -745,9 +771,12 @@ const[inTy_Pur,insertTy_Pur]=useState("");
         </select>
             <input type="submit" value="Insert Doctor" />
         </form>
-
+{/* const idD_S=formData.get("");
+        const updateDoctor=formData.get("upDoc_Speci");
+        const updateSpec=formData.get("upSpec_Doc");
+        alert(idD_S,updateDoctor,updateSpec); */}
         <form action={updateDoc_Spec}>
-            <input type="number" name="idClinic" onChange={(e)=>setIdClinic(e.target.value)}/>
+            <input type="number" name="upIdD_S" onChange={(e)=>updateIdD_S(e.target.value)}/>
             <select name="upDoc_Speci">
           {doctors.map((doctor)=>(
             <option key={doctor.idDoc} value={doctor.idDoc}>

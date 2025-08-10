@@ -14,7 +14,8 @@ insertPatient, insertStatus, getAllAppointments, getAllPatinets, getAllStatus,
 updatePurpose,
 getAllTy_PurSchedule,
 getAllDoctorSchedule,
-updateSchedule} from "../database/db.js";
+updateSchedule,
+updateAppointment} from "../database/db.js";
 
 
 app.on('ready',()=>{
@@ -53,6 +54,7 @@ app.on('ready',()=>{
     ipcMain.handle('insert-type-purpose',(event,idType,idPurpose,idStage)=>insertType_Purpose(idType,idPurpose,idStage));
     ipcMain.handle('insert-user',(event,userName,pass,userType)=>insert_User(userName,pass,userType));
     ipcMain.handle('update-spec',(event,idNum,specName)=>updateSpec(idNum,specName));
+    ipcMain.handle('update-appointment',(event,idAppointment,doc_cli, status,time,date,ty_pur,idPatient)=>updateAppointment(idAppointment,doc_cli, status,time,date,ty_pur,idPatient));
     ipcMain.handle('update-clinic',(event,idClinic,updateClinicName,updateClinicAddress)=>updateClinic(idClinic,updateClinicName,updateClinicAddress));
     ipcMain.handle('update-doctor',(event,idDoc,firstName,middleName,lastName,docSpecialization,docTelephone,docUser)=>updateDoctor(idDoc,firstName,middleName,lastName,docSpecialization,docTelephone,docUser));
     ipcMain.handle('update-doctor-clinic',(event,idD_C,idDoc_D_C,idClinic_D_C,cabinet)=>updateDoc_Clinic(idD_C,idDoc_D_C,idClinic_D_C,cabinet));

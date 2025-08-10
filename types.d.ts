@@ -48,6 +48,7 @@ type UnsubscribeFunction=()=>void;
         insertTypeOfUser:(userTypeName)=>Promise<any>;
         insertType_Purpose:(idType,idPurpose,idStage)=>Promise<any>;
         insert_User:(username,password,typeOfUser)=>Promise<any>;
+        updateAppointment:(idAppointment,doc_cli, status,time,date,ty_pur,idPatient)=>Promise<any>;
         updateClinic:(idClinic,updateClinicName,updateClinicAddress)=>Promise<any>;
         updateDoc_Clinic:(idD_C,idDoc_D_C,idClinic_D_C,cabinet)=>Promise<any>;
         updateDoc_Spec:(idD_S,idDoc_D_S,idSpec_D_S)=>Promise<any>;
