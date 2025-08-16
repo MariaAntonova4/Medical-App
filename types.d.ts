@@ -18,6 +18,7 @@ type UnsubscribeFunction=()=>void;
         getA:()=>Promise<Atype>;
         readSpec:()=>Promise<any>;
         readAppointment:()=>Promise<any>;
+        readDateAppointment:(date)=>Promise<any>;
         readClinic:()=>Promise<any>;
         readDoctor:()=>Promise<any>;
         readDoc_Clinic:()=>Promise<any>;

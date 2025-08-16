@@ -352,6 +352,18 @@ export function getAllAppointments():Promise<any[]>{
     });
 }
 
+export function getAllDateAppointments(date:Date):Promise<any[]>{
+    return new Promise((resolve,reject)=>{
+        db.all('SELECT * FROM appointment WHERE date='+date,[],(err,data)=>{
+            if (err) {
+                reject(err);              
+            } else {
+                resolve(data);
+            }
+        })
+    });
+}
+
 export function getAllPatinets():Promise<any[]>{
     return new Promise((resolve,reject)=>{
         db.all("SELECT * FROM patient",[],(err,data)=>{

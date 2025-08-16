@@ -1,4 +1,4 @@
-import {app,BrowserWindow, ipcMain}from 'electron';
+import {app,BrowserWindow, ipcMain, MenuItemConstructorOptions,Menu}from 'electron';
 import path from 'path';
 import { ipcMainHandle, isDev } from './util.js';
 import { pollResources,getA } from './resourceManager.js';
@@ -12,7 +12,7 @@ getAllDoc_Spec, updateDoc_Spec, updateDoc_Clinic, updateDoctor, insertPurpose, i
 , getAllTypes, getAllStage, getAllPurpose, getAllType_Purpose, insertSchedule, getAllSchedule, insertAppointment, 
 insertPatient, insertStatus, getAllAppointments, getAllPatinets, getAllStatus,
 updatePurpose,
-getAllTy_PurSchedule,
+getAllTy_PurSchedule, getAllDateAppointments,
 getAllDoctorSchedule,
 updateSchedule,
 updateAppointment} from "../database/db.js";
@@ -125,6 +125,15 @@ app.on('ready',()=>{
         const doctor=await getAllAppointments();
         return doctor;
     });
+    ipcMain.handle('read-date-appointment',(event,date)=>{
+        const dateAppointment=getAllDateAppointments(date);
+        return dateAppointment;
+    });
+ 
+    // ipcMain.handle('',async(date)=>{
+    //     const dateAppointment=await getAllDateAppointments(date);
+    //     return dateAppointment;
+    // });
     ipcMain.handle('read-patient',async()=>{
             const doc_Clinics=await getAllPatinets();
             return doc_Clinics;
@@ -134,8 +143,55 @@ app.on('ready',()=>{
             return doc_Spec;
         });
 
-    createMenu();
 
+
+        
+const adminMenu:MenuItemConstructorOptions[] = [
+  {
+    label: 'Insert',
+    submenu: [
+      { label: 'Open', click: () => console.log('Open clicked') },
+      { label: 'Exit', role: 'quit' }
+    ]
+  },{
+    label:'Update',
+    submenu:[
+        {label:'ldl;'}
+    ]
+  }
+];
+
+const adMenu = Menu.buildFromTemplate(adminMenu);
+ 
+function createAdminWindow() {
+        const adminWindow=new BrowserWindow({
+        parent:mainWindow,
+        modal:false,
+        show:true,
+        webPreferences:{
+            preload:getPreloadPath(),
+        }
+    });
+    if (isDev()) {
+        adminWindow.loadURL('http://localhost:7842/admin');
+    }else{
+        adminWindow.loadFile(path.join(app.getAppPath(),'/dist-react/index.html'));
+    }
+    adminWindow.setMenu(adMenu);
+    }
+
+    createMenu();
+ const customMenuTemplate:MenuItemConstructorOptions[] = [
+  {
+    label: 'File',
+    submenu: [
+      { label: 'Open', click: () => console.log('Open clicked') },
+      { label: 'Exit', role: 'quit' }
+    ]
+  }
+];
+
+const customMenu = Menu.buildFromTemplate(customMenuTemplate);
     function createChildWindow() {
         const childWindow=new BrowserWindow({
         parent:mainWindow,
@@ -148,13 +204,27 @@ app.on('ready',()=>{
         childWindow.loadURL('http://localhost:7842/child');
     }else{
         childWindow.loadFile(path.join(app.getAppPath(),'/dist-react/index.html'));
-    }
+    }    childWindow.setMenu(customMenu);
     }
     ipcMain.on('',()=>{
         createChildWindow();
     });
 
-
+function createMenu() {
+        Menu.setApplicationMenu(Menu.buildFromTemplate([{
+                label: "App",
+                type: "submenu",
+                submenu: [{
+                        label: "Quit",
+                        click: app.quit
+                    },{
+                            label:"Admin",
+                            click:()=>{
+        createAdminWindow(); 
+                            }
+                    }]
+            }]));
+    }
     function handleCloseEvents(mainWindow:BrowserWindow){
         let willClose=false;
     mainWindow.on("close",(e)=>{
@@ -175,7 +245,3 @@ app.on('ready',()=>{
     });
     }
     });
-
-// }
-// function handleGetA(callback:()=>Atype){
-//             ipcMain.handle('getA',callback); 

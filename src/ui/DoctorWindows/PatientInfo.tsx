@@ -1,9 +1,9 @@
 import React from 'react';
 import { useEffect,StrictMode, useState} from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
-import './App.css';
-import App from './App';
+import './../index.css'
+import './../App.css';
+import App from '../App';
 import { format } from 'date-fns';
 
 function App2({patient}:{patient:any}){
@@ -42,18 +42,35 @@ function App2({patient}:{patient:any}){
   return(
     <>
     <div>
-      <h3>Patient Information:</h3>
-      <p>{patient.firstName}</p>
-      <p>{patient.lastName}</p>
-      <p>{patient.EGN}</p>
-      {/* <h1>
-        Specialization
-      </h1>
-      <ul>
-        {patients.map((patient,idx)=>(
-          <li key={idx}>{JSON.stringify(patient)}</li>
-        ))}
-      </ul> */}
+      <h1>
+      Patient Information:
+    </h1>
+    <h2>
+      First Name:
+    </h2>
+    {patient.firstName}
+    <h2>
+      Middle Name:
+    </h2>
+    {patient.middleName}
+    <h2>
+      Last Name:
+    </h2>
+    {patient.lastName}
+    <h2>
+      Age:
+    </h2>
+    {patient.age}
+    <h2>
+      EGN
+    </h2>
+    {patient.EGN}
+    <h2>Gender:</h2>
+    {patient.gender}
+    <h2>Address</h2>
+    {patient.address}
+    <h2>Telephone</h2>
+    {patient.telephone}
     </div>
     <form action={returnApp}>
       <button>Return Home</button>

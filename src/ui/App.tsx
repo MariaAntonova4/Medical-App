@@ -6,14 +6,13 @@ import { useData } from './useData.js';
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import Doctor from './Doctor'
-import Patient from './Patient';
+import Doctor from './DoctorWindows/Doctor'
+import Patient from './UnlockPatient';
 import Admin from './UnlockAdmin';
 import Dev from './Admin';
+
 function App() {
   function connectToDoctorWindow() {
-    //alert('hey');
-    //window.electron.createChildWindow();
     createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Doctor />
@@ -27,14 +26,6 @@ function App() {
       </StrictMode>
     )
   }
-  function connectToAdminWindow() {
-  createRoot(document.getElementById('root')!).render(
-    <StrictMode>
-      {/* <Admin/> */}
-      <Dev/>
-    </StrictMode>
-  )
-}
   return (
     <>
     {/* <div>
@@ -70,59 +61,9 @@ function App() {
             Patient
           </button>
         </form>
-
-        <h3>Connect to admin window</h3>
-        <form action={connectToAdminWindow}>
-          <button>
-            Admin
-          </button>
-        </form>
-
        </div>
-      <Func/>
     </>
   )
 }
 
-function Func() {
-  const [ime,setIme]=useState("");
-  const handleSubmit=(event: { preventDefault: () => void; })=>{
-    event.preventDefault();
-    <><Fun a="{ime}" /><p>Name : </p></>
-    alert(ime);
-  }
-  return(
-    <p></p>
-    // <form onSubmit={handleSubmit}>
-    //   <input type="text"value={ime}onChange={(e)=>setIme(e.target.value)} />
-    //   <input type="submit" />
-    // </form>
-  );
-}
-function Fun({a}:{a:string}) {
-  return(
-    <p>The name is {a}</p>
-  );
-}
-
 export default App
-interface State {
-   count: string
-};
-
-type CounterAction =
-  | { type: "reset" }
-  | { type: "setCount"; value: State["count"] }
-
-const initialState: State = { count: "h" };
-
-function stateReducer(state: State, action: CounterAction): State {
-  switch (action.type) {
-    case "reset":
-      return initialState;
-    case "setCount":
-      return { ...state, count: action.value };
-    default:
-      throw new Error("Unknown action");
-  }
-}

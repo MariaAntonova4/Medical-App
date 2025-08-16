@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import './App.css';
 import App from './App';
-
+//import { Electron } from './../../node_modules/electron/electron';
 function Admin(){
   const[upIdAppointment,updateIdAppointment]=useState("");
   const[upDoc_Cl,updateDoc_Cl]=useState("");
@@ -19,28 +19,13 @@ function Admin(){
   const [nameSpec,setNameSpec]=useState("");
   const [specs,setSpecs]=useState<any[]>([]);
 
-  const[insertClinicName,setAClinicName]=useState("");
-  const[insertClinicAddress,setAClinicAddress]=useState("");
-  const[idClinic,setIdClinic]=useState("");
-  const[updateClinicName,updateClinicNameF]=useState("");
-  const[updateClinicAddress,updateClinicAddressF]=useState("");
   const[clinics,allClinics]=useState<any[]>([]);
 
   const[inTypeUser,insertTypeUser]=useState("");
   const[allTypesOfUsers,typesOfUsers]=useState<any[]>([]);
 
-  const[inUsername,insertUsername]=useState("");
-  const[inPass,insertPass]=useState("");
-  const[inTypeOfUser,insertTypeU]=useState("");
   const[users,allUsers]=useState<any[]>([]);
 
-  const[upIdDoc,updateIdDoc]=useState("");
-  const[inFirstName,insertFirstName]=useState("");   const[upFirstName,updateFirstName]=useState("");
-  const[inMiddleName,insertMiddleName]=useState(""); const[upMiddleName,updateMiddleName]=useState("");
-  const[inLastName,insertLastName]=useState("");     const[upLastName,updateLastName]=useState("");
-  const[inDoc_Spec,insertDoc_Spec]=useState("");     const[upDoctor_Spec,updateDoctor_Spec]=useState("");
-  const[inDoc_Tel,insertDoc_Tel]=useState("");       const[upDoc_Tel,updateDoc_Tel]=useState("");
-  const[inDoc_User,insertDoc_User]=useState("");     const[upDoc_User,updateDoc_User]=useState("");
   const[doctors,allDoctors]=useState<any[]>([]);
 
   const[upIdD_C,updateIdD_C]=useState("");
@@ -80,28 +65,12 @@ const[inStageName,insertStageName]=useState("");
 
 const[stages,allStages]=useState<any[]>([]);
 
-const[inIdType,insertIdType]=useState(""); 
-const[inIdPurpose,insertidPurpose]=useState("");  
-const[inIdStage,insertIdStage]=useState("");
 const[type_purposes,allType_Purpose]=useState<any[]>([]);
 
 const[appointments,allAppointments]=useState<any[]>([]);
 
-const[inFirstPName,insertFirstPName]=useState("");
-const[inMiddlePName,insertMiddlePName]=useState("");
-const[inLastPName,insertLastPName]=useState("");
-const[inAge,insertAge]=useState("");
-const[inEGN,insertEGN]=useState("");
-const[inGender,insertGender]=useState("");
-const[inAddress,insertAddress]=useState("");
-const[inTelephone,insertTelephone]=useState("");
-const[inIdUser,insertIdUser]=useState("");
-const[patients,allPatients]=useState<any[]>([]);
-
 const[inStatusName,insertStatusName]=useState("");
 const[statuses,allStatus]=useState<any[]>([]);
-
-const[]=useState<any[]>([]);
 
  useEffect(()=>{
     window.electron.readTy_PurSchedule().then(allTy_PurSchedules);
@@ -116,15 +85,7 @@ const[]=useState<any[]>([]);
   },[]);
 
   useEffect(()=>{
-    window.electron.readPatient().then(allPatients);
-  },[]);
-
-  useEffect(()=>{
     window.electron.readStatus().then(allStatus);
-  },[]);
-
-  useEffect(()=>{
-    window.electron.readDoctor().then(allDoctors);
   },[]);
 
   useEffect(()=>{
@@ -172,6 +133,10 @@ const[]=useState<any[]>([]);
     window.electron.readStage().then(allStages);
   },[]);
 
+  function sendMenu() {
+    window.electron.createChildWindow()
+  }
+
   function updateAppointment(formData: { get: (arg0: string) => any; }) {
     const updaIdAppointment=formData.get("upIdAppointment");
     const updaDoc_Cl=formData.get("upDoc_Cl");
@@ -180,23 +145,6 @@ const[]=useState<any[]>([]);
     const updaTy_Pur=formData.get("upTy_Pur");
     
     window.electron.updateAppointment(updaIdAppointment,updaDoc_Cl,1,updaTime,updaDate,updaTy_Pur,1);
-  }
-
-  function insertPatient(formData: { get: (arg0: string) => any; }) {
-    const addFirstName=formData.get("inFirstPName");
-    const addMiddleName=formData.get("inMiddlePName");
-    const addLastName=formData.get("inLastPName");
-    const addAge=formData.get("inAge");
-    const addEGN=formData.get("inEGN");
-    const addGender=formData.get("inGender");
-    const addAddress=formData.get("inAddress");
-    const addTelephone=formData.get("inTelephone");
-    const addIdUser=formData.get("inIdUser");
-    
-    if (users.find((user)=>user.username===addIdUser&&user.userType===3)) {
-      window.electron.insertPatient(addFirstName,addMiddleName,addLastName,addAge,addEGN,addGender,addAddress,addTelephone,addIdUser);
-    }
-    
   }
 
   function insertStatus(formData: { get: (arg0: string) => any; }) {
@@ -253,110 +201,24 @@ const[]=useState<any[]>([]);
     window.electron.insertType(addTypeName);
   }
 
-    function insertType_Purpose(formData: { get: (arg0: string) => any; }) {
-    const addIdType=formData.get("inIdType");
-    const addIdPurpose=formData.get("inIdPurpose");
-    const addIdStage=formData.get("inIdStage");
-
-    window.electron.insertType_Purpose(addIdType,addIdPurpose,addIdStage);
-  }
-
-  function insert_User(formData: { get: (arg0: string) => any; }) {
-    const addUsername=formData.get("inUsername");
-    const addPass=formData.get("inPass");
-    const addTypeU=formData.get("inTypeOfUser");
-    window.electron.insert_User(addUsername,addPass,addTypeU);
-  }
-
-function update_User(formData: { get: (arg0: string) => any; }) {
-    const upIdUser=formData.get("upIdUser");
-    const upUsername=formData.get("upUsername");
-    const upPass=formData.get("upPass");
-    const upTypeU=formData.get("upTypeOfUser");
-    window.electron.update_User(upIdUser,upUsername,upPass,upTypeU);
-  }
-
   function insertTypeOfUser(formData: { get: (arg0: string) => any; }) {
     const addTypeUser=formData.get("inTypeUser");
 
     window.electron.insertTypeOfUser(addTypeUser);
   }
-    function insertClinic(formData: { get: (arg0: string) => any; }) {
-        const addClinicName=formData.get("insertClinicName");
-        const addClinicAddress=formData.get("insertClinicAddress");
 
-        window.electron.insertClinic(addClinicName,addClinicAddress);
-    }
-
-  function updateDoctor(formData: { get: (arg0: string) => any; }) {
-    const upIdDoc=formData.get("upIdDoc");
-    const upFirstName=formData.get("upFirstName");
-    const upMiddleName=formData.get("upMiddleName");
-    const upLastName=formData.get("upLastName");
-    const upDoc_Spec=formData.get("upDoctor_Spec");
-    const upDoc_Tel=formData.get("upDoc_Tel");
-    const upDoc_User=formData.get("upDoc_User");
-    if (users.find((user)=>user.username===upDoc_User&&user.userType===2)) {
-      
-      window.electron.updateDoctor(upIdDoc,upFirstName,upMiddleName,upLastName,upDoc_Spec,upDoc_Tel,upDoc_User);
-    }
-    else{
-      alert("This user doesn't exist")
-    }
-  }
-
-  function updateDoc_Clinic(formData: { get: (arg0: string) => any; }) {
-    const upIdD_C=formData.get("upIdD_C");
-    const updateIdDoc_Clinic=formData.get("upDoc_Clinic");
-    const updateIdClinic_Doc=formData.get("upClinic_Doc");
-    const cabinet=formData.get("upCabinet");
-
-    window.electron.updateDoc_Clinic(upIdD_C,updateIdDoc_Clinic,updateIdClinic_Doc,cabinet);
-  }
     function updateDoc_Spec(formData: { get: (arg0: string) => any; }) {
       const idD_S=formData.get("upIdD_S");
         const updateDoctor=formData.get("upDoc_Speci");
         const updateSpec=formData.get("upSpec_Doc");
-        alert(idD_S,updateDoctor,updateSpec);
         window.electron.updateDoc_Spec(idD_S,updateDoctor,updateSpec);
     }
 
-    function insertDoctor(formData: { get: (arg0: string) => any; }) {
-    const inFirstName=formData.get("inFirstName");
-    const inMiddleName=formData.get("inMiddleName");
-    const inLastName=formData.get("inLastName");
-    const inDoc_Spec=formData.get("inDoc_Spec");
-    const inDoc_Tel=formData.get("inDoc_Tel");
-    const inDoc_User=formData.get("inDoc_User");
-    if (users.find((user)=>user.username===inDoc_User&&user.userType===2)) {
-      
-      window.electron.insertDoctor(inFirstName,inMiddleName,inLastName,inDoc_Spec,inDoc_Tel,inDoc_User);
-    }
-    else{
-      alert("This user doesn't exist")
-    }
-  }
-
-  function insertDoc_Clinic(formData: { get: (arg0: string) => any; }) {
-    const addIdDoc_Clinic=formData.get("inDoc_Clinic");
-    const addIdClinic_Doc=formData.get("inClinic_Doc");
-    const cabinet=formData.get("inCabinet");
-
-    window.electron.insertDoc_Clinic(addIdDoc_Clinic,addIdClinic_Doc,cabinet);
-  }
     function insert_Doc_Spec(formData: { get: (arg0: string) => any; }) {
         const addDoctor=formData.get("inDoc_Speci");
         const addSpec=formData.get("inSpec_Doc");
 
         window.electron.insertDoc_Spec(addDoctor,addSpec);
-    }
-
-    function updateClinic(formData: { get: (arg0: string) => any; }) {
-        const idClinic=formData.get("idClinic");
-        const clinicName=formData.get("updateClinicName");
-        const clinicAddress=formData.get("updateClinicAddress");
-
-        window.electron.updateClinic(idClinic,updateClinicName,updateClinicAddress);
     }
 
   function addSpec(formData: { get: (arg0: string) => any; }) {
@@ -385,13 +247,6 @@ function update_User(formData: { get: (arg0: string) => any; }) {
         <li key={idx}>{JSON.stringify(appointment)}</li>
       ))}</ul>
     </div>     
-
-     <div>
-      <h1>Patients</h1>
-      <ul>{patients.map((patient,idx)=>(
-        <li key={idx}>{JSON.stringify(patient)}</li>
-      ))}</ul>
-    </div>   
 
       <div>
       <h1>Status</h1>
@@ -429,38 +284,9 @@ function update_User(formData: { get: (arg0: string) => any; }) {
     </div>
 
     <div>
-      <h1>Type_Purpose</h1>
-      <ul>{type_purposes.map((type_purpose,idx)=>(
-        <li key={idx}>{JSON.stringify(type_purpose)}</li>
-      ))}</ul>
-    </div>
-
-    <div>
-      <h1>Doctors</h1>
-      <ul>{doctors.map((doctor,idx)=>(
-        <li key={idx}>{JSON.stringify(doctor)}</li>
-      ))}</ul>
-    </div>
-    
-    <div>
-      <h1>Doctor's clinic</h1>
-      <ul>{doc_clinics.map((doc_clinic,idx)=>(
-        <li key={idx}>{JSON.stringify(doc_clinic)
-        }</li>
-      ))}</ul>
-    </div>
-
-    <div>
       <h1>Doctor's specialization</h1>
       <ul>{doc_specs.map((doc_spec,idx)=>(
         <li key={idx}>{JSON.stringify(doc_spec)}</li>
-      ))}</ul>
-    </div>
-    
-    <div>
-      <h1>Users</h1>
-      <ul>{users.map((user,idx)=>(
-        <li key={idx}>{JSON.stringify(user)}</li>
       ))}</ul>
     </div>
 
@@ -471,14 +297,6 @@ function update_User(formData: { get: (arg0: string) => any; }) {
       ))}</ul>
     </div>
 
-    <div>
-        <h1>Clinics</h1>
-        <ul>
-            {clinics.map((clinic,idx)=>(
-                <li key={idx}>{JSON.stringify(clinic)}</li>
-            ))}
-        </ul>
-    </div>
 
     <div>
       <h1>
@@ -490,26 +308,6 @@ function update_User(formData: { get: (arg0: string) => any; }) {
         ))}
       </ul>
     </div>
-
-{/* const[inDoc_Cli,insertDoc_cli]=useState("");
-const[inStat,insertStat]=useState(""); 
-const[inTy_Pur,insertTy_Pur]=useState("");
-*/}
-  
-  <div>
-    <form action={insertPatient}>
-      <input type="text" name="inFirstPName" onChange={(e)=>insertFirstPName(e.target.value)}/>
-      <input type="text" name="inMiddlePName" onChange={(e)=>insertMiddlePName(e.target.value)}/>
-      <input type="text" name="inLastPName" onChange={(e)=>insertLastPName(e.target.value)}/>
-      <input type="number" name="inAge" onChange={(e)=>insertAge(e.target.value)}/>
-      <input type="text" name="inEGN" onChange={(e)=>insertEGN(e.target.value)}/>
-      <input type="text" name="inGender" onChange={(e)=>insertGender(e.target.value)}/>
-      <input type="text" name="inAddress" onChange={(e)=>insertAddress(e.target.value)}/>
-      <input type="tel" name="inTelephone" onChange={(e)=>insertTelephone(e.target.value)}/>
-      <input type="text" name="inIdUser" onChange={(e)=>insertIdUser(e.target.value)}/>
-      <input type="submit" value="Insert Patient" />
-    </form>
-  </div>
 
   <div>
     <form action={insertStatus}>
@@ -523,22 +321,6 @@ const[inTy_Pur,insertTy_Pur]=useState("");
             <input type="submit" value="Insert Type" />
         </form>
 
-        {/* <form action={updateDoctor}>
-            
-            <input type="text" name="upFirstName" onChange={(e)=>updateFirstName(e.target.value)} />
-            <input type="text" name="upMiddleName" onChange={(e)=>updateMiddleName(e.target.value)} />
-            <input type="text" name="upLastName" onChange={(e)=>updateLastName(e.target.value)} />
-            <input type="text" name='upDoc_User' onChange={(e)=>updateDoc_User(e.target.value)}/>
-            <select name="upDoctor_Spec">
-          {specs.map((specialization)=>(
-            <option key={specialization.id} value={specialization.id}>
-              {specialization.specName}
-            </option>
-          ))}
-        </select>
-            <input type="tel" name="upDoc_Tel" onChange={(e)=>updateDoc_Tel(e.target.value)} />
-            <input type="submit" value="Update Doctor" />
-        </form> */}
     </div>
 
     <div>
@@ -557,32 +339,6 @@ const[inTy_Pur,insertTy_Pur]=useState("");
         </form>
     </div>
 
- <div>
-        <form action={insertType_Purpose}>
-          <select name="inIdType">
-          {types.map((type)=>(
-            <option key={type.idType} value={type.idType}>
-              {type.typeName}
-            </option>
-          ))}
-        </select>  
-            <select name="inIdPurpose">
-          {purposes.map((purpose)=>(
-            <option key={purpose.idPurpose} value={purpose.idPurpose}>
-              {purpose.purposeName}
-            </option>
-          ))}
-        </select> 
-            <select name="inIdStage">
-          {stages.map((stage)=>(
-            <option key={stage.idStage} value={stage.idStage}>
-              {stage.stageName}
-            </option>
-          ))}
-        </select>
-            <input type="submit" value="Insert Type_Purpose" />
-        </form>
-      </div>
         <form action={updateAppointment}>
             <input type="number" name="upIdAppointment" onChange={(e)=>updateIdAppointment(e.target.value)}/>
             <select name="upDoc_Cl">
@@ -660,99 +416,6 @@ const[inTy_Pur,insertTy_Pur]=useState("");
       </form>
     </div>
 
-<div>
-      {/* <form action={update_User}>
-        <input type="number" name="upIdUser"/>
-        <input type="text" name="upUsername" onChange={(e)=>insertUsername(e.target.value)}/>
-        <input type="submit" value="Update User" />
-      </form> */}
-    </div>
-{/* 
-    <div>
-      <form action={insertType_Purpose}>
-        <input type="text" name="inTypeUser" onChange={(e)=>insertTypeUser(e.target.value)} />
-        
-        <input type="submit" value="Insert Type Of User" />
-      </form>
-    </div> */}
-
-
-    <div>
-        <form action={insertDoctor}>
-            <input type="text" name="inFirstName" onChange={(e)=>insertFirstName(e.target.value)} />
-            <input type="text" name="inMiddleName" onChange={(e)=>insertMiddleName(e.target.value)} />
-            <input type="text" name="inLastName" onChange={(e)=>insertLastName(e.target.value)} />
-            <input type="text" name='inDoc_User' onChange={(e)=>insertDoc_User(e.target.value)}/>
-            <select name="inDoc_Spec">
-          {specs.map((specialization)=>(
-            <option key={specialization.id} value={specialization.id}>
-              {specialization.specName}
-            </option>
-          ))}
-        </select>
-            <input type="tel" name="inDoc_Tel" onChange={(e)=>insertDoc_Tel(e.target.value)} />
-            <input type="submit" value="Insert Doctor" />
-        </form>
-
-        <form action={updateDoctor}>
-            <input type="number" name="upIdDoc" onChange={(e)=>updateIdDoc(e.target.value)}/>
-            <input type="text" name="upFirstName" onChange={(e)=>updateFirstName(e.target.value)} />
-            <input type="text" name="upMiddleName" onChange={(e)=>updateMiddleName(e.target.value)} />
-            <input type="text" name="upLastName" onChange={(e)=>updateLastName(e.target.value)} />
-            <input type="text" name='upDoc_User' onChange={(e)=>updateDoc_User(e.target.value)}/>
-            <select name="upDoctor_Spec">
-          {specs.map((specialization)=>(
-            <option key={specialization.id} value={specialization.id}>
-              {specialization.specName}
-            </option>
-          ))}
-        </select>
-            <input type="tel" name="upDoc_Tel" onChange={(e)=>updateDoc_Tel(e.target.value)} />
-            <input type="submit" value="Update Doctor" />
-        </form>
-    </div>
-
-    <div>
-        <form action={insertDoc_Clinic}>
-            <select name="inDoc_Clinic">
-          {doctors.map((doctor)=>(
-            <option key={doctor.idDoc} value={doctor.idDoc}>
-              {doctor.firstName} {doctor.middleName} {doctor.lastName}
-            </option>
-          ))}
-        </select>
-        <select name="inClinic_Doc">
-          {clinics.map((clinic)=>(
-            <option key={clinic.idClinic} value={clinic.idClinic}>
-              {clinic.nameOfClinic}
-            </option>
-          ))}
-        </select>
-        <input type="text" name='inCabinet' onChange={(e)=>insertCabinet(e.target.value)}/>
-            <input type="submit" value="Insert Doctor Clinic" />
-        </form>
-
-        <form action={updateDoc_Clinic}>
-            <input type="number" name="upIdD_C" onChange={(e)=>updateIdD_C(e.target.value)}/>
-            <select name="upDoc_Clinic">
-          {doctors.map((doctor)=>(
-            <option key={doctor.idDoc} value={doctor.idDoc}>
-              {doctor.firstName} {doctor.middleName} {doctor.lastName}
-            </option>
-          ))}
-        </select>
-        <select name="upClinic_Doc">
-          {clinics.map((clinic)=>(
-            <option key={clinic.idClinic} value={clinic.idClinic}>
-              {clinic.nameOfClinic}
-            </option>
-          ))}
-        </select>
-        <input type="text" name='upCabinet' onChange={(e)=>updateCabinet(e.target.value)}/>
-            <input type="submit" value="Update Doctor's clinic" />
-        </form>
-    </div>
-
  <div>
         <form action={insert_Doc_Spec}>
           <select name="inDoc_Speci">
@@ -771,10 +434,7 @@ const[inTy_Pur,insertTy_Pur]=useState("");
         </select>
             <input type="submit" value="Insert Doctor" />
         </form>
-{/* const idD_S=formData.get("");
-        const updateDoctor=formData.get("upDoc_Speci");
-        const updateSpec=formData.get("upSpec_Doc");
-        alert(idD_S,updateDoctor,updateSpec); */}
+
         <form action={updateDoc_Spec}>
             <input type="number" name="upIdD_S" onChange={(e)=>updateIdD_S(e.target.value)}/>
             <select name="upDoc_Speci">
@@ -796,56 +456,10 @@ const[inTy_Pur,insertTy_Pur]=useState("");
     </div>
 
     <div>
-      <form action={insert_User}>
-        <input type="text" name="inUsername" onChange={(e)=>insertUsername(e.target.value)}/>
-        <input type="password" name="inPass" onChange={(e)=>insertPass(e.target.value)} />
-        <select name="inTypeOfUser">
-          {allTypesOfUsers.map((tyUser)=>(
-            <option key={tyUser.idTypeUser} value={tyUser.idTypeUser}>
-              {tyUser.typeUserName}
-            </option>
-          ))}
-        </select>
-        <input type="submit" value="Insert User" />
-      </form>
-    </div>
-
-<div>
-      <form action={update_User}>
-        <input type="number" name="upIdUser"/>
-        <input type="text" name="upUsername" onChange={(e)=>insertUsername(e.target.value)}/>
-        <input type="password" name="upPass" onChange={(e)=>insertPass(e.target.value)} />
-        <select name="upTypeOfUser">
-          {allTypesOfUsers.map((tyUser)=>(
-            <option key={tyUser.idTypeUser} value={tyUser.idTypeUser}>
-              {tyUser.typeUserName}
-            </option>
-          ))}
-        </select>
-        <input type="submit" value="Update User" />
-      </form>
-    </div>
-
-    <div>
       <form action={insertTypeOfUser}>
         <input type="text" name="inTypeUser" onChange={(e)=>insertTypeUser(e.target.value)} />
         <input type="submit" value="Insert Type Of User" />
       </form>
-    </div>
-
-    <div>
-        <form action={insertClinic}>
-            <input type="text" name="insertClinicName" onChange={(e)=>setAClinicName(e.target.value)} />
-            <input type="text" name="insertClinicAddress" onChange={(e)=>setAClinicAddress(e.target.value)} />
-            <input type="submit" value="Insert Clinic" />
-        </form>
-
-        <form action={updateClinic}>
-            <input type="number" name="idClinic" onChange={(e)=>setIdClinic(e.target.value)}/>
-            <input type="text" name="updateClinicName" onChange={(e)=>updateClinicNameF(e.target.value)} />
-            <input type="text" name="updateClinicAddress" onChange={(e)=>updateClinicAddressF(e.target.value)} />
-            <input type="submit" value="Update Clinic" />
-        </form>
     </div>
 
     <div>

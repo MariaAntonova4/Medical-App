@@ -1,13 +1,13 @@
 import React, { useEffect, useMemo, useState,memo,useReducer, StrictMode } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
-import './App.css';
+import './../App.css';
 import { createRoot } from 'react-dom/client';
-import Home from './App';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Child from './Child.js'
-function App() {
-  const[doc_clinics,allDoc_Clinics]=useState<any[]>([]);
+import Home from '../App';
+
+function App({patient}:{patient:any}) {
+
+const[doc_clinics,allDoc_Clinics]=useState<any[]>([]);
 
 const[schedules,allSchedules]=useState<any[]>([]);
 
@@ -56,19 +56,14 @@ useEffect(()=>{
     const addDate=formData.get("inDate");
     const addTy_pur=formData.get("inTy_Pur");
     const addIdPatient=formData.get("inIdPatient");
-    //addStatus  addIdPatient 
-    alert ("Before Type");
+
     if (type_purposes.find((type_purpose)=>type_purpose.idType_Purpose==addTy_pur)) {
       const ty_purNumber=type_purposes.find((type_purpose)=>type_purpose.idType_Purpose==addTy_pur);
       let durationChecker=0;
-      alert("You passed the type");
+
     if (schedules.find((schedule)=>schedule.date==addDate&&schedule.doctor_clinic==addDoc_cli&&schedule.idType==ty_purNumber.idType)) {
       const sch=schedules.find((schedule)=>schedule.doctor_clinic==addDoc_cli);
-      alert(sch.finishTime);
-      alert(addTime);
-      //var numberTime=parseFloat(addTime);
-      //var minutes=new Date(numberTime);
-      //alert(minutes.getTime());
+
       if (addTime>sch.beginningTime&&addTime<sch.finishTime) {
         while (durationChecker<=ty_purNumber.duration) {
         var [hours, minutes] = addTime.split(':').map(Number);
@@ -80,29 +75,28 @@ useEffect(()=>{
           var newHours = String(date.getHours()).padStart(2, '0');
           var newMinutes = String(date.getMinutes()).padStart(2, '0');
           const addNewTime=newHours+":"+newMinutes;
-//
+
            if (appointments.find((appointment)=>appointment.time<addNewTime&&appointment.date==addDate&&appointment.doc_cli==addDoc_cli)) {
               alert("There alredy is an appointment!");
               return;
               }
 
           if (sch.beginningTime>=addNewTime||sch.finishTime<=addNewTime) {
-            alert("The dates !!!");
+            alert("Please choose another time");
             return;
           }
-          alert(addNewTime);
           durationChecker=durationChecker+5;
-          //minutes.setHours(9,5);
-          //alert({newHours,newMinutes});
         }
-        alert("Adding in database");
-        //window.electron.insertAppointment(addDoc_cli,1,addTime,addDate,addTy_pur,1);
+        window.electron.insertAppointment(addDoc_cli,1,addTime,addDate,addTy_pur,patient.idPatient);
       }
     }} 
   }
-const openChildWindow = () => {
-  window.electron.createChildWindow();
-};
+
+  function openChildWindow() {
+      window.electron.createChildWindow();
+  }
+
+
   function connectToHome() {
     createRoot(document.getElementById('root')!).render(
       <StrictMode>
@@ -116,14 +110,6 @@ const openChildWindow = () => {
 
 
 <div><button onClick={openChildWindow}>Open Child Window</button></div>
-  
-    <BrowserRouter>
-      <Routes>
-
-        <Route path="/child" element={<Child />} />
-      </Routes>
-    </BrowserRouter>
-
 
         <div>
       <form action={insertAppointment}>

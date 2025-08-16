@@ -10,8 +10,10 @@ electron.contextBridge.exposeInMainWorld("electron",{
        }) 
     },
     createChildWindow:()=>ipcRenderer.invoke('open-child-window'),
+    
     readSpec:()=>ipcRenderer.invoke('read-spec'),
     readAppointment:()=>ipcRenderer.invoke('read-appointment'),
+    readDateAppointment:(date:Date)=>ipcRenderer.invoke('read-date-appointment',date),
     readClinic:()=>ipcRenderer.invoke('read-clinic'),
     readDoctor:()=>ipcRenderer.invoke('read-doctor'),
     readDoc_Clinic:()=>ipcRenderer.invoke('read-doctor-clinic'),
