@@ -24,12 +24,24 @@ a:hover {
 
 body {
   margin: 0;
+  background-color: rgb(172, 225, 241);
   display: flex;
   place-items: center;
+  gap: 50px;
   min-width: 320px;
   min-height: 100vh;
 }
+.homepage{
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+}
 
+.homepage.items{
+  display: flex;
+  gap: 170px;
+}
 h1 {
   font-size: 3.2em;
   line-height: 1.1;

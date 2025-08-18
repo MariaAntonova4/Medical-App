@@ -3,13 +3,18 @@ import './App.css';
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css';
-import Admin from './Admin';
+import Doctor from './DoctorWindows/Doctor';
 import Unlock from "./App";
 
 function App() {
   const[inUsername,insertUsername]=useState("");
   const[inPass,insertPass]=useState("");
   const[users,allUsers]=useState<any[]>([]);
+  const[doctors,allDoctors]=useState<any[]>([]);
+
+  useEffect(()=>{
+    window.electron.readDoctor().then(allDoctors);
+  },[]);
 
   useEffect(()=>{
     window.electron.readUser().then(allUsers);
@@ -18,11 +23,13 @@ function App() {
   function connectToDocWindow(formData: { get: (arg0: string) => any; }) {
     const getUsername=formData.get("inUsername");
     const getPass=formData.get("inPass");
-
+//idUser
     if (users.find((user)=>user.username===getUsername&&user.pass===getPass&&user.userType===2)) {
+    var user=users.find((user)=>user.username==getUsername&&user.pass==getPass&&user.userType==2);
+    var doc=doctors.find((doctor)=>doctor.docUser===user.username);
     createRoot(document.getElementById('root')!).render(
     <StrictMode>
-      <Admin/>
+      <Doctor doctor={doc}/>
     </StrictMode>
     )  
     }else if(users.find((user)=>user.username===getUsername&&user.pass===getPass&&user.userType!==2)){

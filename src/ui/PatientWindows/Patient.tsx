@@ -62,8 +62,8 @@ useEffect(()=>{
       let durationChecker=0;
 
     if (schedules.find((schedule)=>schedule.date==addDate&&schedule.doctor_clinic==addDoc_cli&&schedule.idType==ty_purNumber.idType)) {
-      const sch=schedules.find((schedule)=>schedule.doctor_clinic==addDoc_cli);
-
+      const sch=schedules.find((schedule)=>schedule.date==addDate&&schedule.doctor_clinic==addDoc_cli&&schedule.idType==ty_purNumber.idType);
+      alert(addTime+" sch.beginningTime: "+sch.beginningTime+" addTime: "+addTime+" sch.finishTime: "+sch.finishTime);
       if (addTime>sch.beginningTime&&addTime<sch.finishTime) {
         while (durationChecker<=ty_purNumber.duration) {
         var [hours, minutes] = addTime.split(':').map(Number);
@@ -76,10 +76,12 @@ useEffect(()=>{
           var newMinutes = String(date.getMinutes()).padStart(2, '0');
           const addNewTime=newHours+":"+newMinutes;
 
-           if (appointments.find((appointment)=>appointment.time<addNewTime&&appointment.date==addDate&&appointment.doc_cli==addDoc_cli)) {
-              alert("There alredy is an appointment!");
-              return;
-              }
+          //  if (appointments.find((appointment)=>appointment.time<addNewTime&&appointment.date==addDate&&appointment.doc_cli==addDoc_cli)) {
+          //   const app=appointments.find((appointment)=>appointment.time<addNewTime&&appointment.date==addDate&&appointment.doc_cli==addDoc_cli);
+          //   alert(app.time+" addNewTime: "+addNewTime+" app.date: "+app.date+" addDate: "+addDate+" app.doc_cli: "+app.doc_cli+" addDoc_cli: "+addDoc_cli);  
+          //   alert("There alredy is an appointment!");
+          //     return;
+          //     }
 
           if (sch.beginningTime>=addNewTime||sch.finishTime<=addNewTime) {
             alert("Please choose another time");

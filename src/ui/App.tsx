@@ -6,7 +6,7 @@ import { useData } from './useData.js';
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import Doctor from './DoctorWindows/Doctor'
+import Doctor from './UnlockDoc'
 import Patient from './UnlockPatient';
 import Admin from './UnlockAdmin';
 import Dev from './Admin';
@@ -46,22 +46,23 @@ function App() {
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
       </div>     */}
-       <div>
-        
-        <h3>Connect to doctor window</h3>
-        <img src={doctorLogo} className="logo" alt="doctor logo" />
-        <form action={connectToDoctorWindow}>
-      <button>Doctor</button>
-      </form>
-
-        <h3>Connect to patient window</h3>
-        <img src={patientLogo} className="logo react" alt="patient logo" />
-        <form action={connectToPatientWindow}>
+      <div className='homepage'>
+        <div style={{ display: 'flex', gap: '170px' }}>
+      <h2> Connect to doctor window   
+</h2><h2>
+        Connect to patient window
+      </h2></div>
+       <div style={{ display: 'flex', gap: '350px' }}>
+      <img src={doctorLogo} className="logo" alt="doctor logo" />
+      <img src={patientLogo} className="logo react" alt="patient logo" /></div>
+      <div style={{ display: 'flex', gap: '400px' }}>
+      <form action={connectToDoctorWindow}>
+      <button>Doctor</button></form> 
+      <form action={connectToPatientWindow}>
           <button>
             Patient
           </button>
-        </form>
-       </div>
+      </form></div></div>
     </>
   )
 }

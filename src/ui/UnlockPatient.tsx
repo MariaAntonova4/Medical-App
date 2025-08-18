@@ -17,6 +17,15 @@ function App() {
 useEffect(()=>{
     window.electron.readPatient().then(allPatients);
   },[]);
+
+    function returnApp() {
+     createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <Unlock />
+    </StrictMode>,
+  ) 
+    }
+
   function connectToPatientWindow(formData: { get: (arg0: string) => any; }) {
     const getUsername=formData.get("inUsername");
     const getPass=formData.get("inPass");
@@ -57,7 +66,9 @@ useEffect(()=>{
         <input type="submit" value="Unlock Patient" />
       </form>
     </div>
-      
+      <form action={returnApp}>
+      <button>Return Home</button>
+    </form>
     </>
   )
 }

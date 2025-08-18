@@ -10,8 +10,8 @@ import { getAllSpec, setSpec, updateSpec,insertClinic,getAllClinics,updateClinic
 , insert_User, update_User, insertDoctor, insertDoc_Clinic, insertDoc_Spec, getAllUsers, getAllDoctors, getAllDoc_Clinic,
 getAllDoc_Spec, updateDoc_Spec, updateDoc_Clinic, updateDoctor, insertPurpose, insertStage, insertType, insertType_Purpose
 , getAllTypes, getAllStage, getAllPurpose, getAllType_Purpose, insertSchedule, getAllSchedule, insertAppointment, 
-insertPatient, insertStatus, getAllAppointments, getAllPatinets, getAllStatus,
-updatePurpose,
+insertPatient, insertStatus, getAllAppointments, getAllPatinets, getAllStatus,getAllDoctor_ClinicAppointments,
+updatePurpose,getAllDoctorDoc_Clinic,
 getAllTy_PurSchedule, getAllDateAppointments,
 getAllDoctorSchedule,
 updateSchedule,
@@ -116,6 +116,10 @@ app.on('ready',()=>{
             const doc_Clinics=await getAllDoc_Clinic();
             return doc_Clinics;
         });
+         ipcMain.handle('read-doc-doctor-clinic',async(event,doctor)=>{
+                    const doc_Clinics=await getAllDoctorDoc_Clinic(doctor);
+                    return doc_Clinics;
+                });
     ipcMain.handle('read-doctor-spec',async()=>{
             const doc_Spec=await getAllDoc_Spec();
             return doc_Spec;
@@ -130,10 +134,11 @@ app.on('ready',()=>{
         return dateAppointment;
     });
  
-    // ipcMain.handle('',async(date)=>{
-    //     const dateAppointment=await getAllDateAppointments(date);
-    //     return dateAppointment;
-    // });
+    ipcMain.handle('read-doctor-clinic-appointment',(event,doctor_clinic,date)=>{
+                    const doctorAppointment=getAllDoctor_ClinicAppointments(doctor_clinic,date);
+                    return doctorAppointment;
+                });
+
     ipcMain.handle('read-patient',async()=>{
             const doc_Clinics=await getAllPatinets();
             return doc_Clinics;

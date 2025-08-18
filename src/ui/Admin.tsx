@@ -4,7 +4,8 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import './App.css';
 import App from './App';
-//import { Electron } from './../../node_modules/electron/electron';
+import { format } from 'date-fns';
+
 function Admin(){
   const[upIdAppointment,updateIdAppointment]=useState("");
   const[upDoc_Cl,updateDoc_Cl]=useState("");
@@ -14,9 +15,6 @@ function Admin(){
   const[ty_purSchedules,allTy_PurSchedules]=useState<any[]>([]);
   const[doctorsSchedules,allDoctorSchedules]=useState<any[]>([]);
 
-  const [aSpecName,setASpecName]=useState("");
-  const [idSpec,setIdSpec]=useState("");
-  const [nameSpec,setNameSpec]=useState("");
   const [specs,setSpecs]=useState<any[]>([]);
 
   const[clinics,allClinics]=useState<any[]>([]);
@@ -79,8 +77,8 @@ const[statuses,allStatus]=useState<any[]>([]);
      useEffect(()=>{
     window.electron.readDoctorSchedule().then(allDoctorSchedules);
   },[]);
-  
-  useEffect(()=>{
+
+    useEffect(()=>{
     window.electron.readAppointment().then(allAppointments);
   },[]);
 
@@ -132,10 +130,6 @@ const[statuses,allStatus]=useState<any[]>([]);
   useEffect(()=>{
     window.electron.readStage().then(allStages);
   },[]);
-
-  function sendMenu() {
-    window.electron.createChildWindow()
-  }
 
   function updateAppointment(formData: { get: (arg0: string) => any; }) {
     const updaIdAppointment=formData.get("upIdAppointment");
@@ -221,16 +215,6 @@ const[statuses,allStatus]=useState<any[]>([]);
         window.electron.insertDoc_Spec(addDoctor,addSpec);
     }
 
-  function addSpec(formData: { get: (arg0: string) => any; }) {
-      const addSpecName = formData.get("addSpecName");
-      window.electron.getSpec(addSpecName);
-    }
-  
-    function updateSpec(formData: { get: (arg0: string) => any; }) {
-      const idSpec=formData.get("idSpec");
-      const specname=formData.get("specname");
-      window.electron.updateSpec(idSpec,specname);
-    }
   function returnApp() {
    createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -297,18 +281,6 @@ const[statuses,allStatus]=useState<any[]>([]);
       ))}</ul>
     </div>
 
-
-    <div>
-      <h1>
-        Specialization
-      </h1>
-      <ul>
-        {specs.map((spec,idx)=>(
-          <li key={idx}>{JSON.stringify(spec)}</li>
-        ))}
-      </ul>
-    </div>
-
   <div>
     <form action={insertStatus}>
       <input type="text" name="inStatusName" onChange={(e)=>insertStatusName(e.target.value)}/>
@@ -366,7 +338,7 @@ const[statuses,allStatus]=useState<any[]>([]);
       <select name="inDoctor_Clinic">
           {doc_clinics.map((doc_clinic)=>(
             <option key={doc_clinic.idDoc_Clinic} value={doc_clinic.idDoc_Clinic}>
-              {doc_clinic.idDoc_Clinic}
+              {doc_clinic.firstName} {doc_clinic.middleName} {doc_clinic.lastName} - {doc_clinic.nameOfClinic} ({doc_clinic.cabinet})
             </option>
           ))}
         </select>  
@@ -390,7 +362,7 @@ const[statuses,allStatus]=useState<any[]>([]);
       <select name="upDoctor_Clinic">
           {doc_clinics.map((doc_clinic)=>(
             <option key={doc_clinic.idDoc_Clinic} value={doc_clinic.idDoc_Clinic}>
-              {doc_clinic.idDoc_Clinic}
+              {doc_clinic.firstName} {doc_clinic.middleName} {doc_clinic.lastName} - {doc_clinic.nameOfClinic} ({doc_clinic.cabinet})
             </option>
           ))}
         </select>  
@@ -460,18 +432,6 @@ const[statuses,allStatus]=useState<any[]>([]);
         <input type="text" name="inTypeUser" onChange={(e)=>insertTypeUser(e.target.value)} />
         <input type="submit" value="Insert Type Of User" />
       </form>
-    </div>
-
-    <div>
-        <form action={addSpec}>
-      <input type="text"name="addSpecName"onChange={(e)=>setASpecName(e.target.value)} />
-      <input type="submit" value="Insert specialization"/>
-    </form>
-    <form action={updateSpec}>
-      <input type="number" name="idSpec" onChange={(e)=>setIdSpec(e.target.value)}/>
-      <input type="text"name="specname"onChange={(e)=>setNameSpec(e.target.value)} />
-      <input type="submit" value="Update specialization"/>
-    </form>
     </div>
 
     <form action={returnApp}>

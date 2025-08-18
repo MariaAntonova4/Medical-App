@@ -1,5 +1,5 @@
 import{useEffect,useState}from'react';
-import { SendInfo } from '../../types';
+//import { SendInfo } from '../../types';
 
 //export function useData(){}
 
