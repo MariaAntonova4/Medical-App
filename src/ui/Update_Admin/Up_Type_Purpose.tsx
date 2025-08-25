@@ -9,13 +9,11 @@ const[types,allTypes]=useState<any[]>([]);
 const[purposes,allPurposes]=useState<any[]>([]);
 
 const[stages,allStages]=useState<any[]>([]);
-
-const[inIdType,insertIdType]=useState(""); 
-const[inIdPurpose,insertidPurpose]=useState("");  
-const[inIdStage,insertIdStage]=useState("");
+const[upIdT_P,updateIdT_P]=useState("");
+const[upIdType,updateIdType]=useState(""); 
+const[upIdPurpose,updateidPurpose]=useState("");  
+const[upIdStage,updateIdStage]=useState("");
 const[type_purposes,allType_Purpose]=useState<any[]>([]);
-
-const[statuses,allStatus]=useState<any[]>([]);
 
   useEffect(()=>{
     window.electron.readType().then(allTypes);
@@ -33,12 +31,13 @@ const[statuses,allStatus]=useState<any[]>([]);
     window.electron.readType_Purpose().then(allType_Purpose);
   },[]);
 
-    function insertType_Purpose(formData: { get: (arg0: string) => any; }) {
-    const addIdType=formData.get("inIdType");
-    const addIdPurpose=formData.get("inIdPurpose");
-    const addIdStage=formData.get("inIdStage");
+    function updateType_Purpose(formData: { get: (arg0: string) => any; }) {
+    const addIdT_P=formData.get("upIdT_P");
+    const addIdType=formData.get("upIdType");
+    const addIdPurpose=formData.get("upIdPurpose");
+    const addIdStage=formData.get("upIdStage");
 
-    window.electron.insertType_Purpose(addIdType,addIdPurpose,addIdStage);
+    window.electron.updateType_Purpose(addIdT_P,addIdType,addIdPurpose,addIdStage);
   }
 
   return(
@@ -51,29 +50,30 @@ const[statuses,allStatus]=useState<any[]>([]);
     </div>
 
  <div>
-        <form action={insertType_Purpose}>
-          <select name="inIdType">
+        <form action={updateType_Purpose}>
+          <input type="number" name="upIdT_P" onChange={(e)=>updateIdT_P(e.target.value)}/>
+          <select name="upIdType">
           {types.map((type)=>(
             <option key={type.idType} value={type.idType}>
               {type.typeName}
             </option>
           ))}
         </select>  
-            <select name="inIdPurpose">
+            <select name="upIdPurpose">
           {purposes.map((purpose)=>(
             <option key={purpose.idPurpose} value={purpose.idPurpose}>
               {purpose.purposeName}
             </option>
           ))}
         </select> 
-            <select name="inIdStage">
+            <select name="upIdStage">
           {stages.map((stage)=>(
             <option key={stage.idStage} value={stage.idStage}>
               {stage.stageName}
             </option>
           ))}
         </select>
-            <input type="submit" value="Insert Type_Purpose" />
+            <input type="submit" value="Update Type_Purpose" />
         </form>
       </div>
     </>
