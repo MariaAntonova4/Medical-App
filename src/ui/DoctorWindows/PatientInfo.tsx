@@ -33,6 +33,10 @@ function App2({patient}:{patient:any}){
   }
   
   function returnApp() {
+  const updateAppointment=appointments.find((appointment)=>appointment.date==today&&appointment.idPatient==pat.idPatient);
+  if (appointments.find((appointment)=>appointment.date==today&&appointment.idPatient==pat.idPatient)) {
+    window.electron.updateAppointment(updateAppointment.idAppointment,updateAppointment.doc_cli,5,updateAppointment.time,updateAppointment.date,updateAppointment.ty_pur,updateAppointment.idPatient);
+  }
    createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />

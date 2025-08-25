@@ -5,6 +5,9 @@ import './../index.css'
 import './../App.css';
 import App from '../App';
 import MakeAppointment from './Patient';
+import EditAppointment from "./EditAppointment";
+import CancelAppointment from './CancelAppointment';
+import { format } from 'date-fns';
 
 function Patient({patient}:{patient:any}){
   
@@ -13,20 +16,65 @@ const [patients,allPatients]=useState<any[]>([]);
 const [searchEGN,search_egn]=useState("");
 const [nameSpec,setNameSpec]=useState("");
 const [appointments,allAppointments]=useState<any[]>([]);
+const[userAppointments,allUserAppointments]=useState<any[]>([]);
+const[dateAppointments,allDateAppointments]=useState<any[]>([]);
 
+var todayShow=new Date();
+var today=format(todayShow.toLocaleDateString(),'yyyy-MM-dd');
+  
   useEffect(()=>{
     window.electron.readAppointment().then(allAppointments);
   },[]);
 
   useEffect(()=>{
+    window.electron.readUserAppointment(patient.idPatient).then(allUserAppointments);
+  },[]);
+
+  useEffect(()=>{
     window.electron.readPatient().then(allPatients);
   },[]);
+
+   useEffect(()=>{
+    window.electron.readDateAppointment(today).then(allDateAppointments);
+  },[]);
+
 //0247276798
 
   const pat=patients.find((patient)=>patient.EGN==patient.EGN);
   useEffect(()=>{
     window.electron.readSpec().then(setSpecs);
   },[]);
+
+  function searchAppointment() {
+    if(userAppointments.find((appointment)=>appointment.status==1)){
+      alert("Your appointment is coming soon");
+    }
+  }
+
+function clearAppointments() {
+  if (userAppointments.find((appointment)=>appointment.status==5)) {
+      var deleteApp=userAppointments.find((appointment)=>appointment.status==5);
+      window.electron.deleteAppointment(deleteApp.idAppointment);
+    }
+}
+
+function checkYourTurn() {
+  var a=0;
+  while (a<dateAppointments.length) {
+    if (dateAppointments.at(a).idPatient==patient.idPatient) {
+      if (a==0||a==1||dateAppointments.at(a-1).status==4||dateAppointments.at(a-1).status==5) {
+        alert("Your appointment will be staring soon!");
+        return;
+      }
+    }
+    a=a+1;
+  }
+}
+
+  checkYourTurn();
+  //searchAppointment();
+  clearAppointments();
+  
 
   function returnApp() {
    createRoot(document.getElementById('root')!).render(
@@ -42,11 +90,35 @@ const [appointments,allAppointments]=useState<any[]>([]);
   </StrictMode>,
 ) 
   }
+
+  function editAppointment() {
+   createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <EditAppointment patient={patient}/>
+  </StrictMode>,
+) 
+  }
+
+   function cancelAppointment() {
+   createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <CancelAppointment patient={patient}/>
+  </StrictMode>,
+) 
+  }
+
   return(
     <>
     <h1>
       Patient Information:
     </h1>
+     <div>
+      <h3>Today's date:</h3> {today}
+      <h2>Appointments</h2>
+      <ul>{userAppointments.map((appointment,idx)=>(
+        <li key={idx}>{JSON.stringify(appointment)}</li>
+      ))}</ul>
+    </div> 
     <h2>
       First Name:
     </h2>
@@ -75,12 +147,26 @@ const [appointments,allAppointments]=useState<any[]>([]);
     {patient.telephone}
     <h2>User</h2>
     {patient.idUser}
-    <form action={returnApp}>
+    <p>
+      <form action={returnApp}>
       <button>Return Home</button>
     </form>
-    <form action={makeAppointment}>
+    </p>
+    <p>
+      <form action={makeAppointment}>
       <button>Make Appointment</button>
     </form>
+    </p>
+    <p>
+      <form action={editAppointment}>
+      <button>Edit Appointment</button>
+    </form>
+    </p>
+    <p>
+    <form action={cancelAppointment}>
+      <button>Cancel Appointment</button>
+    </form>
+    </p>
     </>
   )
 }
