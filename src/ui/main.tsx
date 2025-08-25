@@ -3,7 +3,7 @@
  import './index.css'
 import App from './App.js'
 // import { BrowserRouter, Routes, Route, createBrowserRouter } from 'react-router-dom';
-import Child from './Child.js'
+import Child from './PatientWindows/ShowDoctorSchedule.js'
 import Chi from './main2';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

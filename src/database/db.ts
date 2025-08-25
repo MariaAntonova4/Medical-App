@@ -156,6 +156,12 @@ export function updateDoc_Clinic(idD_C:number,idDoc_D_C:number,idClinic_D_C:numb
     console.log("Updated the Clinic in which is the Doctor");
 }
 
+export function updatePatient(idPatient:number,firstName:string,middleName:string,lastName:string,age:number, EGN:string,gender:string, address:string,telephone:string,idUser:number){
+    const upPatient=db.prepare("UPDATE patient SET firstName=?,middleName=?,lastName=?,age=?,EGN=?,gender=?,address=?,telephone=?,idUser=? WHERE idPatient=?");
+    const result=upPatient.run(firstName,middleName,lastName,age,EGN,gender,address,telephone,idUser,idPatient);
+    console.log('Patient updated');
+}
+
 export function updatePurpose(idPurpose:number,purposeName:string,duration:number){
     const upPurpose=db.prepare("UPDATE purpose SET purposeName=?, duration=? WHERE idPurpose=?") ;
     const result=upPurpose.run(purposeName,duration,idPurpose);
@@ -168,10 +174,46 @@ export function updateSchedule(upIdSchedule:number,upDoc_Cli:number,upBeginningT
     console.log(`Updated schedule`);
 }
 
+export function updateStage(idStage:number,stageName:string) {
+    const upStage=db.prepare("UPDATE stage SET stageName=? WHERE idStage=?");
+    const result=upStage.run(stageName,idStage);
+    console.log("Stage updated");  
+}
+
+export function updateStatus(idStatus:number,statusName:string) {
+    const upStatus=db.prepare("UPDATE status SET statusName=? WHERE idStatus=?");
+    const result=upStatus.run(statusName,idStatus);
+    console.log("Status updated");  
+}
+
+export function updateType(idType:number,typeName:string) {
+    const upType=db.prepare("UPDATE type SET typeName=? WHERE idType=?");
+    const result=upType.run(typeName,idType) ;
+    console.log("Type updated");  
+}
+
+export function updateType_Purpose(idType_Purpose:number,idType:number,idPurpose:number,idStage:number) {
+    const up_T_P=db.prepare("UPDATE type_purpose SET idType=?,idPurpose=?,idStage=? WHERE idType_Purpose=?");
+    const result=up_T_P.run(idType,idPurpose,idStage,idType_Purpose);
+    console.log("Type_Purpose updated");  
+}
+
+export function updateTypeOfUser(idTypeOfUser:number,typeUserName:string){
+    const upTypeOfUser=db.prepare("UPDATE typeOfUser SET typeUserName=? WHERE idTypeUser=?");
+    const result=upTypeOfUser.run(typeUserName,idTypeOfUser);
+    console.log("Type of user is updated");
+}
+
 export function update_User(upIdUser:number,upUsername:string,upPass:string,upTypeOfUser:number) {
     const up=db.prepare("UPDATE user SET username=?, pass=?, userType=? WHERE idUser=?");
     const result=up.run(upUsername,upPass,upTypeOfUser,upIdUser);
     console.log(`Updated user`);
+}
+
+export function deleteAppointment(idAppointment:number) {
+    const deleteAppointment=db.prepare("DELETE FROM appointment WHERE idAppointment=?");
+    const result=deleteAppointment.run(idAppointment);
+    console.log(`Deleted appointment`);
 }
 
 export function getAllSpec():Promise<any[]>{
@@ -365,6 +407,19 @@ export function getAllDoctorSchedule(){
     });
 }
 
+export function getAllDoctorDateSchedule(doctor:number,date:Date):Promise<any[]>{
+   return new Promise((resolve,reject)=>{
+    const upSchedule=db.prepare("SELECT doctor.firstName, doctor.middleName, doctor.lastName,schedule.beginningTime, schedule.finishTime, schedule.date FROM schedule INNER JOIN Doc_Clinic ON schedule.doctor_clinic=Doc_Clinic.idDoc_Clinic INNER JOIN doctor ON Doc_Clinic.idDoc_D_C=doctor.idDoc WHERE doctor.idDoc=? AND schedule.date=?");
+    upSchedule.all(doctor,date,(err: any,data: any[]| PromiseLike<any[]>)=>{
+            if (err) {
+                reject(err);              
+            } else {
+                resolve(data);
+            }
+        });
+    });
+}
+
 export function getAllAppointments():Promise<any[]>{
     return new Promise((resolve,reject)=>{
         db.all("SELECT * FROM appointment",[],(err,data)=>{
@@ -379,7 +434,7 @@ export function getAllAppointments():Promise<any[]>{
 
 export function getAllDateAppointments(date:Date):Promise<any[]>{
     return new Promise((resolve,reject)=>{
-        db.all('SELECT * FROM appointment WHERE date= ?',[date],(err,data)=>{
+        db.all('SELECT * FROM appointment WHERE date= ? ORDER BY time',[date],(err,data)=>{
             if (err) {
                 reject(err);              
             } else {
@@ -393,6 +448,32 @@ export function getAllDoctor_ClinicAppointments(doc_clinic:number,date:Date):Pro
     return new Promise((resolve,reject)=>{
     const upSchedule=db.prepare("SELECT Doc_Clinic.idDoc_D_C,appointment.idAppointment,appointment.doc_cli, appointment.status, appointment.time, appointment.date,appointment.ty_pur,appointment.idPatient FROM appointment INNER JOIN Doc_Clinic ON appointment.doc_cli=Doc_Clinic.idDoc_Clinic WHERE Doc_Clinic.idDoc_D_C=? AND appointment.date=?");
     upSchedule.all(doc_clinic,date,(err: any,data: any[] | PromiseLike<any[]>)=>{
+            if (err) {
+                reject(err);              
+            } else {
+                resolve(data);
+            }
+        });
+    });
+}
+
+
+export function getAllUserAppointments(idUser:number):Promise<any[]>{
+    return new Promise((resolve,reject)=>{
+        db.all('SELECT * FROM appointment WHERE idPatient= ? ORDER BY date,time',[idUser],(err,data)=>{
+            if (err) {
+                reject(err);              
+            } else {
+                resolve(data);
+            }
+        })
+    });
+}
+
+export function getMakeAppointment(doc_clinic:number,time:Date,date:Date):Promise<any[]>{
+    return new Promise((resolve,reject)=>{
+    const upSchedule=db.prepare("SELECT Doc_Clinic.idDoc_D_C,appointment.idAppointment,appointment.doc_cli, appointment.status, appointment.time, appointment.date,appointment.ty_pur,appointment.idPatient FROM appointment INNER JOIN Doc_Clinic ON appointment.doc_cli=Doc_Clinic.idDoc_Clinic WHERE Doc_Clinic.idDoc_D_C=? AND appointment.time=? AND appointment.date=?");
+    upSchedule.all(doc_clinic,time,date,(err: any,data: any[] | PromiseLike<any[]>)=>{
             if (err) {
                 reject(err);              
             } else {

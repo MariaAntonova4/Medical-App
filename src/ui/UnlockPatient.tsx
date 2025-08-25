@@ -66,9 +66,11 @@ useEffect(()=>{
         <input type="submit" value="Unlock Patient" />
       </form>
     </div>
+    <p>
       <form action={returnApp}>
       <button>Return Home</button>
     </form>
+    </p>
     </>
   )
 }

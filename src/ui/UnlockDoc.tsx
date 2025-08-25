@@ -20,6 +20,14 @@ function App() {
     window.electron.readUser().then(allUsers);
   },[]);
 
+  function returnApp() {
+       createRoot(document.getElementById('root')!).render(
+      <StrictMode>
+        <Unlock />
+      </StrictMode>,
+    ) 
+      }
+      
   function connectToDocWindow(formData: { get: (arg0: string) => any; }) {
     const getUsername=formData.get("inUsername");
     const getPass=formData.get("inPass");
@@ -59,7 +67,11 @@ function App() {
         <input type="submit" value="Unlock Doctor" />
       </form>
     </div>
-      
+    <p>
+      <form action={returnApp}>
+      <button>Return Home</button>
+    </form>
+    </p>
     </>
   )
 }

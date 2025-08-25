@@ -11,9 +11,9 @@ import { getAllSpec, setSpec, updateSpec,insertClinic,getAllClinics,updateClinic
 getAllDoc_Spec, updateDoc_Spec, updateDoc_Clinic, updateDoctor, insertPurpose, insertStage, insertType, insertType_Purpose
 , getAllTypes, getAllStage, getAllPurpose, getAllType_Purpose, insertSchedule, getAllSchedule, insertAppointment, 
 insertPatient, insertStatus, getAllAppointments, getAllPatinets, getAllStatus,getAllDoctor_ClinicAppointments,
-updatePurpose,getAllDoctorDoc_Clinic,
-getAllTy_PurSchedule, getAllDateAppointments,
-getAllDoctorSchedule,
+updatePurpose,getAllDoctorDoc_Clinic,getMakeAppointment,getAllDoctorDateSchedule,getAllUserAppointments,updateType,
+getAllTy_PurSchedule, getAllDateAppointments,deleteAppointment,updatePatient,updateType_Purpose,updateTypeOfUser,
+getAllDoctorSchedule,updateStage,updateStatus,
 updateSchedule,
 updateAppointment} from "../database/db.js";
 
@@ -59,9 +59,16 @@ app.on('ready',()=>{
     ipcMain.handle('update-doctor',(event,idDoc,firstName,middleName,lastName,docSpecialization,docTelephone,docUser)=>updateDoctor(idDoc,firstName,middleName,lastName,docSpecialization,docTelephone,docUser));
     ipcMain.handle('update-doctor-clinic',(event,idD_C,idDoc_D_C,idClinic_D_C,cabinet)=>updateDoc_Clinic(idD_C,idDoc_D_C,idClinic_D_C,cabinet));
     ipcMain.handle('update-doctor-spec',(event,idD_S,idDoc_D_S,idSpec_D_S)=>updateDoc_Spec(idD_S,idDoc_D_S,idSpec_D_S));
+    ipcMain.handle('update-patient',(event,idPatient,firstName,middleName,lastName,age,EGN,gender,address,telephone,idUser)=>updatePatient(idPatient,firstName,middleName,lastName,age,EGN,gender,address,telephone,idUser));
     ipcMain.handle('update-purpose',(event,idPurpose,purposeName,duration)=>updatePurpose(idPurpose,purposeName,duration));
     ipcMain.handle('update-schedule',(event,upIdSchedule,upDoc_Cli,upBeginningTime,upFinishTime, upDate, upType)=>updateSchedule(upIdSchedule,upDoc_Cli,upBeginningTime,upFinishTime, upDate, upType));
+    ipcMain.handle('update-stage',(event,upIdStage,upStageName)=>updateStage(upIdStage,upStageName));
+    ipcMain.handle('update-status',(event,upIdStatus,upStatusName)=>updateStatus(upIdStatus,upStatusName));
+    ipcMain.handle('update-type',(event,idType,typeName)=>updateType(idType,typeName));
+    ipcMain.handle('update-type-purpose',(event,idType_Purpose,idType,idPurpose,idStage)=>updateType_Purpose(idType_Purpose,idType,idPurpose,idStage));
+    ipcMain.handle('update-type-user',(event,idTypeUser,typeUserName)=>updateTypeOfUser(idTypeUser,typeUserName));
     ipcMain.handle('update-user',(event,upIdUser,upUsername,upPass,upTypeOfUser)=>update_User(upIdUser,upUsername,upPass,upTypeOfUser));
+    ipcMain.handle('delete-appointment',(event,idAppointment)=>deleteAppointment(idAppointment));
     ipcMain.handle('read-spec',async()=>{
         const specs=await getAllSpec();
         return specs;
@@ -108,6 +115,12 @@ app.on('ready',()=>{
         const users=await getAllDoctorSchedule();
         return users;
     });
+
+     ipcMain.handle('read-doc-date-schedule',async(event,doctor,date)=>{
+        const users=await getAllDoctorDateSchedule(doctor,date);
+        return users;
+    });
+
      ipcMain.handle('read-doctor',async()=>{
                 const doctor=await getAllDoctors();
                 return doctor;
@@ -133,11 +146,19 @@ app.on('ready',()=>{
         const dateAppointment=getAllDateAppointments(date);
         return dateAppointment;
     });
- 
+    ipcMain.handle('read-user-appointment',(event,idUser)=>{
+        const userAppointment=getAllUserAppointments(idUser);
+        return userAppointment;
+    });
     ipcMain.handle('read-doctor-clinic-appointment',(event,doctor_clinic,date)=>{
                     const doctorAppointment=getAllDoctor_ClinicAppointments(doctor_clinic,date);
                     return doctorAppointment;
                 });
+
+    ipcMain.handle('read-make-appointment',(event,doctor_clinic,time,date)=>{
+                        const makeAppointment=getMakeAppointment(doctor_clinic,time,date);
+                        return makeAppointment;
+                    });
 
     ipcMain.handle('read-patient',async()=>{
             const doc_Clinics=await getAllPatinets();
@@ -206,7 +227,7 @@ const customMenu = Menu.buildFromTemplate(customMenuTemplate);
         }
     });
     if (isDev()) {
-        childWindow.loadURL('http://localhost:7842/child');
+        childWindow.loadURL('http://localhost:7842/showDoctorSchedule');
     }else{
         childWindow.loadFile(path.join(app.getAppPath(),'/dist-react/index.html'));
     }    childWindow.setMenu(customMenu);
