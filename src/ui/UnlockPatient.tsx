@@ -59,16 +59,18 @@ useEffect(()=>{
   return (
     <>
     <div>
-      <h3>Connect to Patient window</h3>
+      <h3>Свързване с пациентскиски прозорец</h3>
       <form action={connectToPatientWindow}>
+        Моля въведете потребителско име:
         <input type="text" name="inUsername" onChange={(e)=>insertUsername(e.target.value)}/>
+        Моля въведете парола:
         <input type="password" name="inPass" onChange={(e)=>insertPass(e.target.value)} />
-        <input type="submit" value="Unlock Patient" />
+        <input type="submit" value="Отвори пациентски прозорец" />
       </form>
     </div>
     <p>
       <form action={returnApp}>
-      <button>Return Home</button>
+      <button>Връщане в началото</button>
     </form>
     </p>
     </>

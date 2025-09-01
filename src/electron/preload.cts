@@ -38,9 +38,11 @@ electron.contextBridge.exposeInMainWorld("electron",{
     insertClinic:(clinicName:string,clinicAddress:string)=>ipcRenderer.invoke('insert-clinic',clinicName,clinicAddress),
     insertAppointment:(doc_cli:number, status:number,time:Date,date:Date,ty_pur:number,idPatient:number)=>ipcRenderer.invoke('insert-appointment',doc_cli,status,time,date,ty_pur,idPatient),
     insertDoctor:(firstName:string,middleName:string,lastName:string,docSpecialization:number,docTelephone:string,docUser:number)=>ipcRenderer.invoke('insert-doctor',firstName,middleName,lastName,docSpecialization,docTelephone,docUser),
+    insertDoctorUser:(data1:any,data2:any)=>ipcRenderer.invoke('add-doctor',data1,data2),
     insertDoc_Clinic:(idDoc_D_C:number,idClinic_D_C:number,cabinet:string)=>ipcRenderer.invoke('insert-doc-clinic',idDoc_D_C,idClinic_D_C,cabinet),
     insertDoc_Spec:(idDoc_D_S:number,idSpec_D_S:number)=>ipcRenderer.invoke('insert-doc-spec',idDoc_D_S,idSpec_D_S),
     insertPatient:(firstName:string,middleName:string,lastName:string,age:number,EGN:string,gender:string,address:string,telephone:string,idUser:number)=>ipcRenderer.invoke('insert-patient',firstName,middleName,lastName,age,EGN,gender,address,telephone,idUser),
+    insertPatientUser:(data1:any,data2:any)=>ipcRenderer.invoke('add-patient',data1,data2),
     insertPurpose:(purposeName:string,duration:number)=>ipcRenderer.invoke('insert-purpose',purposeName,duration),
     insertSchedule:(doctor_clinic:number,beginningTime:Date,finishTime:Date,data:Date,idType:number)=>ipcRenderer.invoke('insert-schedule',doctor_clinic,beginningTime,finishTime,data,idType),
     insertStage:(stageName:string)=>ipcRenderer.invoke('insert-stage',stageName),
@@ -65,8 +67,12 @@ electron.contextBridge.exposeInMainWorld("electron",{
     updateTypeUser:(idTypeUser:number,typeUserName:string)=>ipcRenderer.invoke('update-type-user',idTypeUser,typeUserName),
     update_User:(upIdUser:number,upUsername:string,upPass:string,upTypeOfUser:number)=>ipcRenderer.invoke('update-user',upIdUser,upUsername,upPass,upTypeOfUser),
     deleteAppointment:(idAppointment:number)=>ipcRenderer.invoke('delete-appointment',idAppointment),
-    // getA:()=>ipcInvoke('getA'),
-}//satisfies Window['electron']
+    deleteClinic:(idClinic:number)=>ipcRenderer.invoke('delete-clinic',idClinic),
+        deleteDoctor:(idDoctor:number)=>ipcRenderer.invoke('delete-doctor',idDoctor),
+        deletePatient:(idPatient:number)=>ipcRenderer.invoke('delete-patient',idPatient),
+        deleteTypeOfUser:(idTypeOfUser:number)=>ipcRenderer.invoke('delete-type-user',idTypeOfUser),
+        deleteUser:(idUser:number)=>ipcRenderer.invoke('delete-user',idUser),
+}
 );
 
 function ipcInvoke<Key extends keyof EventPayloadMapping>(

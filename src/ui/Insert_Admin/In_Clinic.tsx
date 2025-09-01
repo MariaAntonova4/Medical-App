@@ -23,7 +23,7 @@ function Clinic(){
     <>
 
     <div>
-        <h1>Clinics</h1>
+        <h1>Клиники</h1>
         <ul>
             {clinics.map((clinic,idx)=>(
                 <li key={idx}>{JSON.stringify(clinic)}</li>
@@ -33,9 +33,11 @@ function Clinic(){
 
     <div>
         <form action={insertClinic}>
+          Моля добавете името на клиниката:
             <input type="text" name="insertClinicName" onChange={(e)=>setAClinicName(e.target.value)} />
+            Моля добавете адреса на клиниката:
             <input type="text" name="insertClinicAddress" onChange={(e)=>setAClinicAddress(e.target.value)} />
-            <input type="submit" value="Insert Clinic" />
+            <input type="submit" value="Добави клиника" />
         </form>
     </div>
 

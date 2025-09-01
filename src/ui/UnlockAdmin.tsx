@@ -45,11 +45,13 @@ function App() {
   return (
     <>
     <div>
-      <h3>Connect to Admin window</h3>
+      <h3>Свързване с администраторски прозорец</h3>
       <form action={connectToAdminWindow}>
+        Моля въведете потребителско име:
         <input type="text" name="inUsername" onChange={(e)=>insertUsername(e.target.value)}/>
+        Моля въведете парола:
         <input type="password" name="inPass" onChange={(e)=>insertPass(e.target.value)} />
-        <input type="submit" value="Unlock Admin" />
+        <input type="submit" value="Отвори администраторски прозорец" />
       </form>
     </div>
       

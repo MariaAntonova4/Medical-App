@@ -21,16 +21,16 @@ useEffect(()=>{
   return(
     <>
      <div>
-      <h1>Doctors</h1>
+      <h1>Доктори</h1>
       <ul>{doctors.map((doctor,idx)=>(
         <li key={idx}>{JSON.stringify(doctor)}</li>
       ))}</ul>
     </div>     
 
     <form action={deleteDoctor}>
-        Please write the ID of the appointment you want to cancel: 
+        Моля въведете номера на лекаря, който желаете да премахнете:
         <input type="number" name="delIdDoctor" onChange={(e)=>deleteIdDoctor(e.target.value)}/>
-        <input type="submit" value="Delete Doctor" />
+        <input type="submit" value="Премахване на лекар" />
     </form>
     </>
   )

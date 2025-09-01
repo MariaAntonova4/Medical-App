@@ -33,13 +33,20 @@ function Doctor(){
     const inDoc_Spec=formData.get("inDoc_Spec");
     const inDoc_Tel=formData.get("inDoc_Tel");
     const inDoc_User=formData.get("inDoc_User");
-    if (users.find((user)=>user.username===inDoc_User&&user.userType===2)) {
+    const username=inFirstName+" "+inMiddleName+" "+inLastName;
+
+    const data1 = { username:username,pass:inDoc_User,userType:2};
+  const data2 = { firstName:inFirstName,middleName:inMiddleName,lastName:inLastName,doctorSpecialization:inDoc_Spec,docTelephone:inDoc_Tel };
+
+  const result = window.electron.insertDoctorUser(data1,data2);
+
+    // if (users.find((user)=>user.username===inDoc_User&&user.userType===2)) {
       
-      window.electron.insertDoctor(inFirstName,inMiddleName,inLastName,inDoc_Spec,inDoc_Tel,inDoc_User);
-    }
-    else{
-      alert("This user doesn't exist")
-    }
+    //   window.electron.insertDoctor(inFirstName,inMiddleName,inLastName,inDoc_Spec,inDoc_Tel,inDoc_User);
+    // }
+    // else{
+    //   alert("This user doesn't exist")
+    // }
   }
 
 
@@ -47,7 +54,7 @@ function Doctor(){
     <>
 
     <div>
-      <h1>Doctors</h1>
+      <h1>Лекари</h1>
       <ul>{doctors.map((doctor,idx)=>(
         <li key={idx}>{JSON.stringify(doctor)}</li>
       ))}</ul>
@@ -55,10 +62,14 @@ function Doctor(){
 
     <div>
         <form action={insertDoctor}>
+          Моля добавете първото има на лекуващия лекар:
             <input type="text" name="inFirstName" onChange={(e)=>insertFirstName(e.target.value)} />
+            Моля добавете второто има на лекуващия лекар:
             <input type="text" name="inMiddleName" onChange={(e)=>insertMiddleName(e.target.value)} />
+            Моля добавете третото има на лекуващия лекар:
             <input type="text" name="inLastName" onChange={(e)=>insertLastName(e.target.value)} />
-            <input type="text" name='inDoc_User' onChange={(e)=>insertDoc_User(e.target.value)}/>
+            Моля добавете парола за профила на лекуващия лекар:
+            <input type="password" name='inDoc_User' onChange={(e)=>insertDoc_User(e.target.value)}/>
             <select name="inDoc_Spec">
           {specs.map((specialization)=>(
             <option key={specialization.id} value={specialization.id}>
@@ -66,8 +77,9 @@ function Doctor(){
             </option>
           ))}
         </select>
+        Моля добавете телефонен номер на лекуващия лекарМ
             <input type="tel" name="inDoc_Tel" onChange={(e)=>insertDoc_Tel(e.target.value)} />
-            <input type="submit" value="Insert Doctor" />
+            <input type="submit" value="Добави лекар" />
         </form>
     </div>
 

@@ -30,6 +30,26 @@ export function insertDoctor(firstName:string,middleName:string,lastName:string,
     console.log("Doctor added");  
 }
 
+export function insertDoctorUser(data1:any,data2:any): Promise<void>{
+  return new Promise((resolve, reject) => {
+    db.serialize(() => {
+      db.run('BEGIN TRANSACTION');
+      db.run('INSERT INTO user (username,pass,userType) VALUES (?, ?,?)', [data1.username, data1.pass,data1.userType], function (err) {
+        if (err) return reject(err);
+        const userId = this.lastID;
+        db.run("INSERT OR REPLACE INTO doctor(firstName,middleName,lastName,doctorSpecialization, docTelephone, docUser)VALUES(?,?,?,?,?,?)", [data2.firstName,data2.middleName,data2.lastName,data2.doctorSpecialization,data2.docTelephone,userId], function (err) {
+          if (err) {
+            db.run('ROLLBACK');
+            return reject(err);
+          }
+          db.run('COMMIT');
+          resolve();
+        });
+      });
+    });
+  });
+}
+
 export function insertType(typeName:string) {
     db.run("CREATE TABLE IF NOT EXISTS type(idType INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT,typeName TEXT)");
     db.run("INSERT OR REPLACE INTO type(typeName)VALUES(?)",[typeName]) ;
@@ -62,6 +82,26 @@ export function insertSchedule(doctor_clinic:number,beginningTime:Date,finishTim
 //     const result=inMainDoctor.run();
 //     console.log('Main Doctor added');
 // }
+
+export function insertPatientUser(data1:any,data2:any): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
+    db.serialize(() => {
+      db.run('BEGIN TRANSACTION');
+      db.run('INSERT INTO user (username,pass,userType) VALUES (?, ?,?)', [data1.username, data1.pass,data1.userType], function (err) {
+        if (err) return reject(err);
+        const userId = this.lastID;
+        db.run('INSERT INTO patient (firstName,middleName,lastName,age,EGN,gender,address,telephone,idUser) VALUES (?, ?,?,?,?,?,?,?,?)', [data2.firstName,data2.middleName,data2.lastName,data2.age,data2.EGN,data2.gender,data2.address,data2.telephone,userId], function (err) {
+          if (err) {
+            db.run('ROLLBACK');
+            return reject(err);
+          }
+          db.run('COMMIT');
+          resolve();
+        });
+      });
+    });
+  });
+}
 
 export function insertPatient(firstName:string,middleName:string,lastName:string,age:number, EGN:string,gender:string, address:string,telephone:string,idUser:number){
     db.run("CREATE TABLE IF NOT EXISTS patient(idPatient INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT,firstName TEXT,middleName TEXT,lastName TEXT, age INTEGER, EGN TEXT, gender TEXT, address TEXT, telephone TEXT, idUser Integer)");
@@ -214,6 +254,36 @@ export function deleteAppointment(idAppointment:number) {
     const deleteAppointment=db.prepare("DELETE FROM appointment WHERE idAppointment=?");
     const result=deleteAppointment.run(idAppointment);
     console.log(`Deleted appointment`);
+}
+
+export function deleteClinic(idClinic:number){
+    const deleteClinic=db.prepare("DELETE FROM clinic WHERE idClinic=?");
+    const result=deleteClinic.run(idClinic);
+    console.log("Deleted clinic");
+}
+
+export function deleteDoctor(idDoctor:number){
+    const deleteDoctor=db.prepare('DELETE FROM doctor WHERE idDoc=?');
+    const result=deleteDoctor.run(idDoctor);
+    console.log("Doctor deleted");
+}
+
+export function deletePatient(idPatient:number){
+    const deletePatient=db.prepare("DELETE FROM patient WHERE idPatient=?");
+    const result=deletePatient.run(idPatient);
+    console.log("Deleted patient");
+}
+
+export function deleteTypeOfUser(idTypeOfUser:number){
+    const delTypeOfUser=db.prepare("DELETE FROM typeOfUser WHERE idTypeUser=?");
+    const result=delTypeOfUser.run(idTypeOfUser);
+    console.log("Type of user is deleted");
+}
+
+export function deleteUser(delIdUser:number) {
+    const delUser=db.prepare("DELETE FROM user WHERE idUser=?");
+    const result=delUser.run(delIdUser);
+    console.log(`Deleted user`);
 }
 
 export function getAllSpec():Promise<any[]>{

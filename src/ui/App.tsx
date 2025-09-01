@@ -48,19 +48,19 @@ function App() {
       </div>     */}
       <div className='homepage'>
         <div style={{ display: 'flex', gap: '170px' }}>
-      <h2> Connect to doctor window   
+      <h2> Докторски профил   
 </h2><h2>
-        Connect to patient window
+        Пациенски профил
       </h2></div>
        <div style={{ display: 'flex', gap: '350px' }}>
       <img src={doctorLogo} className="logo" alt="doctor logo" />
       <img src={patientLogo} className="logo react" alt="patient logo" /></div>
       <div style={{ display: 'flex', gap: '400px' }}>
       <form action={connectToDoctorWindow}>
-      <button>Doctor</button></form> 
+      <button>Доктор</button></form> 
       <form action={connectToPatientWindow}>
           <button>
-            Patient
+            Пациент
           </button>
       </form></div></div>
     </>

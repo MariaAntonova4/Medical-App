@@ -60,16 +60,18 @@ function App() {
   return (
     <>
     <div>
-      <h3>Connect to Doctor window</h3>
+      <h3>Свързване с лекарски прозорец</h3>
       <form action={connectToDocWindow}>
+        Моля въведете потребителско име:
         <input type="text" name="inUsername" onChange={(e)=>insertUsername(e.target.value)}/>
+        Моля въведете парола:
         <input type="password" name="inPass" onChange={(e)=>insertPass(e.target.value)} />
-        <input type="submit" value="Unlock Doctor" />
+        <input type="submit" value="Отвори лекарски прозорец" />
       </form>
     </div>
     <p>
       <form action={returnApp}>
-      <button>Return Home</button>
+      <button>Връщане в началото</button>
     </form>
     </p>
     </>

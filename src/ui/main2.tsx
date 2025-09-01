@@ -43,52 +43,62 @@ import UserDelete from './../ui/Delete_Admin/Del_User';
 import DeleteDoctor from './../ui/Delete_Admin/Del_Doctor';
 import DeleteClinic from './../ui/Delete_Admin/Del_Clinic';
 import DeletePatient from './../ui/Delete_Admin/Del_Patient';
+import { createRoot } from 'react-dom/client';
+import { StrictMode } from 'react';
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<MainWindow />} />
-        <Route path="/showDoctorSchedule" element={<ChildWindow />} />
-        <Route path="/admin" element={<Admin />} />
+    createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <MainWindow/>
+  </StrictMode>,
+) )
+  }
+    // <BrowserRouter>
+    //   <Routes>
+    //     ReactDOM.render(<MainWindow />, document.getElementById('root'));
 
-        <Route path="/insert_T_P" element={<Type_Purpose />} />
-        <Route path="/insertClinic" element={<Clinic />} />
-        <Route path="/insertDoctor" element={<Doctor />} />
-        <Route path="/insertDoctorClinic" element={<DoctorClinic />} />
-        <Route path="/insertDoctorSpecialization" element={<DoctorSpecialization/>} />
-        <Route path="/insertPatient" element={<Patient />} />
-        <Route path="/insertPurpose" element={<Purpose />} />
-        <Route path="/insertSchedule" element={<Schedule />} />
-        <Route path="/insertSpecialization" element={<Specialization />} />
-        <Route path="/insertStage" element={<Stage />} />
-        <Route path="/insertStatus" element={<Status />} />
-        <Route path="/insertType" element={<Type />} />
-        <Route path="/insertTypeUser" element={<TypeUser />} />
-        <Route path="/insertUser" element={<User />} />
+    //     <Route path="/" element={<MainWindow />} />
+    //     <Route path="/showDoctorSchedule" element={<ChildWindow />} />
+    //     <Route path="/admin" element={<Admin />} />
 
-        <Route path="/updateClinic" element={<ClinicUpdate />} />
-        <Route path="/updateDoctor" element={<DoctorUpdate />} />
-        <Route path="/updateDoctorClinic" element={<DoctorClinicUpdate />} />
-        <Route path="/updateDoctorSpecialization" element={<DoctorSpecializationUpdate />} />
-        <Route path="/updatePatient" element={<PatientUpdate />} />
-        <Route path="/updatePurpose" element={<PurposeUpdate />} />
-        <Route path="/updateSchedule" element={<ScheduleUpdate />} />
-        <Route path="/updateSpecialization" element={<SpecializationUpdate />} />
-        <Route path="/updateStage" element={<StageUpdate />} />
-        <Route path="/updateStatus" element={<StatusUpdate />} />
-        <Route path="/update_T_P" element={<Type_PurposeUpdate />} />
-        <Route path="/updateType" element={<TypeUpdate />} />
-        <Route path="/updateTypeUser" element={<TypeUserUpdate />} />
-        <Route path="/updateUser" element={<UserUpdate />} />
+    //     <Route path="/insert_T_P" element={<Type_Purpose />} />
+    //     <Route path="/insertClinic" element={<Clinic />} />
+    //     <Route path="/insertDoctor" element={<Doctor />} />
+    //     <Route path="/insertDoctorClinic" element={<DoctorClinic />} />
+    //     <Route path="/insertDoctorSpecialization" element={<DoctorSpecialization/>} />
+    //     <Route path="/insertPatient" element={<Patient />} />
+    //     <Route path="/insertPurpose" element={<Purpose />} />
+    //     <Route path="/insertSchedule" element={<Schedule />} />
+    //     <Route path="/insertSpecialization" element={<Specialization />} />
+    //     <Route path="/insertStage" element={<Stage />} />
+    //     <Route path="/insertStatus" element={<Status />} />
+    //     <Route path="/insertType" element={<Type />} />
+    //     <Route path="/insertTypeUser" element={<TypeUser />} />
+    //     <Route path="/insertUser" element={<User />} />
 
-        <Route path='/deleteClinic'element={<ClinicDelete/>}/>
-        <Route path='/deleteDoctor'element={<DoctorDelete/>}/>
-        <Route path='/deletePatient'element={<PatientDelete/>}/>
-        <Route path='/deleteTypeUser'element={<TypeUserDelete/>}/>
-        <Route path='/deleteUser'element={<UserDelete/>}/>
-      </Routes>
-    </BrowserRouter>
-  );
-}
+    //     <Route path="/updateClinic" element={<ClinicUpdate />} />
+    //     <Route path="/updateDoctor" element={<DoctorUpdate />} />
+    //     <Route path="/updateDoctorClinic" element={<DoctorClinicUpdate />} />
+    //     <Route path="/updateDoctorSpecialization" element={<DoctorSpecializationUpdate />} />
+    //     <Route path="/updatePatient" element={<PatientUpdate />} />
+    //     <Route path="/updatePurpose" element={<PurposeUpdate />} />
+    //     <Route path="/updateSchedule" element={<ScheduleUpdate />} />
+    //     <Route path="/updateSpecialization" element={<SpecializationUpdate />} />
+    //     <Route path="/updateStage" element={<StageUpdate />} />
+    //     <Route path="/updateStatus" element={<StatusUpdate />} />
+    //     <Route path="/update_T_P" element={<Type_PurposeUpdate />} />
+    //     <Route path="/updateType" element={<TypeUpdate />} />
+    //     <Route path="/updateTypeUser" element={<TypeUserUpdate />} />
+    //     <Route path="/updateUser" element={<UserUpdate />} />
+
+    //     <Route path='/deleteClinic'element={<ClinicDelete/>}/>
+    //     <Route path='/deleteDoctor'element={<DoctorDelete/>}/>
+    //     <Route path='/deletePatient'element={<PatientDelete/>}/>
+    //     <Route path='/deleteTypeUser'element={<TypeUserDelete/>}/>
+    //     <Route path='/deleteUser'element={<UserDelete/>}/>
+    //   </Routes>  );
+
+    // </BrowserRouter>
+
 
 export default App;

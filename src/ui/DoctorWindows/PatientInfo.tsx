@@ -47,37 +47,37 @@ function App2({patient}:{patient:any}){
     <>
     <div>
       <h1>
-      Patient Information:
+      Информация за пациента:
     </h1>
     <h2>
-      First Name:
+      Първо име:
     </h2>
     {patient.firstName}
     <h2>
-      Middle Name:
+      Презиме:
     </h2>
     {patient.middleName}
     <h2>
-      Last Name:
+      Фамилия:
     </h2>
     {patient.lastName}
     <h2>
-      Age:
+      Години:
     </h2>
     {patient.age}
     <h2>
-      EGN
+      ЕГН:
     </h2>
     {patient.EGN}
-    <h2>Gender:</h2>
+    <h2>Пол:</h2>
     {patient.gender}
-    <h2>Address</h2>
+    <h2>Адрес:</h2>
     {patient.address}
-    <h2>Telephone</h2>
+    <h2>Телефон:</h2>
     {patient.telephone}
     </div>
     <form action={returnApp}>
-      <button>Return Home</button>
+      <button>Връщане в началото</button>
     </form>
     </>
   )

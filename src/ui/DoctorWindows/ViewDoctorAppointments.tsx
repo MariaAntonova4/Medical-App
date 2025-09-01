@@ -61,16 +61,15 @@ const [nameSpec,setNameSpec]=useState("");
   }
   return(
     <>
-    <h1>Welcome doctor {doctor.firstName}</h1>
-    Today's date: {today}
+    Днескашна дата: {today}
      <div>
-      <h1>Doctor Appointments</h1>
+      <h1>Запазени часове:</h1>
       <ul>{doctorAppointments.map((appointment,idx)=>(
         <li key={idx}>{JSON.stringify(appointment)}</li>
       ))}</ul>
     </div>   
   <form action={returnApp}>
-      <button>Return</button>
+      <button>Връщане назад</button>
     </form>
     </>
   )

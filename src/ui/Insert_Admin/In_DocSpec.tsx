@@ -34,7 +34,7 @@ function DocSpec(){
   return(
     <>
     <div>
-      <h1>Doctor's specialization</h1>
+      <h1>Докторски специализация</h1>
       <ul>{doc_specs.map((doc_spec,idx)=>(
         <li key={idx}>{JSON.stringify(doc_spec)}</li>
       ))}</ul>
@@ -42,6 +42,7 @@ function DocSpec(){
 
  <div>
         <form action={insert_Doc_Spec}>
+          Моля изберете имена на лекаря:
           <select name="inDoc_Speci">
           {doctors.map((doctor)=>(
             <option key={doctor.idDoc} value={doctor.idDoc}>
@@ -49,6 +50,7 @@ function DocSpec(){
             </option>
           ))}
         </select>  
+        Моля изберете специализация:
             <select name="inSpec_Doc">
           {specs.map((specialization)=>(
             <option key={specialization.id} value={specialization.id}>
@@ -56,7 +58,7 @@ function DocSpec(){
             </option>
           ))}
         </select>
-            <input type="submit" value="Insert Doctor" />
+            <input type="submit" value="Добавете специализация" />
         </form>
     </div>
 

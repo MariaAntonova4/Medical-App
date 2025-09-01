@@ -8,14 +8,14 @@ import RemoveLogo from "./../../src/assets/Remove3.png";
 function Admin(){
   return(
     <>
-     <h1>Welcome Admin!</h1>
-     <p>Please choose action from the menu if you want to:</p>
+     <h1>Добре дошли!</h1>
+     <p>Моля изберете от менюто действие:</p>
 
   <div className='homepage'>
         <div style={{ display: 'flex', gap: '200px' }}>
-        <h2>Add in database</h2>
-        <h2>Edit the database</h2>
-        <h2>Remove from the database</h2>
+        <h2>Добавяне в база данни</h2>
+        <h2>Редактиране в база данни</h2>
+        <h2>Изтриване нот база данни</h2>
         </div>
     <div style={{ display: 'flex', gap: '290px' }}>
       <img src={AddLogo} className="logo" alt="add logo" />

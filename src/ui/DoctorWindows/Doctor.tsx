@@ -52,25 +52,26 @@ function searchPatient(formData: { get: (arg0: string) => any; }){
     <>
     <div>
       <h1>
-        Welcome, doctor {doctor.firstName} {doctor.middleName} {doctor.lastName}
+        Добре дошли, доктор {doctor.firstName} {doctor.middleName} {doctor.lastName}
       </h1>
     </div>
     <div>
       <form action={searchPatient}>
+        Моля въведете ЕГНто на пациента, който търсите:
         <input type="text" name="searchEGN" onChange={(e)=>search_egn(e.target.value)}/>
-        <input type="submit" value="Search patient" />
+        <input type="submit" value="Потърси пациент" />
       </form>
     </div>
    
     <div> 
       <p>
       <form action={viewAppointments}>
-      <button>View Appointments for today</button>
+      <button>Преглед на запазени часове за деня</button>
     </form>
     </p>
       <p>
        <form action={returnApp}>
-      <button>Return Home</button>
+      <button>Връщане в началото</button>
     </form> 
       </p>
        
