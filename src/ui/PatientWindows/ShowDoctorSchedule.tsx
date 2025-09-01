@@ -27,8 +27,8 @@ export default function ShowDoctorSchedule() {
   }
   return(
     <p>
-      Which Doctor's schedule would you like to check:
       <form action={checkSchedule}>
+        Моля избирите лекаря, чиито график желаете да проверите:
         <select name="inDoc">
           {doctors.map((schedule)=>(
             <option key={schedule.idDoc} value={schedule.idDoc}>
@@ -36,8 +36,9 @@ export default function ShowDoctorSchedule() {
             </option>
           ))}
         </select>
+        Моля изберете датата на графика, който желаете да видите:
         <input type="date" name="inDate" onChange={(e)=>insertDate(e.target.value)}/>
-        <input type="submit" value="Check Schedule" />
+        <input type="submit" value="Проверете график" />
       </form>
     </p>
   );

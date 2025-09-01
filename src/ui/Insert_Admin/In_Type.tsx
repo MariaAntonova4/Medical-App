@@ -22,7 +22,7 @@ const[types,allTypes]=useState<any[]>([]);
     <>
 
 <div>
-      <h1>Types</h1>
+      <h1>Типове:</h1>
       <ul>{types.map((type,idx)=>(
         <li key={idx}>{JSON.stringify(type)}</li>
       ))}</ul>
@@ -30,8 +30,9 @@ const[types,allTypes]=useState<any[]>([]);
 
 <div>
         <form action={insertType}>
+          Добавете тип:
             <input type="text" name="inTypeName" onChange={(e)=>insertTypeName(e.target.value)} />
-            <input type="submit" value="Insert Type" />
+            <input type="submit" value="Добавете тип" />
         </form>
 
     </div>

@@ -22,7 +22,7 @@ function Status(){
       return(
         <>
           <div>
-          <h1>Status</h1>
+          <h1>Статус</h1>
           <ul>{statuses.map((status,idx)=>(
             <li key={idx}>{JSON.stringify(status)}</li>
           ))}</ul>
@@ -30,9 +30,11 @@ function Status(){
     
       <div>
         <form action={updateStatus}>
+          Моля въведете номера на статуса, който желаете да редактирате:
            <input type="number" name="upIdStatus" onChange={(e)=>updateIdStatus(e.target.value)}/>
+           Моля въведете статус:
           <input type="text" name="upStatusName" onChange={(e)=>updateStatusName(e.target.value)}/>
-          <input type="submit" value="Update Status" />
+          <input type="submit" value="Редактирайте статус" />
         </form>
       </div>
 

@@ -21,7 +21,7 @@ function TypeUser(){
     <>
 
     <div>
-      <h1>Types Of Users</h1>
+      <h1>Типове потребители:</h1>
       <ul>{allTypesOfUsers.map((typeOfUser,idx)=>(
         <li key={idx}>{JSON.stringify(typeOfUser)}</li>
       ))}</ul>
@@ -29,8 +29,9 @@ function TypeUser(){
 
     <div>
       <form action={insertTypeOfUser}>
+        Добавете тип потребител:
         <input type="text" name="inTypeUser" onChange={(e)=>insertTypeUser(e.target.value)} />
-        <input type="submit" value="Insert Type Of User" />
+        <input type="submit" value="Добавете тип потребител" />
       </form>
     </div>
     </>

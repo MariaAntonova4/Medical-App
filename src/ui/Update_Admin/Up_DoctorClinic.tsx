@@ -29,7 +29,7 @@ function DoctorClinic() {
 return( 
 <>       
     <div>
-      <h1>Doctor's clinic</h1>
+      <h1>Докторски клиники</h1>
       <ul>{doc_clinics.map((doc_clinic,idx)=>(
         <li key={idx}>{JSON.stringify(doc_clinic)
         }</li>
@@ -37,7 +37,9 @@ return(
     </div>
     <div>
        <form action={updateDoc_Clinic}>
+        Моля въведете номера на докторската клиника, която желаете да редактирате:
             <input type="number" name="upIdD_C" onChange={(e)=>updateIdD_C(e.target.value)}/>
+            Моля изберете лекар:
             <select name="upDoc_Clinic">
           {doctors.map((doctor)=>(
             <option key={doctor.idDoc} value={doctor.idDoc}>
@@ -45,6 +47,7 @@ return(
             </option>
           ))}
         </select>
+        Моля изберете клиника:
         <select name="upClinic_Doc">
           {clinics.map((clinic)=>(
             <option key={clinic.idClinic} value={clinic.idClinic}>
@@ -52,8 +55,9 @@ return(
             </option>
           ))}
         </select>
+        Моля въведете кабинет:
         <input type="text" name='upCabinet' onChange={(e)=>updateCabinet(e.target.value)}/>
-            <input type="submit" value="Update Doctor's clinic" />
+            <input type="submit" value="Редактирайте докторска клиника" />
         </form>
     </div>
     </>

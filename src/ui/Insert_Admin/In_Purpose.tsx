@@ -24,7 +24,7 @@ function Purpose(){
       return(
         <>    
         <div>
-          <h1>Purpose</h1>
+          <h1>Причини на посещение</h1>
           <ul>{purposes.map((purpose,idx)=>(
             <li key={idx}>{JSON.stringify(purpose)}</li>
           ))}</ul>
@@ -32,9 +32,11 @@ function Purpose(){
     
         <div>
             <form action={insertPurpose}>
+              Моля въведете причина за посещение:
             <input type="text" name='inPurposeName' onChange={(e)=>insertPurposeName(e.target.value)}/>
+            Моля въведете продължителност:
             <input type="number" name="inDuration" onChange={(e)=>insertDuration(e.target.value)} />
-                <input type="submit" value="Insert Purpose" />
+                <input type="submit" value="Добавете причина" />
             </form>
             </div>
 

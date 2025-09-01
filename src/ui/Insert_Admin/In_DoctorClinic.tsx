@@ -29,7 +29,7 @@ import './../App.css';
 return(    
     <>
     <div>
-      <h1>Doctor's clinic</h1>
+      <h1>Докторски клиники</h1>
       <ul>{doc_clinics.map((doc_clinic,idx)=>(
         <li key={idx}>{JSON.stringify(doc_clinic)
         }</li>
@@ -37,6 +37,7 @@ return(
     </div>
    <div>
         <form action={insertDoc_Clinic}>
+          Моля изберете лекар:
             <select name="inDoc_Clinic">
           {doctors.map((doctor)=>(
             <option key={doctor.idDoc} value={doctor.idDoc}>
@@ -44,6 +45,7 @@ return(
             </option>
           ))}
         </select>
+        Моля изберете клиника:
         <select name="inClinic_Doc">
           {clinics.map((clinic)=>(
             <option key={clinic.idClinic} value={clinic.idClinic}>
@@ -51,8 +53,9 @@ return(
             </option>
           ))}
         </select>
+        Моля въведете номера на кабинета на лекаря от клиниката:
         <input type="text" name='inCabinet' onChange={(e)=>insertCabinet(e.target.value)}/>
-            <input type="submit" value="Insert Doctor Clinic" />
+            <input type="submit" value="Добавете докторска клиника" />
         </form>
     </div>
     </> 

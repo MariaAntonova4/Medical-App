@@ -43,7 +43,7 @@ const[type_purposes,allType_Purpose]=useState<any[]>([]);
   return(
     <>
     <div>
-      <h1>Type_Purpose</h1>
+      <h1>Типове и причини</h1>
       <ul>{type_purposes.map((type_purpose,idx)=>(
         <li key={idx}>{JSON.stringify(type_purpose)}</li>
       ))}</ul>
@@ -51,7 +51,9 @@ const[type_purposes,allType_Purpose]=useState<any[]>([]);
 
  <div>
         <form action={updateType_Purpose}>
+          Моля въведете номера на типа и причината, които желаете да редактирате:
           <input type="number" name="upIdT_P" onChange={(e)=>updateIdT_P(e.target.value)}/>
+          Моля изберете тип:
           <select name="upIdType">
           {types.map((type)=>(
             <option key={type.idType} value={type.idType}>
@@ -59,6 +61,7 @@ const[type_purposes,allType_Purpose]=useState<any[]>([]);
             </option>
           ))}
         </select>  
+        Моля изберете причина:
             <select name="upIdPurpose">
           {purposes.map((purpose)=>(
             <option key={purpose.idPurpose} value={purpose.idPurpose}>
@@ -66,6 +69,7 @@ const[type_purposes,allType_Purpose]=useState<any[]>([]);
             </option>
           ))}
         </select> 
+        Моля изберете степен:
             <select name="upIdStage">
           {stages.map((stage)=>(
             <option key={stage.idStage} value={stage.idStage}>
@@ -73,7 +77,7 @@ const[type_purposes,allType_Purpose]=useState<any[]>([]);
             </option>
           ))}
         </select>
-            <input type="submit" value="Update Type_Purpose" />
+            <input type="submit" value="Редактирайте типа и причината" />
         </form>
       </div>
     </>

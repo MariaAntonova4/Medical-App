@@ -31,7 +31,7 @@ function update_User(formData: { get: (arg0: string) => any; }) {
     <>
     
     <div>
-      <h1>Users</h1>
+      <h1>Потребители</h1>
       <ul>{users.map((user,idx)=>(
         <li key={idx}>{JSON.stringify(user)}</li>
       ))}</ul>
@@ -39,9 +39,13 @@ function update_User(formData: { get: (arg0: string) => any; }) {
 
 <div>
       <form action={update_User}>
+        Моля въведете номера на потребителя, който желаете да редактирате:
         <input type="number" name="upIdUser"/>
+        Моля въведете потребителско име:
         <input type="text" name="upUsername" onChange={(e)=>insertUsername(e.target.value)}/>
+        Моля въведете парола:
         <input type="password" name="upPass" onChange={(e)=>insertPass(e.target.value)} />
+        Моля изберете тип потребител:
         <select name="upTypeOfUser">
           {allTypesOfUsers.map((tyUser)=>(
             <option key={tyUser.idTypeUser} value={tyUser.idTypeUser}>
@@ -49,7 +53,7 @@ function update_User(formData: { get: (arg0: string) => any; }) {
             </option>
           ))}
         </select>
-        <input type="submit" value="Update User" />
+        <input type="submit" value="Редактирайте потребител" />
       </form>
     </div>
 

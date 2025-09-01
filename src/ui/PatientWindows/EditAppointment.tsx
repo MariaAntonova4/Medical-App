@@ -55,14 +55,16 @@ const[appointments,allAppointments]=useState<any[]>([]);
   return(
     <>
 <div>
-      <h1>Appointments</h1>
+      <h1>Запазени часове</h1>
       <ul>{appointments.map((appointment,idx)=>(
         <li key={idx}>{JSON.stringify(appointment)}</li>
       ))}</ul>
     </div>     
 
         <form action={updateAppointment}>
+          Моля въведете номера на запазения час, който желаете да редактирате:
             <input type="number" name="upIdAppointment" onChange={(e)=>updateIdAppointment(e.target.value)}/>
+            Моля избирете лекар и клиника:
             <select name="upDoc_Cl">
           {doctorsSchedules.map((schedule)=>(
             <option key={schedule.doctor_clinic} value={schedule.doctor_clinic}>
@@ -70,8 +72,11 @@ const[appointments,allAppointments]=useState<any[]>([]);
             </option>
           ))}
         </select>  
+        Моля изберете час:
         <input type="time" name="upTime" onChange={(e)=>updateTime(e.target.value)} />
+        Моля изберете дата:
         <input type="date" name="upDate" onChange={(e)=>updateDate(e.target.value)} />
+        Моля изберете тип и причина:
             <select name="upTy_Pur">
           {ty_purSchedules.map((schedule)=>(
             <option key={schedule.idType_Purpose} value={schedule.idType_Purpose}>
@@ -79,14 +84,14 @@ const[appointments,allAppointments]=useState<any[]>([]);
             </option>
           ))}
         </select>
-            <input type="submit" value="Update Appointment" />
+            <input type="submit" value="Редактирайте запазения час" />
         </form>
 
      <div>
         <p>
          <form action={openChildWindow}>
           <button>
-            Show Schedule
+            Покажете график на избран лекар
           </button>
         </form> 
         </p>
@@ -94,7 +99,7 @@ const[appointments,allAppointments]=useState<any[]>([]);
   
 <p>
     <form action={returnApp}>
-      <button>Return</button>
+      <button>Връщане назад</button>
     </form></p>
     </>
   )

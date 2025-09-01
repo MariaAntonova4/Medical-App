@@ -40,7 +40,7 @@ const[type_purposes,allType_Purpose]=useState<any[]>([]);
 
   return(
     <>
-      <h1>Schedules</h1>
+      <h1>Лекарски графици:</h1>
       <ul>{schedules.map((schedule,idx)=>(
         <li key={idx}>{JSON.stringify(schedule)}</li>
       ))}</ul>
@@ -48,6 +48,7 @@ const[type_purposes,allType_Purpose]=useState<any[]>([]);
 
   <div>
     <form action={insertSchedule}>
+      Моля изберете доктор, клиника и кабинет:
       <select name="inDoctor_Clinic">
           {doc_clinics.map((doc_clinic)=>(
             <option key={doc_clinic.idDoc_Clinic} value={doc_clinic.idDoc_Clinic}>
@@ -55,9 +56,13 @@ const[type_purposes,allType_Purpose]=useState<any[]>([]);
             </option>
           ))}
         </select>  
+      Моля изберете начален час:
       <input type="time" name="inBeginningTime" onChange={(e)=>insertBeginningTime(e.target.value)}/>
+      Моля изберете краен час:
       <input type="time" name="inFinishTime" onChange={(e)=>insertFinishTime(e.target.value)}/>
+      Моля изберете дата:
       <input type="date" name="inData" onChange={(e)=>insertData(e.target.value)}/>
+      Моля изберете вид преглед:
       <select name="inIdTy">
           {types.map((type)=>(
             <option key={type.idType} value={type.idType}>
@@ -65,7 +70,7 @@ const[type_purposes,allType_Purpose]=useState<any[]>([]);
             </option>
           ))}
         </select> 
-      <input type="submit" value="Insert Schedule" />
+      <input type="submit" value="Добавете график" />
     </form>
   </div>
     </>

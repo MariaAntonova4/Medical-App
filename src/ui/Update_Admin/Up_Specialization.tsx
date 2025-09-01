@@ -22,7 +22,7 @@ const [aSpecName,setASpecName]=useState("");
     <>
     <div>
       <h1>
-        Specialization
+        Специализация
       </h1>
       <ul>
         {specs.map((spec,idx)=>(
@@ -32,9 +32,11 @@ const [aSpecName,setASpecName]=useState("");
     </div>
     <div>
     <form action={updateSpec}>
+      Моля въведете номера на специализацията, която желаете да редактирате:
       <input type="number" name="idSpec" onChange={(e)=>setIdSpec(e.target.value)}/>
+      Моля въведете специализация:
       <input type="text"name="specname"onChange={(e)=>setNameSpec(e.target.value)} />
-      <input type="submit" value="Update Specialization"/>
+      <input type="submit" value="Редактирайте специализация"/>
     </form>
     </div>
     </>

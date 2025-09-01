@@ -44,7 +44,7 @@ function Patient(){
   return(
     <>
      <div>
-      <h1>Patients</h1>
+      <h1>Пациенти</h1>
       <ul>{patients.map((patient,idx)=>(
         <li key={idx}>{JSON.stringify(patient)}</li>
       ))}</ul>
@@ -52,27 +52,27 @@ function Patient(){
 
  <div>
     <form action={updatePatient}>
-      Id:
+      Моля въведете номера на пациента, който желаете да редактирате:
       <input type="number" name="upIdPatient" onChange={(e)=>updateIdPatient(e.target.value)}/>
-      First Name:
+      Моля въведете първото име на пациента:
       <input type="text" name="upFirstPName" onChange={(e)=>updateFirstPName(e.target.value)}/>
-      Middle Name:
+      Моля въведете презимето на пациента:
       <input type="text" name="upMiddlePName" onChange={(e)=>updateMiddlePName(e.target.value)}/>
-      Last Name:
+      Моля въведете фамилното име на пациента:
       <input type="text" name="upLastPName" onChange={(e)=>updateLastPName(e.target.value)}/>
-      Age:
+      Моля въведете годините на пациента:
       <input type="number" name="upAge" onChange={(e)=>updateAge(e.target.value)}/>
-      EGN:
+      Моля въведете ЕГНто на пациента:
       <input type="text" name="upEGN" onChange={(e)=>updateEGN(e.target.value)}/>
-      Gender:
+      Моля въведете пола на пациента:
       <input type="text" name="upGender" onChange={(e)=>updateGender(e.target.value)}/>
-      Address:
+      Моля въведете адреса на пациента:
       <input type="text" name="upAddress" onChange={(e)=>updateAddress(e.target.value)}/>
-      Telephone:
+      Моля въведете телефонният номер на пациента:
       <input type="tel" name="upTelephone" onChange={(e)=>updateTelephone(e.target.value)}/>
-      User's id:
+      Моля въведете номера на потребителският номер:
       <input type="number" name="upIdUser" onChange={(e)=>updateIdUser(e.target.value)}/>
-      <input type="submit" value="Update Patient" />
+      <input type="submit" value="Редактирайте пациент" />
     </form>
   </div>
     </>

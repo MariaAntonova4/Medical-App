@@ -25,7 +25,7 @@ const[purposes,allPurposes]=useState<any[]>([]);
       return(
         <>    
         <div>
-          <h1>Purpose</h1>
+          <h1>Причини на посещение</h1>
           <ul>{purposes.map((purpose,idx)=>(
             <li key={idx}>{JSON.stringify(purpose)}</li>
           ))}</ul>
@@ -33,10 +33,13 @@ const[purposes,allPurposes]=useState<any[]>([]);
 
             <div>
             <form action={updatePurpose}>
+              Моля въведете номера на причината за посещение, която желаете да редактирате:
                 <input type="number" name="upIdPurpose" onChange={(e)=>updateIdPurpose(e.target.value)}/>
+                Моля въведете причината:
                 <input type="text" name='upPurposeName' onChange={(e)=>updatePurposeName(e.target.value)}/>
+                Моля въведете продължителност:
                 <input type="number" name="upDuration" onChange={(e)=>updateDuration(e.target.value)} />
-                <input type="submit" value="Update Purpose" />
+                <input type="submit" value="Редактирайте причина" />
             </form>
         </div>
     </>)

@@ -44,7 +44,7 @@ const[statuses,allStatus]=useState<any[]>([]);
   return(
     <>
     <div>
-      <h1>Type_Purpose</h1>
+      <h1>Видове и причини</h1>
       <ul>{type_purposes.map((type_purpose,idx)=>(
         <li key={idx}>{JSON.stringify(type_purpose)}</li>
       ))}</ul>
@@ -52,6 +52,7 @@ const[statuses,allStatus]=useState<any[]>([]);
 
  <div>
         <form action={insertType_Purpose}>
+          Изберете вид:
           <select name="inIdType">
           {types.map((type)=>(
             <option key={type.idType} value={type.idType}>
@@ -59,6 +60,7 @@ const[statuses,allStatus]=useState<any[]>([]);
             </option>
           ))}
         </select>  
+        Изберете причина:
             <select name="inIdPurpose">
           {purposes.map((purpose)=>(
             <option key={purpose.idPurpose} value={purpose.idPurpose}>
@@ -66,6 +68,7 @@ const[statuses,allStatus]=useState<any[]>([]);
             </option>
           ))}
         </select> 
+        Изберете степен:
             <select name="inIdStage">
           {stages.map((stage)=>(
             <option key={stage.idStage} value={stage.idStage}>
@@ -73,7 +76,7 @@ const[statuses,allStatus]=useState<any[]>([]);
             </option>
           ))}
         </select>
-            <input type="submit" value="Insert Type_Purpose" />
+            <input type="submit" value="Добавете вид и причина" />
         </form>
       </div>
     </>

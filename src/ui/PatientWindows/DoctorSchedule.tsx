@@ -16,7 +16,7 @@ const [doc,date]=doctor;
   return(
     <>
 <div>
-      <h1>Schedules</h1>
+      <h1>График:</h1>
       <ul>{schedules.map((schedule,idx)=>(
         <li key={idx}>{JSON.stringify(schedule)}</li>
       ))}</ul>

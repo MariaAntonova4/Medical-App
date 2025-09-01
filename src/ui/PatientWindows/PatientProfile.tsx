@@ -110,61 +110,61 @@ function checkYourTurn() {
   return(
     <>
     <h1>
-      Patient Information:
+      Добре дошли, {patient.firstName} {patient.middleName} {patient.lastName}
     </h1>
      <div>
-      <h3>Today's date:</h3> {today}
-      <h2>Appointments</h2>
+      <h3>Днескашна дата:</h3> {today}
+      <h2>Запазени часове</h2>
       <ul>{userAppointments.map((appointment,idx)=>(
         <li key={idx}>{JSON.stringify(appointment)}</li>
       ))}</ul>
     </div> 
     <h2>
-      First Name:
+      Първо име:
     </h2>
     {patient.firstName}
     <h2>
-      Middle Name:
+      Презиме:
     </h2>
     {patient.middleName}
     <h2>
-      Last Name:
+      Фамилия:
     </h2>
     {patient.lastName}
     <h2>
-      Age:
+      Години:
     </h2>
     {patient.age}
     <h2>
-      EGN
+      ЕГН:
     </h2>
     {patient.EGN}
-    <h2>Gender:</h2>
+    <h2>Пол:</h2>
     {patient.gender}
-    <h2>Address</h2>
+    <h2>Адрес</h2>
     {patient.address}
-    <h2>Telephone</h2>
+    <h2>Телефон</h2>
     {patient.telephone}
-    <h2>User</h2>
+    <h2>Потребителски номер</h2>
     {patient.idUser}
     <p>
       <form action={returnApp}>
-      <button>Return Home</button>
+      <button>Връщане в началото</button>
     </form>
     </p>
     <p>
       <form action={makeAppointment}>
-      <button>Make Appointment</button>
+      <button>Запазване на час</button>
     </form>
     </p>
     <p>
       <form action={editAppointment}>
-      <button>Edit Appointment</button>
+      <button>Редакция на час</button>
     </form>
     </p>
     <p>
     <form action={cancelAppointment}>
-      <button>Cancel Appointment</button>
+      <button>Отмяна на час</button>
     </form>
     </p>
     </>

@@ -28,7 +28,7 @@ const [patients,allPatients]=useState<any[]>([]);
     <>
     <div>
       <h1>
-        Specialization
+        Специализации
       </h1>
       <ul>
         {specs.map((spec,idx)=>(
@@ -38,8 +38,9 @@ const [patients,allPatients]=useState<any[]>([]);
     </div>
     <div>
         <form action={addSpec}>
+      Моля добавете име на специализацията:
       <input type="text"name="addSpecName"onChange={(e)=>setASpecName(e.target.value)} />
-      <input type="submit" value="Add Specialization"/>
+      <input type="submit" value="Добавете специализация"/>
     </form>
     </div>
     </>

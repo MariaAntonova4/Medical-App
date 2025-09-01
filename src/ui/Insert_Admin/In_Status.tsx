@@ -20,7 +20,7 @@ function Status(){
       return(
         <>
           <div>
-          <h1>Status</h1>
+          <h1>Статус:</h1>
           <ul>{statuses.map((status,idx)=>(
             <li key={idx}>{JSON.stringify(status)}</li>
           ))}</ul>
@@ -28,8 +28,9 @@ function Status(){
     
       <div>
         <form action={insertStatus}>
+          Добавете статус:
           <input type="text" name="inStatusName" onChange={(e)=>insertStatusName(e.target.value)}/>
-          <input type="submit" value="Insert Status" />
+          <input type="submit" value="Добавете статус" />
         </form>
       </div>
 

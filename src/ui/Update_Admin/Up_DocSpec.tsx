@@ -34,7 +34,7 @@ function DocSpec(){
   return(
     <>
     <div>
-      <h1>Doctor's specialization</h1>
+      <h1>Лекарска специализация</h1>
       <ul>{doc_specs.map((doc_spec,idx)=>(
         <li key={idx}>{JSON.stringify(doc_spec)}</li>
       ))}</ul>
@@ -43,14 +43,17 @@ function DocSpec(){
  <div>
 
         <form action={updateDoc_Spec}>
+          Моля изберете номера на докторската специализация, която желаете да редактирате:
             <input type="number" name="upIdD_S" onChange={(e)=>updateIdD_S(e.target.value)}/>
+            Моля изберете доктор:
             <select name="upDoc_Speci">
           {doctors.map((doctor)=>(
             <option key={doctor.idDoc} value={doctor.idDoc}>
               {doctor.firstName} {doctor.middleName} {doctor.lastName}
             </option>
           ))}
-        </select>  
+        </select>
+        Моля изберете специализация:  
             <select name="upSpec_Doc">
           {specs.map((specialization)=>(
             <option key={specialization.id} value={specialization.id}>
@@ -58,7 +61,7 @@ function DocSpec(){
             </option>
           ))}
         </select>
-            <input type="submit" value="Update Doctor's specialization" />
+            <input type="submit" value="Редактирайте лекарската специализация" />
         </form>
     </div>
 

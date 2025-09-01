@@ -46,7 +46,7 @@ function Doctor(){
     <>
 
     <div>
-      <h1>Doctors</h1>
+      <h1>Лекари</h1>
       <ul>{doctors.map((doctor,idx)=>(
         <li key={idx}>{JSON.stringify(doctor)}</li>
       ))}</ul>
@@ -55,11 +55,17 @@ function Doctor(){
     <div>
 
         <form action={updateDoctor}>
+          Моля веведете номера на лекаря, който желаете да редактирате:
             <input type="number" name="upIdDoc" onChange={(e)=>updateIdDoc(e.target.value)}/>
+            Моля въведете първото име на лекаря:
             <input type="text" name="upFirstName" onChange={(e)=>updateFirstName(e.target.value)} />
+            Моля въведете презимето на лекаря:
             <input type="text" name="upMiddleName" onChange={(e)=>updateMiddleName(e.target.value)} />
+            Моля въведете фамилното име на лекаря:
             <input type="text" name="upLastName" onChange={(e)=>updateLastName(e.target.value)} />
+            Моля въведете потребител:
             <input type="text" name='upDoc_User' onChange={(e)=>updateDoc_User(e.target.value)}/>
+            Моля изберете специализация:
             <select name="upDoctor_Spec">
           {specs.map((specialization)=>(
             <option key={specialization.id} value={specialization.id}>
@@ -67,8 +73,9 @@ function Doctor(){
             </option>
           ))}
         </select>
+        Моля въведете телефонен номер на лекаря:
             <input type="tel" name="upDoc_Tel" onChange={(e)=>updateDoc_Tel(e.target.value)} />
-            <input type="submit" value="Update Doctor" />
+            <input type="submit" value="Редактирайте лекаря" />
         </form>
     </div>
 

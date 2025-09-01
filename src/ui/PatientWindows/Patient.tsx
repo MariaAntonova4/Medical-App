@@ -154,7 +154,9 @@ useEffect(()=>{
   return (
     <>
     <div>
+      <h3>Запазете час:</h3>
       <form action={insertAppointment}>
+        Моля избирите лекар и клиника:
          <select name="inDoc_Cli">
           {doctorsSchedules.map((schedule)=>(
             <option key={schedule.doctor_clinic} value={schedule.doctor_clinic}>
@@ -162,8 +164,11 @@ useEffect(()=>{
             </option>
           ))}
         </select>
+        Моля изберете час:
         <input type="time" name="inTime" onChange={(e)=>insertTime(e.target.value)}/>
+        Моля изберете дата:
         <input type="date" name="inDate" onChange={(e)=>insertDate(e.target.value)}/>
+        Моля изберете тип:
         <select name="inTy_Pur">
           {types.map((type)=>(
             <option key={type.idType} value={type.idType}>
@@ -171,6 +176,7 @@ useEffect(()=>{
             </option>
           ))}
         </select>
+        Моля изберете причина:
         <select name="inPur">
           {purposes.map((purpose)=>(
             <option key={purpose.idPurpose} value={purpose.idPurpose}>
@@ -178,14 +184,14 @@ useEffect(()=>{
             </option>
           ))}
         </select>
-        <input type="submit" value="Make an Appointment" />
+        <input type="submit" value="Запазване на час" />
       </form>
     </div>
       <div>
         <p>
          <form action={connectToHome}>
           <button>
-            Return
+            Връщане назад
           </button>
         </form> 
         </p>
@@ -194,7 +200,7 @@ useEffect(()=>{
         <p>
          <form action={openChildWindow}>
           <button>
-            Show Schedule
+            Показване на график на избарн лекар
           </button>
         </form> 
         </p>

@@ -22,7 +22,7 @@ function TypeUser(){
   return(
     <>
     <div>
-      <h1>Types Of Users</h1>
+      <h1>Типове потребители</h1>
       <ul>{allTypesOfUsers.map((typeOfUser,idx)=>(
         <li key={idx}>{JSON.stringify(typeOfUser)}</li>
       ))}</ul>
@@ -30,9 +30,11 @@ function TypeUser(){
 
     <div>
       <form action={updateTypeOfUser}>
+        Моля въведете номера на типа потребител, който желаете да редактирате:
         <input type="number" name="upIdTypeUser" onChange={(e)=>updateIdTypeUser(e.target.value)}/>
+        Моля въведете тип потребител:
         <input type="text" name="upTypeUser" onChange={(e)=>updateTypeUser(e.target.value)} />
-        <input type="submit" value="Update Type Of User" />
+        <input type="submit" value="Редактирайте тип потребител" />
       </form>
     </div>
     </>

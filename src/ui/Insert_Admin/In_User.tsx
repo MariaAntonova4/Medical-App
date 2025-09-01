@@ -30,7 +30,7 @@ function User(){
     <>
     
     <div>
-      <h1>Users</h1>
+      <h1>Потребители</h1>
       <ul>{users.map((user,idx)=>(
         <li key={idx}>{JSON.stringify(user)}</li>
       ))}</ul>
@@ -38,8 +38,11 @@ function User(){
 
     <div>
       <form action={insert_User}>
+        Добавете потребителско име:
         <input type="text" name="inUsername" onChange={(e)=>insertUsername(e.target.value)}/>
+        Добавете парола:
         <input type="password" name="inPass" onChange={(e)=>insertPass(e.target.value)} />
+        Изберете тип на потребителя:
         <select name="inTypeOfUser">
           {allTypesOfUsers.map((tyUser)=>(
             <option key={tyUser.idTypeUser} value={tyUser.idTypeUser}>
@@ -47,7 +50,7 @@ function User(){
             </option>
           ))}
         </select>
-        <input type="submit" value="Insert User" />
+        <input type="submit" value="Добавете потребител" />
       </form>
     </div>
 

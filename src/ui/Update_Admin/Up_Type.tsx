@@ -24,7 +24,7 @@ const[types,allTypes]=useState<any[]>([]);
     <>
 
 <div>
-      <h1>Types</h1>
+      <h1>Типове</h1>
       <ul>{types.map((type,idx)=>(
         <li key={idx}>{JSON.stringify(type)}</li>
       ))}</ul>
@@ -32,9 +32,11 @@ const[types,allTypes]=useState<any[]>([]);
 
 <div>
         <form action={updateType}>
+          Моля въведете номера на типа, който желаете да редактирате:
            <input type="number" name="upIdType" onChange={(e)=>updateIdType(e.target.value)}/>
+           Моля въведете тип:
             <input type="text" name="upTypeName" onChange={(e)=>updateTypeName(e.target.value)} />
-            <input type="submit" value="Update Type" />
+            <input type="submit" value="Редактирайте тип" />
         </form>
 
     </div>

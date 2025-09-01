@@ -21,7 +21,7 @@ function Stage(){
       return(
         <>    
         <div>
-          <h1>Stage</h1>
+          <h1>Степен</h1>
           <ul>{stages.map((stage,idx)=>(
             <li key={idx}>{JSON.stringify(stage)}</li>
           ))}</ul>
@@ -29,9 +29,11 @@ function Stage(){
 
         <div>
           <form action={updateStage}>
+            Моля въведете номера на степента, която желаете да редактирате:
              <input type="number" name="upIdStage" onChange={(e)=>updateIdStage(e.target.value)}/>
+             Моля въведете степента:
             <input type="text" name="upStageName" onChange={(e)=>updateStageName(e.target.value)}/>
-            <input type="submit" value="Update Stage" />
+            <input type="submit" value="Редактирайте степен" />
           </form>
         </div>
     

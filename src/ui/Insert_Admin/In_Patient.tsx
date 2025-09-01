@@ -38,8 +38,23 @@ function Patient(){
     const username=addFirstName+" "+addMiddleName+" "+addLastName;
     //window.electron.insert_User(username,addIdUser,3);
     //if (users.find((user)=>user.username==username&&user.pass==addIdUser&&user.userType==3)) {
-    const user=users.find((user)=>user.username==username&&user.pass==addIdUser&&user.userType==3);
-    //window.electron.insertPatient(addFirstName,addMiddleName,addLastName,addAge,addEGN,addGender,addAddress,addTelephone,user.idUser);
+    //const user=users.find((user)=>user.username==username&&user.pass==addIdUser&&user.userType==3);
+
+
+  const data1 = { username:username,pass:addIdUser,userType:3};
+  const data2 = { firstName:addFirstName,middleName:addMiddleName,lastName:addLastName,age:addAge,EGN:addEGN,gender:addGender,address:addAddress,telephone:addTelephone };
+
+  const result = window.electron.insertPatientUser(data1,data2);
+  // if (result.success) {
+  //   console.log('Data added successfully');
+  // } else {
+  //   console.error('Error:', result.error);
+  // }
+
+
+
+
+    //window.electron.insertPatientUser(addFirstName,addMiddleName,addLastName,addAge,addEGN,addGender,addAddress,addTelephone,41,username,addIdUser,3);
     //}
     
   }
@@ -47,7 +62,7 @@ function Patient(){
   return(
     <>
      <div>
-      <h1>Patients</h1>
+      <h1>Пациенти</h1>
       <ul>{patients.map((patient,idx)=>(
         <li key={idx}>{JSON.stringify(patient)}</li>
       ))}</ul>
@@ -55,25 +70,25 @@ function Patient(){
 
  <div>
     <form action={insertPatient}>
-      First Name:
+      Моля добавете първото име на пациента:
       <input type="text" name="inFirstPName" onChange={(e)=>insertFirstPName(e.target.value)}/>
-      Middle Name:
+      Моля добавете второто име на пациента:
       <input type="text" name="inMiddlePName" onChange={(e)=>insertMiddlePName(e.target.value)}/>
-      Last Name:
+      Моля добавете фамилното име на пациента:
       <input type="text" name="inLastPName" onChange={(e)=>insertLastPName(e.target.value)}/>
-      Age:
+      Моля добавете годините на пациента:
       <input type="number" name="inAge" onChange={(e)=>insertAge(e.target.value)}/>
-      EGN:
+      Моля добавете ЕГН на пациента:
       <input type="text" name="inEGN" onChange={(e)=>insertEGN(e.target.value)}/>
-      Gender:
+      Моля запишете пола на пациента:
       <input type="text" name="inGender" onChange={(e)=>insertGender(e.target.value)}/>
-      Address:
+      Моля добавете адреса на пациента:
       <input type="text" name="inAddress" onChange={(e)=>insertAddress(e.target.value)}/>
-      Telephone:
+      Моля добавете телефонния номер на пациента:
       <input type="tel" name="inTelephone" onChange={(e)=>insertTelephone(e.target.value)}/>
-      User's password:
+      Моля добавете паролата за профила на пациента:
       <input type="password" name="inIdUser" onChange={(e)=>insertIdUser(e.target.value)}/>
-      <input type="submit" value="Insert Patient" />
+      <input type="submit" value="Добави пациент" />
     </form>
   </div>
     </>

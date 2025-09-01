@@ -21,7 +21,7 @@ function Stage(){
         <>  
     
         <div>
-          <h1>Stage</h1>
+          <h1>Степени</h1>
           <ul>{stages.map((stage,idx)=>(
             <li key={idx}>{JSON.stringify(stage)}</li>
           ))}</ul>
@@ -29,8 +29,9 @@ function Stage(){
 
         <div>
           <form action={insertStage}>
+            Добавете степен:
             <input type="text" name="inStageName" onChange={(e)=>insertStageName(e.target.value)}/>
-            <input type="submit" value="Insert Stage" />
+            <input type="submit" value="Добавете степен" />
           </form>
         </div>
     

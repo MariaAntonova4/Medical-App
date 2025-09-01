@@ -44,14 +44,16 @@ const[type_purposes,allType_Purpose]=useState<any[]>([]);
 
   return(
     <>
-      <h1>Schedules</h1>
+      <h1>Графици</h1>
       <ul>{schedules.map((schedule,idx)=>(
         <li key={idx}>{JSON.stringify(schedule)}</li>
       ))}</ul>
 
  <div>
     <form action={updateSchedule}>
+      Моля въведете номера на графика, който желаете да редактирате:
       <input type="number" name="upIdSchedule" onChange={(e)=>updateIdSchedule(e.target.value)}/>
+      Моля изберете доктор и клиника:
       <select name="upDoctor_Clinic">
           {doc_clinics.map((doc_clinic)=>(
             <option key={doc_clinic.idDoc_Clinic} value={doc_clinic.idDoc_Clinic}>
@@ -59,9 +61,13 @@ const[type_purposes,allType_Purpose]=useState<any[]>([]);
             </option>
           ))}
         </select>  
+        Моля въведете начален час:
       <input type="time" name="upBeginningTime" onChange={(e)=>updateBeginningTime(e.target.value)}/>
+      Моля въведете краен час:
       <input type="time" name="upFinishTime" onChange={(e)=>updateFinishTime(e.target.value)}/>
+      Моля въведете дата:
       <input type="date" name="upData" onChange={(e)=>updateData(e.target.value)}/>
+      Моля изберете тип:
       <select name="upIdTy">
           {types.map((type)=>(
             <option key={type.idType} value={type.idType}>
@@ -69,7 +75,7 @@ const[type_purposes,allType_Purpose]=useState<any[]>([]);
             </option>
           ))}
         </select> 
-      <input type="submit" value="Update Schedule" />
+      <input type="submit" value="Редактирайте график" />
     </form>
   </div>
     </>

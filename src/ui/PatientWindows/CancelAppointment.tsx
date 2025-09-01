@@ -32,23 +32,23 @@ useEffect(()=>{
   return(
     <>
      <div>
-      <h1>Appointments</h1>
+      <h1>Запазени часове</h1>
       <ul>{appointments.map((appointment,idx)=>(
         <li key={idx}>{JSON.stringify(appointment)}</li>
       ))}</ul>
     </div>     
 
     <form action={deleteAppointment}>
-        Please write the ID of the appointment you want to cancel: 
+        Моля въведете номера на запазения час, който желаете да отмените:
         <input type="number" name="deleteidAppointment" onChange={(e)=>deleteIdAppointment(e.target.value)}/>
-        <input type="submit" value="Cancel Appointment" />
+        <input type="submit" value="Отменете час" />
     </form>
     
 
   
 <p>
     <form action={returnApp}>
-      <button>Return</button>
+      <button>Връщане назад</button>
     </form></p>
     </>
   )
